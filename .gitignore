@@ -2,7 +2,7 @@
 *.vsix
 
 # ML artifacts — model lives in GitHub Release, not in repo
-models/
+/models/
 __pycache__/
 *.pt
 *.pyc

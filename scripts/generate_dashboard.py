@@ -743,7 +743,7 @@ details.alert-card[open] summary{border-bottom:1px solid var(--border)}
 .card-title{font-weight:600;font-size:14px;flex:1;min-width:0}
 .card-meta{font-size:12px;color:var(--muted);white-space:nowrap}
 .region-badge{font-size:11px;background:#f0f2f5;border:1px solid var(--border);border-radius:10px;padding:1px 7px;color:var(--text);white-space:nowrap}
-.card-score{font-family:monospace;font-size:12px;color:var(--muted);white-space:nowrap}
+.card-score{font-family:monospace;font-size:15px;font-weight:700;color:var(--text);background:#f0f2f5;border:1px solid var(--border);border-radius:8px;padding:2px 9px;white-space:nowrap}
 .expand-hint{font-size:11px;color:var(--muted);margin-left:auto}
 
 .card-body{padding:12px 16px;background:rgba(255,255,255,.7)}
@@ -1182,14 +1182,15 @@ function renderCard(a, extraClass=''){
 
   const regionBadge = a.region ? `<span class="region-badge">${esc(a.region)}</span>` : '';
 
-  return `<details class="alert-card ${a.tier} ${extraClass}">
+  const cardId = 'alert-' + a.alert_id.replace(/[^a-zA-Z0-9]/g, '-');
+  return `<details class="alert-card ${a.tier} ${extraClass}" id="${cardId}">
   <summary>
     ${TIER_BADGE[a.tier]||''}
     ${israelBadge}
     ${regionBadge}
+    <span class="card-score" title="Absolute risk score 1–10 (min-max normalized from model output range −5.65 to +6.71)">${a.absolute_score.toFixed(1)}<span style="font-size:11px;font-weight:400;opacity:.6">/10</span></span>
     <span class="card-title">${esc(a.title||a.alert_id)}</span>
     <span class="card-meta">${esc(a.source_published_date)}</span>
-    <span class="card-score" title="Absolute risk score 1–10 (min-max normalized from model output range −5.65 to +6.71)">${a.absolute_score.toFixed(1)}<span style="font-size:10px;opacity:.7">/10</span></span>
     <span class="expand-hint">▸</span>
   </summary>
   <div class="card-body">
@@ -1398,6 +1399,9 @@ function renderFeedSection(alerts, containerId, btnId, label){
   renderFeedSection(critical, 'critical-feed', 'critical-more-btn', 'critical');
   renderFeedSection(high,     'high-feed',     'high-more-btn',     'high');
   renderFeedSection(medium,   'medium-feed',   'medium-more-btn',   'medium');
+
+  // After all cards are in the DOM, handle deep-link hash navigation
+  if (window.location.hash) openAlertFromHash();
 
   const medBtn = document.getElementById('medium-btn');
   if(medium.length > 0){
@@ -1703,6 +1707,29 @@ new Chart(document.getElementById('countryChart'),{
   }
   window.addEventListener('scroll', updateActive, {passive:true});
   updateActive();
+})();
+
+// Deep-link: open and scroll to a specific alert via URL hash (#alert-xxx)
+(function() {
+  function openAlertFromHash() {
+    const hash = window.location.hash;
+    if (!hash) return;
+    const el = document.querySelector(hash);
+    if (!el) return;
+    const medSec = document.getElementById('medium-section');
+    if (medSec && medSec.contains(el) && getComputedStyle(medSec).display === 'none') {
+      toggleMedium();
+    }
+    el.setAttribute('open', '');
+    requestAnimationFrame(() => {
+      const headerH = document.querySelector('.header').offsetHeight;
+      const top = el.getBoundingClientRect().top + window.scrollY - headerH - 16;
+      window.scrollTo({top, behavior:'smooth'});
+      el.style.outline = '2px solid #2471a3';
+      setTimeout(() => el.style.outline = '', 3000);
+    });
+  }
+  window.addEventListener('hashchange', openAlertFromHash);
 })();
 </script>
 </body>

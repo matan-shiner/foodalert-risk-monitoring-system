@@ -1795,23 +1795,30 @@ new Chart(document.getElementById('countryChart'),{
 
 // Deep-link: open and scroll to a specific alert via URL hash (#alert-xxx)
 function openAlertFromHash() {
-    const hash = window.location.hash;
-    if (!hash) return;
-    const el = document.getElementById(hash.slice(1));
-    if (!el) return;
-    const medSec = document.getElementById('medium-section');
-    if (medSec && medSec.contains(el) && getComputedStyle(medSec).display === 'none') {
-      toggleMedium();
-    }
-    el.setAttribute('open', '');
-    requestAnimationFrame(() => {
-      const headerH = document.querySelector('.header').offsetHeight;
-      const top = el.getBoundingClientRect().top + window.scrollY - headerH - 16;
-      window.scrollTo({top, behavior:'smooth'});
-      el.style.outline = '2px solid #2471a3';
-      setTimeout(() => el.style.outline = '', 3000);
-    });
-  }
+  const hash = window.location.hash;
+  if (!hash) return;
+  const alertId = hash.slice(1);
+
+  // Expand all tier sections so the target card is in the DOM
+  ['critical-more-btn','high-more-btn','medium-more-btn'].forEach(btnId => {
+    const btn = document.getElementById(btnId);
+    if (btn && btn.style.display !== 'none') btn.click();
+  });
+  // Show medium section if hidden
+  const medSec = document.getElementById('medium-section');
+  if (medSec && (medSec.style.display === 'none' || !medSec.style.display)) toggleMedium();
+
+  const el = document.getElementById(alertId);
+  if (!el) return;
+  el.setAttribute('open', '');
+  requestAnimationFrame(() => {
+    const headerH = document.querySelector('.header').offsetHeight;
+    const top = el.getBoundingClientRect().top + window.scrollY - headerH - 16;
+    window.scrollTo({top, behavior:'smooth'});
+    el.style.outline = '2px solid #2471a3';
+    setTimeout(() => el.style.outline = '', 3000);
+  });
+}
   window.addEventListener('hashchange', openAlertFromHash);
 
 function checkExportDays(input) {

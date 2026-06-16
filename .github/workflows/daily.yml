@@ -4,6 +4,11 @@ on:
   schedule:
     - cron: '0 5 * * *'   # 5:00 UTC = 8:00 Israel time (UTC+3 summer)
   workflow_dispatch:        # manual trigger from GitHub UI
+    inputs:
+      notify_date:
+        description: 'Date to check for email notifications (YYYY-MM-DD). Leave empty for today.'
+        required: false
+        default: ''
 
 permissions:
   contents: write           # needed to commit DB + dashboard back to repo
@@ -67,7 +72,10 @@ jobs:
 
       # ── Commit results back to repo ─────────────────────────────────────────
       - name: Send email notifications for high-risk alerts
-        run: python3 scripts/notify.py --date $(date -u +%Y-%m-%d)
+        run: |
+          DATE="${{ github.event.inputs.notify_date }}"
+          if [ -z "$DATE" ]; then DATE=$(date -u +%Y-%m-%d); fi
+          python3 scripts/notify.py --date "$DATE"
         env:
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
 

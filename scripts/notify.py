@@ -9,9 +9,16 @@ import argparse
 import json
 import os
 import sys
+import urllib.error
 import urllib.request
 from datetime import date, timedelta
 from pathlib import Path
+
+try:
+    import requests as _requests
+    _HAS_REQUESTS = True
+except ImportError:
+    _HAS_REQUESTS = False
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
@@ -130,30 +137,40 @@ def build_html(alerts_to_send: list[tuple[dict, list[str]]], ref_date: str) -> s
 
 
 def send_email(api_key: str, subject: str, html: str) -> None:
-    payload = json.dumps({
+    payload = {
         "from": SENDER,
         "to": RECIPIENTS,
         "subject": subject,
         "html": html,
-    }).encode()
+    }
+    headers = {
+        "Authorization": f"Bearer {api_key}",
+        "Content-Type": "application/json",
+        "User-Agent": "FoodSafe-Notifier/1.0",
+        "Accept": "application/json",
+    }
 
-    req = urllib.request.Request(
-        RESEND_API_URL,
-        data=payload,
-        headers={
-            "Authorization": f"Bearer {api_key}",
-            "Content-Type": "application/json",
-        },
-        method="POST",
-    )
-    try:
-        with urllib.request.urlopen(req) as resp:
-            body = resp.read().decode()
-            print(f"Email sent. Response: {body}")
-    except urllib.error.HTTPError as e:
-        body = e.read().decode()
-        print(f"Resend error {e.code}: {body}", file=sys.stderr)
-        raise
+    if _HAS_REQUESTS:
+        resp = _requests.post(RESEND_API_URL, json=payload, headers=headers, timeout=30)
+        if not resp.ok:
+            print(f"Resend error {resp.status_code}: {resp.text}", file=sys.stderr)
+            resp.raise_for_status()
+        print(f"Email sent. Response: {resp.text}")
+    else:
+        req = urllib.request.Request(
+            RESEND_API_URL,
+            data=json.dumps(payload).encode(),
+            headers=headers,
+            method="POST",
+        )
+        try:
+            with urllib.request.urlopen(req) as resp:
+                body = resp.read().decode()
+                print(f"Email sent. Response: {body}")
+        except urllib.error.HTTPError as e:
+            body = e.read().decode()
+            print(f"Resend error {e.code}: {body}", file=sys.stderr)
+            raise
 
 
 def main() -> None:

@@ -799,6 +799,8 @@ img.emoji{height:1em;width:1em;margin:0 .05em 0 .1em;vertical-align:-.1em;displa
 .fc.fca{background:var(--text);color:#fff;border-color:var(--text)}
 #filter-country-input{padding:3px 10px;border:1.5px solid var(--border);border-radius:20px;font-size:12px;width:190px;outline:none;color:var(--text)}
 #filter-country-input:focus{border-color:#888}
+#filter-product-select{padding:3px 10px;border:1.5px solid var(--border);border-radius:20px;font-size:12px;color:var(--text);background:#fff;cursor:pointer;outline:none;max-width:280px}
+#filter-product-select:focus{border-color:#888}
 #clear-filters-btn{background:none;border:1.5px solid #e74c3c;color:#e74c3c;border-radius:20px;padding:2px 10px;font-size:11px;cursor:pointer;transition:all .15s;display:none}
 #clear-filters-btn:hover{background:#e74c3c;color:#fff}
 #filter-badge{font-size:11px;color:#e67e22;font-weight:600;display:none}
@@ -1014,6 +1016,12 @@ footer{text-align:center;padding:20px;font-size:12px;color:var(--muted);border-t
       <button class="fc" data-f="source" data-v="fda_enforcement" onclick="setFilter('source','fda_enforcement')">FDA</button>
       <button class="fc" data-f="source" data-v="fsis"            onclick="setFilter('source','fsis')">USDA FSIS</button>
       <button class="fc" data-f="source" data-v="fsa_uk"          onclick="setFilter('source','fsa_uk')">FSA UK</button>
+    </div>
+    <div class="filter-row">
+      <span class="filter-label">Product</span>
+      <select id="filter-product-select" onchange="setProductFilter(this.value)">
+        <option value="">All categories</option>
+      </select>
     </div>
     <div class="filter-row">
       <span class="filter-label">Country</span>
@@ -1494,13 +1502,16 @@ const INITIAL_SHOW = 10;
 let _sortMode = 'score';
 const _feedAlerts = {};
 const _charts = {};
-const _filters = { hazard: '', source: '', country: '' };
+const _filters = { hazard: '', source: '', country: '', product: '' };
 
 function _passesFilters(a) {
   if (_filters.hazard) {
     if ((a.hazard_category || '').toLowerCase() !== _filters.hazard) return false;
   }
   if (_filters.source && a.source_id !== _filters.source) return false;
+  if (_filters.product) {
+    if ((a.product_category || '').toLowerCase() !== _filters.product) return false;
+  }
   if (_filters.country) {
     const q = _filters.country.toLowerCase();
     const origin = (a.origin_country || '').toLowerCase();
@@ -1524,18 +1535,25 @@ function setCountryFilter(val) {
   _applyAll();
 }
 
+function setProductFilter(val) {
+  _filters.product = val;
+  _applyAll();
+}
+
 function clearFilters() {
   _filters.hazard = '';
   _filters.source = '';
   _filters.country = '';
+  _filters.product = '';
   document.getElementById('filter-country-input').value = '';
+  document.getElementById('filter-product-select').value = '';
   document.querySelectorAll('.fc').forEach(el =>
     el.classList.toggle('fca', el.dataset.v === ''));
   _applyAll();
 }
 
 function _applyAll() {
-  const n = [_filters.hazard, _filters.source, _filters.country].filter(Boolean).length;
+  const n = [_filters.hazard, _filters.source, _filters.country, _filters.product].filter(Boolean).length;
   const clearBtn = document.getElementById('clear-filters-btn');
   const badge    = document.getElementById('filter-badge');
   clearBtn.style.display = n ? 'inline-block' : 'none';
@@ -1613,12 +1631,21 @@ function setSortBy(mode){
   if (window.location.hash) openAlertFromHash();
 
   // Populate country autocomplete datalist
-  const _countries = [...new Set(
-    [..._feedAlerts.critical, ..._feedAlerts.high, ..._feedAlerts.medium]
-    .map(a => a.origin_country).filter(Boolean)
-  )].sort();
+  const _allFeedAlerts = [..._feedAlerts.critical, ..._feedAlerts.high, ..._feedAlerts.medium];
+  const _countries = [...new Set(_allFeedAlerts.map(a => a.origin_country).filter(Boolean))].sort();
   const _dl = document.getElementById('country-datalist');
   _countries.forEach(c => { const o = document.createElement('option'); o.value = c; _dl.appendChild(o); });
+
+  // Populate product category dropdown (sorted by frequency)
+  const _prodCounts = {};
+  _allFeedAlerts.forEach(a => { if (a.product_category) _prodCounts[a.product_category] = (_prodCounts[a.product_category]||0)+1; });
+  const _prodSel = document.getElementById('filter-product-select');
+  Object.entries(_prodCounts).sort((a,b)=>b[1]-a[1]).forEach(([cat]) => {
+    const o = document.createElement('option');
+    o.value = cat.toLowerCase();
+    o.textContent = cat.charAt(0).toUpperCase() + cat.slice(1);
+    _prodSel.appendChild(o);
+  });
 
   const medToggleBtn = document.getElementById('medium-toggle-btn');
   if(_feedAlerts.medium.length > 0){

@@ -1051,7 +1051,7 @@ footer{text-align:center;padding:20px;font-size:12px;color:var(--muted);border-t
     <div class="charts-grid" style="margin-top:16px">
       <div class="chart-card">
         <div class="chart-title">Product category (top 10)</div>
-        <div class="chart-wrap tall"><canvas id="productChart"></canvas></div>
+        <div class="chart-wrap xtall"><canvas id="productChart"></canvas></div>
       </div>
       <div class="chart-card">
         <div class="chart-title">Origin country (top 10)</div>

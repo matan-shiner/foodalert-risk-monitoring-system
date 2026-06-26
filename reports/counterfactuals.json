@@ -1,5 +1,5 @@
 {
-  "n_alerts": 459,
+  "n_alerts": 460,
   "analyses": [
     {
       "alert_id": "fsis::092-2019",
@@ -51405,6 +51405,118 @@
           "original_score": 1.4682,
           "perturbed_score": 1.03934,
           "delta": -0.42886,
+          "direction": "↓"
+        }
+      ]
+    },
+    {
+      "alert_id": "rasff::2026.5589",
+      "title": "ASP toxin detected in the flesh of Pecten maximus bivalve molluscs",
+      "source_id": "rasff",
+      "hazard_specific": "",
+      "severity_raw": "information notification for attention/potentially serious",
+      "original_score": 1.21828,
+      "original_percentile": null,
+      "top_driver": "rte→add_RTE",
+      "perturbations": [
+        {
+          "perturbation": "hazard→Listeria",
+          "perturbation_he": "סיכון→ליסטריה",
+          "field": "hazard_specific",
+          "new_value": "Listeria monocytogenes",
+          "original_score": 1.21828,
+          "perturbed_score": 3.12605,
+          "delta": 1.90777,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "hazard→mineral_oil",
+          "perturbation_he": "סיכון→שמן מינרלי",
+          "field": "hazard_specific",
+          "new_value": "mineral oil MOSH/MOAH (chronic chemical)",
+          "original_score": 1.21828,
+          "perturbed_score": -0.05681,
+          "delta": -1.27509,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "hazard→allergen",
+          "perturbation_he": "סיכון→אלרגן",
+          "field": "hazard_specific",
+          "new_value": "undeclared allergen: peanuts, sesame",
+          "original_score": 1.21828,
+          "perturbed_score": -0.60609,
+          "delta": -1.82437,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "severity→ClassI",
+          "perturbation_he": "חומרה→Class I",
+          "field": "severity_raw",
+          "new_value": "Class I",
+          "original_score": 1.21828,
+          "perturbed_score": 2.73,
+          "delta": 1.51172,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "severity→ClassIII",
+          "perturbation_he": "חומרה→Class III",
+          "field": "severity_raw",
+          "new_value": "Class III",
+          "original_score": 1.21828,
+          "perturbed_score": -0.04715,
+          "delta": -1.26543,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→nationwide",
+          "perturbation_he": "הפצה→ארצית",
+          "field": "distribution_countries",
+          "new_value": "[\"United States\"]",
+          "original_score": 1.21828,
+          "perturbed_score": 1.61324,
+          "delta": 0.39496,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "dist→local_only",
+          "perturbation_he": "הפצה→מקומית",
+          "field": "distribution_countries",
+          "new_value": "[\"limited local area, single county\"]",
+          "original_score": 1.21828,
+          "perturbed_score": 2.01111,
+          "delta": 0.79283,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "dist→+Israel",
+          "perturbation_he": "הפצה→+ישראל",
+          "field": "_append_israel",
+          "new_value": null,
+          "original_score": 1.21828,
+          "perturbed_score": 1.18353,
+          "delta": -0.03475,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "rte→add_RTE",
+          "perturbation_he": "מוצר→RTE",
+          "field": "_prepend_desc",
+          "new_value": "Ready-to-eat product. ",
+          "original_score": 1.21828,
+          "perturbed_score": -1.57908,
+          "delta": -2.79736,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "rte→cooked",
+          "perturbation_he": "מוצר→בישול נדרש",
+          "field": "_prepend_desc",
+          "new_value": "Requires thorough cooking before consumption. ",
+          "original_score": 1.21828,
+          "perturbed_score": -0.6048,
+          "delta": -1.82308,
           "direction": "↓"
         }
       ]

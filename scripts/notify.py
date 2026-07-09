@@ -46,11 +46,22 @@ def fetch_todays_alerts(conn, ref_date: str) -> list[dict]:
         FROM alerts a JOIN alert_scores s ON s.alert_id = a.id
         WHERE date(a.ingestion_date) = ?
           AND a.source_published_date >= ?
+          AND a.notified_at IS NULL
         ORDER BY s.bi_encoder_score DESC
         """,
         (ref_date, NOTIFY_SINCE),
     ).fetchall()
     return [dict(r) for r in rows]
+
+
+def mark_notified(conn, alert_ids: list[str]) -> None:
+    from datetime import datetime
+    now = datetime.utcnow().isoformat(timespec="seconds")
+    conn.executemany(
+        "UPDATE alerts SET notified_at = ? WHERE id = ?",
+        [(now, aid) for aid in alert_ids],
+    )
+    conn.commit()
 
 
 def should_notify(alert: dict) -> tuple[bool, list[str]]:
@@ -218,6 +229,7 @@ def main() -> None:
         return
 
     send_email(api_key, subject, html)
+    mark_notified(conn, [a["id"] for a, _ in to_send])
 
 
 if __name__ == "__main__":

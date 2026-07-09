@@ -48,6 +48,9 @@ CREATE TABLE IF NOT EXISTS alerts (
     description              TEXT,
     reason_for_recall        TEXT,
 
+    -- Notification tracking
+    notified_at              TEXT,
+
     UNIQUE(source_id, source_record_id)
 );
 

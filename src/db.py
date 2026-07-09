@@ -38,8 +38,9 @@ def upsert_alert(conn: sqlite3.Connection, alert: dict) -> str:
         conn.execute(f"INSERT INTO alerts ({col_names}) VALUES ({placeholders})", [alert[c] for c in columns])
         return "inserted"
 
-    update_set = ",".join(f"{c} = ?" for c in columns if c != "id")
-    values = [alert[c] for c in columns if c != "id"] + [existing["id"]]
+    skip = {"id", "ingestion_date"}  # keep original ingestion_date on updates
+    update_set = ",".join(f"{c} = ?" for c in columns if c not in skip)
+    values = [alert[c] for c in columns if c not in skip] + [existing["id"]]
     conn.execute(f"UPDATE alerts SET {update_set} WHERE id = ?", values)
     return "updated"
 

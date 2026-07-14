@@ -29,11 +29,11 @@ from scripts.generate_dashboard import _absolute_score
 SCORE_THRESHOLD = 8.5
 NOTIFY_SINCE = "2026-06-28"  # no emails for alerts ingested before this date
 RECIPIENTS = [
-    "yuvalreisner96@gmail.com",  # TODO: switch to matan.shiner@moh.gov.il after domain verification
+    "matan.shiner@moh.gov.il",
 ]
 SENDER = "FoodSafe Alerts <onboarding@resend.dev>"
 RESEND_API_URL = "https://api.resend.com/emails"
-DASHBOARD_URL = "https://yuvalreisner.github.io/foodalert-risk-monitoring-system/"
+DASHBOARD_URL = "https://matan-shiner.github.io/foodalert-risk-monitoring-system/"
 
 
 def fetch_todays_alerts(conn, ref_date: str) -> list[dict]:
@@ -135,7 +135,7 @@ def build_html(alerts_to_send: list[tuple[dict, list[str]]], ref_date: str) -> s
     </table>
 
     <div style="padding:16px 24px;background:#f8f9fb;border-top:1px solid #eee">
-      <a href="https://yuvalreisner.github.io/foodalert-risk-monitoring-system/"
+      <a href="https://matan-shiner.github.io/foodalert-risk-monitoring-system/"
          style="color:#2471a3;font-size:13px">
         View full dashboard ↗
       </a>

@@ -1,5 +1,5 @@
 {
-  "n_alerts": 607,
+  "n_alerts": 627,
   "analyses": [
     {
       "alert_id": "fsis::092-2019",
@@ -67981,6 +67981,2246 @@
           "original_score": 3.0563,
           "perturbed_score": 2.75619,
           "delta": -0.30011,
+          "direction": "↓"
+        }
+      ]
+    },
+    {
+      "alert_id": "fda_enforcement::H-1167-2026",
+      "title": "D'Dioses Fruit Pops, Inc. — Class I — Ice Pop, D'Dioses Cookies Cream, 1 Bar (81",
+      "source_id": "fda_enforcement",
+      "hazard_specific": "",
+      "severity_raw": "Class I",
+      "original_score": 4.94836,
+      "original_percentile": null,
+      "top_driver": "severity→ClassIII",
+      "perturbations": [
+        {
+          "perturbation": "hazard→Listeria",
+          "perturbation_he": "סיכון→ליסטריה",
+          "field": "hazard_specific",
+          "new_value": "Listeria monocytogenes",
+          "original_score": 4.94836,
+          "perturbed_score": 5.66372,
+          "delta": 0.71536,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "hazard→mineral_oil",
+          "perturbation_he": "סיכון→שמן מינרלי",
+          "field": "hazard_specific",
+          "new_value": "mineral oil MOSH/MOAH (chronic chemical)",
+          "original_score": 4.94836,
+          "perturbed_score": 3.9932,
+          "delta": -0.95516,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "hazard→allergen",
+          "perturbation_he": "סיכון→אלרגן",
+          "field": "hazard_specific",
+          "new_value": "undeclared allergen: peanuts, sesame",
+          "original_score": 4.94836,
+          "perturbed_score": 3.69403,
+          "delta": -1.25433,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "severity→ClassI",
+          "perturbation_he": "חומרה→Class I",
+          "field": "severity_raw",
+          "new_value": "Class I",
+          "original_score": 4.94836,
+          "perturbed_score": 4.94835,
+          "delta": -1e-05,
+          "direction": "→"
+        },
+        {
+          "perturbation": "severity→ClassIII",
+          "perturbation_he": "חומרה→Class III",
+          "field": "severity_raw",
+          "new_value": "Class III",
+          "original_score": 4.94836,
+          "perturbed_score": -1.3359,
+          "delta": -6.28426,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→nationwide",
+          "perturbation_he": "הפצה→ארצית",
+          "field": "distribution_countries",
+          "new_value": "[\"United States\"]",
+          "original_score": 4.94836,
+          "perturbed_score": 2.20797,
+          "delta": -2.74039,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→local_only",
+          "perturbation_he": "הפצה→מקומית",
+          "field": "distribution_countries",
+          "new_value": "[\"limited local area, single county\"]",
+          "original_score": 4.94836,
+          "perturbed_score": 2.71693,
+          "delta": -2.23143,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→+Israel",
+          "perturbation_he": "הפצה→+ישראל",
+          "field": "_append_israel",
+          "new_value": null,
+          "original_score": 4.94836,
+          "perturbed_score": 4.53075,
+          "delta": -0.41761,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "rte→add_RTE",
+          "perturbation_he": "מוצר→RTE",
+          "field": "_prepend_desc",
+          "new_value": "Ready-to-eat product. ",
+          "original_score": 4.94836,
+          "perturbed_score": 3.84043,
+          "delta": -1.10793,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "rte→cooked",
+          "perturbation_he": "מוצר→בישול נדרש",
+          "field": "_prepend_desc",
+          "new_value": "Requires thorough cooking before consumption. ",
+          "original_score": 4.94836,
+          "perturbed_score": 4.91065,
+          "delta": -0.03771,
+          "direction": "↓"
+        }
+      ]
+    },
+    {
+      "alert_id": "fda_enforcement::H-1164-2026",
+      "title": "D'Dioses Fruit Pops, Inc. — Class I — Ice Pop, D'Dioses Rompope, 4 oz (85 g), wi",
+      "source_id": "fda_enforcement",
+      "hazard_specific": "",
+      "severity_raw": "Class I",
+      "original_score": 4.06234,
+      "original_percentile": null,
+      "top_driver": "severity→ClassIII",
+      "perturbations": [
+        {
+          "perturbation": "hazard→Listeria",
+          "perturbation_he": "סיכון→ליסטריה",
+          "field": "hazard_specific",
+          "new_value": "Listeria monocytogenes",
+          "original_score": 4.06234,
+          "perturbed_score": 4.91639,
+          "delta": 0.85405,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "hazard→mineral_oil",
+          "perturbation_he": "סיכון→שמן מינרלי",
+          "field": "hazard_specific",
+          "new_value": "mineral oil MOSH/MOAH (chronic chemical)",
+          "original_score": 4.06234,
+          "perturbed_score": 3.01291,
+          "delta": -1.04943,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "hazard→allergen",
+          "perturbation_he": "סיכון→אלרגן",
+          "field": "hazard_specific",
+          "new_value": "undeclared allergen: peanuts, sesame",
+          "original_score": 4.06234,
+          "perturbed_score": 2.86609,
+          "delta": -1.19625,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "severity→ClassI",
+          "perturbation_he": "חומרה→Class I",
+          "field": "severity_raw",
+          "new_value": "Class I",
+          "original_score": 4.06234,
+          "perturbed_score": 4.06234,
+          "delta": 0.0,
+          "direction": "→"
+        },
+        {
+          "perturbation": "severity→ClassIII",
+          "perturbation_he": "חומרה→Class III",
+          "field": "severity_raw",
+          "new_value": "Class III",
+          "original_score": 4.06234,
+          "perturbed_score": -1.97052,
+          "delta": -6.03286,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→nationwide",
+          "perturbation_he": "הפצה→ארצית",
+          "field": "distribution_countries",
+          "new_value": "[\"United States\"]",
+          "original_score": 4.06234,
+          "perturbed_score": 1.16841,
+          "delta": -2.89393,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→local_only",
+          "perturbation_he": "הפצה→מקומית",
+          "field": "distribution_countries",
+          "new_value": "[\"limited local area, single county\"]",
+          "original_score": 4.06234,
+          "perturbed_score": 1.68428,
+          "delta": -2.37806,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→+Israel",
+          "perturbation_he": "הפצה→+ישראל",
+          "field": "_append_israel",
+          "new_value": null,
+          "original_score": 4.06234,
+          "perturbed_score": 3.59071,
+          "delta": -0.47163,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "rte→add_RTE",
+          "perturbation_he": "מוצר→RTE",
+          "field": "_prepend_desc",
+          "new_value": "Ready-to-eat product. ",
+          "original_score": 4.06234,
+          "perturbed_score": 2.98763,
+          "delta": -1.07471,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "rte→cooked",
+          "perturbation_he": "מוצר→בישול נדרש",
+          "field": "_prepend_desc",
+          "new_value": "Requires thorough cooking before consumption. ",
+          "original_score": 4.06234,
+          "perturbed_score": 3.99798,
+          "delta": -0.06436,
+          "direction": "↓"
+        }
+      ]
+    },
+    {
+      "alert_id": "fda_enforcement::H-1163-2026",
+      "title": "D'Dioses Fruit Pops, Inc. — Class I — Ice Pop, D'Dioses Vainilla, 4 oz (85 g), w",
+      "source_id": "fda_enforcement",
+      "hazard_specific": "",
+      "severity_raw": "Class I",
+      "original_score": 4.04457,
+      "original_percentile": null,
+      "top_driver": "severity→ClassIII",
+      "perturbations": [
+        {
+          "perturbation": "hazard→Listeria",
+          "perturbation_he": "סיכון→ליסטריה",
+          "field": "hazard_specific",
+          "new_value": "Listeria monocytogenes",
+          "original_score": 4.04457,
+          "perturbed_score": 4.95446,
+          "delta": 0.90989,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "hazard→mineral_oil",
+          "perturbation_he": "סיכון→שמן מינרלי",
+          "field": "hazard_specific",
+          "new_value": "mineral oil MOSH/MOAH (chronic chemical)",
+          "original_score": 4.04457,
+          "perturbed_score": 3.04075,
+          "delta": -1.00382,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "hazard→allergen",
+          "perturbation_he": "סיכון→אלרגן",
+          "field": "hazard_specific",
+          "new_value": "undeclared allergen: peanuts, sesame",
+          "original_score": 4.04457,
+          "perturbed_score": 2.9734,
+          "delta": -1.07117,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "severity→ClassI",
+          "perturbation_he": "חומרה→Class I",
+          "field": "severity_raw",
+          "new_value": "Class I",
+          "original_score": 4.04457,
+          "perturbed_score": 4.04457,
+          "delta": 0.0,
+          "direction": "→"
+        },
+        {
+          "perturbation": "severity→ClassIII",
+          "perturbation_he": "חומרה→Class III",
+          "field": "severity_raw",
+          "new_value": "Class III",
+          "original_score": 4.04457,
+          "perturbed_score": -2.3548,
+          "delta": -6.39937,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→nationwide",
+          "perturbation_he": "הפצה→ארצית",
+          "field": "distribution_countries",
+          "new_value": "[\"United States\"]",
+          "original_score": 4.04457,
+          "perturbed_score": 0.95804,
+          "delta": -3.08653,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→local_only",
+          "perturbation_he": "הפצה→מקומית",
+          "field": "distribution_countries",
+          "new_value": "[\"limited local area, single county\"]",
+          "original_score": 4.04457,
+          "perturbed_score": 1.55081,
+          "delta": -2.49376,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→+Israel",
+          "perturbation_he": "הפצה→+ישראל",
+          "field": "_append_israel",
+          "new_value": null,
+          "original_score": 4.04457,
+          "perturbed_score": 3.55181,
+          "delta": -0.49276,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "rte→add_RTE",
+          "perturbation_he": "מוצר→RTE",
+          "field": "_prepend_desc",
+          "new_value": "Ready-to-eat product. ",
+          "original_score": 4.04457,
+          "perturbed_score": 2.96933,
+          "delta": -1.07524,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "rte→cooked",
+          "perturbation_he": "מוצר→בישול נדרש",
+          "field": "_prepend_desc",
+          "new_value": "Requires thorough cooking before consumption. ",
+          "original_score": 4.04457,
+          "perturbed_score": 3.99164,
+          "delta": -0.05293,
+          "direction": "↓"
+        }
+      ]
+    },
+    {
+      "alert_id": "fda_enforcement::H-1165-2026",
+      "title": "D'Dioses Fruit Pops, Inc. — Class I — Ice Pop, D'Dioses Pistachio, 1 Bar (81.7 g",
+      "source_id": "fda_enforcement",
+      "hazard_specific": "",
+      "severity_raw": "Class I",
+      "original_score": 4.03594,
+      "original_percentile": null,
+      "top_driver": "severity→ClassIII",
+      "perturbations": [
+        {
+          "perturbation": "hazard→Listeria",
+          "perturbation_he": "סיכון→ליסטריה",
+          "field": "hazard_specific",
+          "new_value": "Listeria monocytogenes",
+          "original_score": 4.03594,
+          "perturbed_score": 4.69356,
+          "delta": 0.65762,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "hazard→mineral_oil",
+          "perturbation_he": "סיכון→שמן מינרלי",
+          "field": "hazard_specific",
+          "new_value": "mineral oil MOSH/MOAH (chronic chemical)",
+          "original_score": 4.03594,
+          "perturbed_score": 3.10126,
+          "delta": -0.93468,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "hazard→allergen",
+          "perturbation_he": "סיכון→אלרגן",
+          "field": "hazard_specific",
+          "new_value": "undeclared allergen: peanuts, sesame",
+          "original_score": 4.03594,
+          "perturbed_score": 2.92307,
+          "delta": -1.11287,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "severity→ClassI",
+          "perturbation_he": "חומרה→Class I",
+          "field": "severity_raw",
+          "new_value": "Class I",
+          "original_score": 4.03594,
+          "perturbed_score": 4.03594,
+          "delta": 0.0,
+          "direction": "→"
+        },
+        {
+          "perturbation": "severity→ClassIII",
+          "perturbation_he": "חומרה→Class III",
+          "field": "severity_raw",
+          "new_value": "Class III",
+          "original_score": 4.03594,
+          "perturbed_score": -2.34933,
+          "delta": -6.38527,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→nationwide",
+          "perturbation_he": "הפצה→ארצית",
+          "field": "distribution_countries",
+          "new_value": "[\"United States\"]",
+          "original_score": 4.03594,
+          "perturbed_score": 1.16206,
+          "delta": -2.87388,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→local_only",
+          "perturbation_he": "הפצה→מקומית",
+          "field": "distribution_countries",
+          "new_value": "[\"limited local area, single county\"]",
+          "original_score": 4.03594,
+          "perturbed_score": 1.25173,
+          "delta": -2.78421,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→+Israel",
+          "perturbation_he": "הפצה→+ישראל",
+          "field": "_append_israel",
+          "new_value": null,
+          "original_score": 4.03594,
+          "perturbed_score": 3.7013,
+          "delta": -0.33464,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "rte→add_RTE",
+          "perturbation_he": "מוצר→RTE",
+          "field": "_prepend_desc",
+          "new_value": "Ready-to-eat product. ",
+          "original_score": 4.03594,
+          "perturbed_score": 3.00774,
+          "delta": -1.0282,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "rte→cooked",
+          "perturbation_he": "מוצר→בישול נדרש",
+          "field": "_prepend_desc",
+          "new_value": "Requires thorough cooking before consumption. ",
+          "original_score": 4.03594,
+          "perturbed_score": 4.07691,
+          "delta": 0.04097,
+          "direction": "↑"
+        }
+      ]
+    },
+    {
+      "alert_id": "fda_enforcement::H-1158-2026",
+      "title": "D'Dioses Fruit Pops, Inc. — Class I — Ice Pop, D'Dioses Coconut, 4 oz (85 g), wi",
+      "source_id": "fda_enforcement",
+      "hazard_specific": "",
+      "severity_raw": "Class I",
+      "original_score": 4.03044,
+      "original_percentile": null,
+      "top_driver": "severity→ClassIII",
+      "perturbations": [
+        {
+          "perturbation": "hazard→Listeria",
+          "perturbation_he": "סיכון→ליסטריה",
+          "field": "hazard_specific",
+          "new_value": "Listeria monocytogenes",
+          "original_score": 4.03044,
+          "perturbed_score": 5.49746,
+          "delta": 1.46702,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "hazard→mineral_oil",
+          "perturbation_he": "סיכון→שמן מינרלי",
+          "field": "hazard_specific",
+          "new_value": "mineral oil MOSH/MOAH (chronic chemical)",
+          "original_score": 4.03044,
+          "perturbed_score": 3.33183,
+          "delta": -0.69861,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "hazard→allergen",
+          "perturbation_he": "סיכון→אלרגן",
+          "field": "hazard_specific",
+          "new_value": "undeclared allergen: peanuts, sesame",
+          "original_score": 4.03044,
+          "perturbed_score": 3.30353,
+          "delta": -0.72691,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "severity→ClassI",
+          "perturbation_he": "חומרה→Class I",
+          "field": "severity_raw",
+          "new_value": "Class I",
+          "original_score": 4.03044,
+          "perturbed_score": 4.03043,
+          "delta": -1e-05,
+          "direction": "→"
+        },
+        {
+          "perturbation": "severity→ClassIII",
+          "perturbation_he": "חומרה→Class III",
+          "field": "severity_raw",
+          "new_value": "Class III",
+          "original_score": 4.03044,
+          "perturbed_score": -2.02142,
+          "delta": -6.05186,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→nationwide",
+          "perturbation_he": "הפצה→ארצית",
+          "field": "distribution_countries",
+          "new_value": "[\"United States\"]",
+          "original_score": 4.03044,
+          "perturbed_score": 1.61156,
+          "delta": -2.41888,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→local_only",
+          "perturbation_he": "הפצה→מקומית",
+          "field": "distribution_countries",
+          "new_value": "[\"limited local area, single county\"]",
+          "original_score": 4.03044,
+          "perturbed_score": 2.14622,
+          "delta": -1.88422,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→+Israel",
+          "perturbation_he": "הפצה→+ישראל",
+          "field": "_append_israel",
+          "new_value": null,
+          "original_score": 4.03044,
+          "perturbed_score": 3.72526,
+          "delta": -0.30518,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "rte→add_RTE",
+          "perturbation_he": "מוצר→RTE",
+          "field": "_prepend_desc",
+          "new_value": "Ready-to-eat product. ",
+          "original_score": 4.03044,
+          "perturbed_score": 2.95513,
+          "delta": -1.07531,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "rte→cooked",
+          "perturbation_he": "מוצר→בישול נדרש",
+          "field": "_prepend_desc",
+          "new_value": "Requires thorough cooking before consumption. ",
+          "original_score": 4.03044,
+          "perturbed_score": 3.94015,
+          "delta": -0.09029,
+          "direction": "↓"
+        }
+      ]
+    },
+    {
+      "alert_id": "fda_enforcement::H-1171-2026",
+      "title": "D'Dioses Fruit Pops, Inc. — Class I — Ice Pop, D'Dioses Mango, 3.7 oz (81.7 g), ",
+      "source_id": "fda_enforcement",
+      "hazard_specific": "",
+      "severity_raw": "Class I",
+      "original_score": 3.9873,
+      "original_percentile": null,
+      "top_driver": "severity→ClassIII",
+      "perturbations": [
+        {
+          "perturbation": "hazard→Listeria",
+          "perturbation_he": "סיכון→ליסטריה",
+          "field": "hazard_specific",
+          "new_value": "Listeria monocytogenes",
+          "original_score": 3.9873,
+          "perturbed_score": 4.58074,
+          "delta": 0.59344,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "hazard→mineral_oil",
+          "perturbation_he": "סיכון→שמן מינרלי",
+          "field": "hazard_specific",
+          "new_value": "mineral oil MOSH/MOAH (chronic chemical)",
+          "original_score": 3.9873,
+          "perturbed_score": 2.70207,
+          "delta": -1.28523,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "hazard→allergen",
+          "perturbation_he": "סיכון→אלרגן",
+          "field": "hazard_specific",
+          "new_value": "undeclared allergen: peanuts, sesame",
+          "original_score": 3.9873,
+          "perturbed_score": 3.13936,
+          "delta": -0.84794,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "severity→ClassI",
+          "perturbation_he": "חומרה→Class I",
+          "field": "severity_raw",
+          "new_value": "Class I",
+          "original_score": 3.9873,
+          "perturbed_score": 3.9873,
+          "delta": -0.0,
+          "direction": "→"
+        },
+        {
+          "perturbation": "severity→ClassIII",
+          "perturbation_he": "חומרה→Class III",
+          "field": "severity_raw",
+          "new_value": "Class III",
+          "original_score": 3.9873,
+          "perturbed_score": -3.01157,
+          "delta": -6.99887,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→nationwide",
+          "perturbation_he": "הפצה→ארצית",
+          "field": "distribution_countries",
+          "new_value": "[\"United States\"]",
+          "original_score": 3.9873,
+          "perturbed_score": 1.70172,
+          "delta": -2.28558,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→local_only",
+          "perturbation_he": "הפצה→מקומית",
+          "field": "distribution_countries",
+          "new_value": "[\"limited local area, single county\"]",
+          "original_score": 3.9873,
+          "perturbed_score": 1.26089,
+          "delta": -2.72641,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→+Israel",
+          "perturbation_he": "הפצה→+ישראל",
+          "field": "_append_israel",
+          "new_value": null,
+          "original_score": 3.9873,
+          "perturbed_score": 3.47757,
+          "delta": -0.50973,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "rte→add_RTE",
+          "perturbation_he": "מוצר→RTE",
+          "field": "_prepend_desc",
+          "new_value": "Ready-to-eat product. ",
+          "original_score": 3.9873,
+          "perturbed_score": 3.02491,
+          "delta": -0.96239,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "rte→cooked",
+          "perturbation_he": "מוצר→בישול נדרש",
+          "field": "_prepend_desc",
+          "new_value": "Requires thorough cooking before consumption. ",
+          "original_score": 3.9873,
+          "perturbed_score": 3.91824,
+          "delta": -0.06906,
+          "direction": "↓"
+        }
+      ]
+    },
+    {
+      "alert_id": "fda_enforcement::H-1159-2026",
+      "title": "D'Dioses Fruit Pops, Inc. — Class I — Ice Pop, D'Dioses Fresa Leche, 4 oz (85 g)",
+      "source_id": "fda_enforcement",
+      "hazard_specific": "",
+      "severity_raw": "Class I",
+      "original_score": 3.92235,
+      "original_percentile": null,
+      "top_driver": "severity→ClassIII",
+      "perturbations": [
+        {
+          "perturbation": "hazard→Listeria",
+          "perturbation_he": "סיכון→ליסטריה",
+          "field": "hazard_specific",
+          "new_value": "Listeria monocytogenes",
+          "original_score": 3.92235,
+          "perturbed_score": 4.41019,
+          "delta": 0.48784,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "hazard→mineral_oil",
+          "perturbation_he": "סיכון→שמן מינרלי",
+          "field": "hazard_specific",
+          "new_value": "mineral oil MOSH/MOAH (chronic chemical)",
+          "original_score": 3.92235,
+          "perturbed_score": 2.77422,
+          "delta": -1.14813,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "hazard→allergen",
+          "perturbation_he": "סיכון→אלרגן",
+          "field": "hazard_specific",
+          "new_value": "undeclared allergen: peanuts, sesame",
+          "original_score": 3.92235,
+          "perturbed_score": 3.00416,
+          "delta": -0.91819,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "severity→ClassI",
+          "perturbation_he": "חומרה→Class I",
+          "field": "severity_raw",
+          "new_value": "Class I",
+          "original_score": 3.92235,
+          "perturbed_score": 3.92235,
+          "delta": 0.0,
+          "direction": "→"
+        },
+        {
+          "perturbation": "severity→ClassIII",
+          "perturbation_he": "חומרה→Class III",
+          "field": "severity_raw",
+          "new_value": "Class III",
+          "original_score": 3.92235,
+          "perturbed_score": -2.71933,
+          "delta": -6.64168,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→nationwide",
+          "perturbation_he": "הפצה→ארצית",
+          "field": "distribution_countries",
+          "new_value": "[\"United States\"]",
+          "original_score": 3.92235,
+          "perturbed_score": 1.72226,
+          "delta": -2.20009,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→local_only",
+          "perturbation_he": "הפצה→מקומית",
+          "field": "distribution_countries",
+          "new_value": "[\"limited local area, single county\"]",
+          "original_score": 3.92235,
+          "perturbed_score": 1.28783,
+          "delta": -2.63452,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→+Israel",
+          "perturbation_he": "הפצה→+ישראל",
+          "field": "_append_israel",
+          "new_value": null,
+          "original_score": 3.92235,
+          "perturbed_score": 3.36299,
+          "delta": -0.55936,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "rte→add_RTE",
+          "perturbation_he": "מוצר→RTE",
+          "field": "_prepend_desc",
+          "new_value": "Ready-to-eat product. ",
+          "original_score": 3.92235,
+          "perturbed_score": 2.97529,
+          "delta": -0.94706,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "rte→cooked",
+          "perturbation_he": "מוצר→בישול נדרש",
+          "field": "_prepend_desc",
+          "new_value": "Requires thorough cooking before consumption. ",
+          "original_score": 3.92235,
+          "perturbed_score": 3.81777,
+          "delta": -0.10458,
+          "direction": "↓"
+        }
+      ]
+    },
+    {
+      "alert_id": "fda_enforcement::H-1162-2026",
+      "title": "D'Dioses Fruit Pops, Inc. — Class I — Ice Pop, D'Dioses Guayaba, 1 Bar (81.7 g),",
+      "source_id": "fda_enforcement",
+      "hazard_specific": "",
+      "severity_raw": "Class I",
+      "original_score": 3.75366,
+      "original_percentile": null,
+      "top_driver": "severity→ClassIII",
+      "perturbations": [
+        {
+          "perturbation": "hazard→Listeria",
+          "perturbation_he": "סיכון→ליסטריה",
+          "field": "hazard_specific",
+          "new_value": "Listeria monocytogenes",
+          "original_score": 3.75366,
+          "perturbed_score": 4.40592,
+          "delta": 0.65226,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "hazard→mineral_oil",
+          "perturbation_he": "סיכון→שמן מינרלי",
+          "field": "hazard_specific",
+          "new_value": "mineral oil MOSH/MOAH (chronic chemical)",
+          "original_score": 3.75366,
+          "perturbed_score": 2.64907,
+          "delta": -1.10459,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "hazard→allergen",
+          "perturbation_he": "סיכון→אלרגן",
+          "field": "hazard_specific",
+          "new_value": "undeclared allergen: peanuts, sesame",
+          "original_score": 3.75366,
+          "perturbed_score": 2.53244,
+          "delta": -1.22122,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "severity→ClassI",
+          "perturbation_he": "חומרה→Class I",
+          "field": "severity_raw",
+          "new_value": "Class I",
+          "original_score": 3.75366,
+          "perturbed_score": 3.75365,
+          "delta": -1e-05,
+          "direction": "→"
+        },
+        {
+          "perturbation": "severity→ClassIII",
+          "perturbation_he": "חומרה→Class III",
+          "field": "severity_raw",
+          "new_value": "Class III",
+          "original_score": 3.75366,
+          "perturbed_score": -2.2551,
+          "delta": -6.00876,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→nationwide",
+          "perturbation_he": "הפצה→ארצית",
+          "field": "distribution_countries",
+          "new_value": "[\"United States\"]",
+          "original_score": 3.75366,
+          "perturbed_score": 0.97432,
+          "delta": -2.77934,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→local_only",
+          "perturbation_he": "הפצה→מקומית",
+          "field": "distribution_countries",
+          "new_value": "[\"limited local area, single county\"]",
+          "original_score": 3.75366,
+          "perturbed_score": 1.16028,
+          "delta": -2.59338,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→+Israel",
+          "perturbation_he": "הפצה→+ישראל",
+          "field": "_append_israel",
+          "new_value": null,
+          "original_score": 3.75366,
+          "perturbed_score": 3.37305,
+          "delta": -0.38061,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "rte→add_RTE",
+          "perturbation_he": "מוצר→RTE",
+          "field": "_prepend_desc",
+          "new_value": "Ready-to-eat product. ",
+          "original_score": 3.75366,
+          "perturbed_score": 2.73905,
+          "delta": -1.01461,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "rte→cooked",
+          "perturbation_he": "מוצר→בישול נדרש",
+          "field": "_prepend_desc",
+          "new_value": "Requires thorough cooking before consumption. ",
+          "original_score": 3.75366,
+          "perturbed_score": 3.80582,
+          "delta": 0.05216,
+          "direction": "↑"
+        }
+      ]
+    },
+    {
+      "alert_id": "fda_enforcement::H-1170-2026",
+      "title": "D'Dioses Fruit Pops, Inc. — Class I — Ice Pop, D'Dioses Grocella, 1 Bar (81.7 g)",
+      "source_id": "fda_enforcement",
+      "hazard_specific": "",
+      "severity_raw": "Class I",
+      "original_score": 3.68334,
+      "original_percentile": null,
+      "top_driver": "severity→ClassIII",
+      "perturbations": [
+        {
+          "perturbation": "hazard→Listeria",
+          "perturbation_he": "סיכון→ליסטריה",
+          "field": "hazard_specific",
+          "new_value": "Listeria monocytogenes",
+          "original_score": 3.68334,
+          "perturbed_score": 4.18345,
+          "delta": 0.50011,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "hazard→mineral_oil",
+          "perturbation_he": "סיכון→שמן מינרלי",
+          "field": "hazard_specific",
+          "new_value": "mineral oil MOSH/MOAH (chronic chemical)",
+          "original_score": 3.68334,
+          "perturbed_score": 2.56785,
+          "delta": -1.11549,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "hazard→allergen",
+          "perturbation_he": "סיכון→אלרגן",
+          "field": "hazard_specific",
+          "new_value": "undeclared allergen: peanuts, sesame",
+          "original_score": 3.68334,
+          "perturbed_score": 2.46651,
+          "delta": -1.21683,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "severity→ClassI",
+          "perturbation_he": "חומרה→Class I",
+          "field": "severity_raw",
+          "new_value": "Class I",
+          "original_score": 3.68334,
+          "perturbed_score": 3.68334,
+          "delta": -0.0,
+          "direction": "→"
+        },
+        {
+          "perturbation": "severity→ClassIII",
+          "perturbation_he": "חומרה→Class III",
+          "field": "severity_raw",
+          "new_value": "Class III",
+          "original_score": 3.68334,
+          "perturbed_score": -2.3108,
+          "delta": -5.99414,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→nationwide",
+          "perturbation_he": "הפצה→ארצית",
+          "field": "distribution_countries",
+          "new_value": "[\"United States\"]",
+          "original_score": 3.68334,
+          "perturbed_score": 0.85118,
+          "delta": -2.83216,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→local_only",
+          "perturbation_he": "הפצה→מקומית",
+          "field": "distribution_countries",
+          "new_value": "[\"limited local area, single county\"]",
+          "original_score": 3.68334,
+          "perturbed_score": 1.04048,
+          "delta": -2.64286,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→+Israel",
+          "perturbation_he": "הפצה→+ישראל",
+          "field": "_append_israel",
+          "new_value": null,
+          "original_score": 3.68334,
+          "perturbed_score": 3.28506,
+          "delta": -0.39828,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "rte→add_RTE",
+          "perturbation_he": "מוצר→RTE",
+          "field": "_prepend_desc",
+          "new_value": "Ready-to-eat product. ",
+          "original_score": 3.68334,
+          "perturbed_score": 2.67462,
+          "delta": -1.00872,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "rte→cooked",
+          "perturbation_he": "מוצר→בישול נדרש",
+          "field": "_prepend_desc",
+          "new_value": "Requires thorough cooking before consumption. ",
+          "original_score": 3.68334,
+          "perturbed_score": 3.74217,
+          "delta": 0.05883,
+          "direction": "↑"
+        }
+      ]
+    },
+    {
+      "alert_id": "fda_enforcement::H-1169-2026",
+      "title": "D'Dioses Fruit Pops, Inc. — Class I — Ice Pop, D'Dioses Limon, 4 oz (85 g), with",
+      "source_id": "fda_enforcement",
+      "hazard_specific": "",
+      "severity_raw": "Class I",
+      "original_score": 3.67959,
+      "original_percentile": null,
+      "top_driver": "severity→ClassIII",
+      "perturbations": [
+        {
+          "perturbation": "hazard→Listeria",
+          "perturbation_he": "סיכון→ליסטריה",
+          "field": "hazard_specific",
+          "new_value": "Listeria monocytogenes",
+          "original_score": 3.67959,
+          "perturbed_score": 5.04537,
+          "delta": 1.36578,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "hazard→mineral_oil",
+          "perturbation_he": "סיכון→שמן מינרלי",
+          "field": "hazard_specific",
+          "new_value": "mineral oil MOSH/MOAH (chronic chemical)",
+          "original_score": 3.67959,
+          "perturbed_score": 2.83188,
+          "delta": -0.84771,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "hazard→allergen",
+          "perturbation_he": "סיכון→אלרגן",
+          "field": "hazard_specific",
+          "new_value": "undeclared allergen: peanuts, sesame",
+          "original_score": 3.67959,
+          "perturbed_score": 2.7365,
+          "delta": -0.94309,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "severity→ClassI",
+          "perturbation_he": "חומרה→Class I",
+          "field": "severity_raw",
+          "new_value": "Class I",
+          "original_score": 3.67959,
+          "perturbed_score": 3.67959,
+          "delta": -0.0,
+          "direction": "→"
+        },
+        {
+          "perturbation": "severity→ClassIII",
+          "perturbation_he": "חומרה→Class III",
+          "field": "severity_raw",
+          "new_value": "Class III",
+          "original_score": 3.67959,
+          "perturbed_score": -2.35649,
+          "delta": -6.03608,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→nationwide",
+          "perturbation_he": "הפצה→ארצית",
+          "field": "distribution_countries",
+          "new_value": "[\"United States\"]",
+          "original_score": 3.67959,
+          "perturbed_score": 0.96838,
+          "delta": -2.71121,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→local_only",
+          "perturbation_he": "הפצה→מקומית",
+          "field": "distribution_countries",
+          "new_value": "[\"limited local area, single county\"]",
+          "original_score": 3.67959,
+          "perturbed_score": 1.48258,
+          "delta": -2.19701,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→+Israel",
+          "perturbation_he": "הפצה→+ישראל",
+          "field": "_append_israel",
+          "new_value": null,
+          "original_score": 3.67959,
+          "perturbed_score": 3.27548,
+          "delta": -0.40411,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "rte→add_RTE",
+          "perturbation_he": "מוצר→RTE",
+          "field": "_prepend_desc",
+          "new_value": "Ready-to-eat product. ",
+          "original_score": 3.67959,
+          "perturbed_score": 2.65053,
+          "delta": -1.02906,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "rte→cooked",
+          "perturbation_he": "מוצר→בישול נדרש",
+          "field": "_prepend_desc",
+          "new_value": "Requires thorough cooking before consumption. ",
+          "original_score": 3.67959,
+          "perturbed_score": 3.64848,
+          "delta": -0.03111,
+          "direction": "↓"
+        }
+      ]
+    },
+    {
+      "alert_id": "fda_enforcement::H-1166-2026",
+      "title": "D'Dioses Fruit Pops, Inc. — Class I — Ice Pop, D'Dioses Nuez, 1 Bar (81.7 g), wi",
+      "source_id": "fda_enforcement",
+      "hazard_specific": "",
+      "severity_raw": "Class I",
+      "original_score": 3.67023,
+      "original_percentile": null,
+      "top_driver": "severity→ClassIII",
+      "perturbations": [
+        {
+          "perturbation": "hazard→Listeria",
+          "perturbation_he": "סיכון→ליסטריה",
+          "field": "hazard_specific",
+          "new_value": "Listeria monocytogenes",
+          "original_score": 3.67023,
+          "perturbed_score": 4.70461,
+          "delta": 1.03438,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "hazard→mineral_oil",
+          "perturbation_he": "סיכון→שמן מינרלי",
+          "field": "hazard_specific",
+          "new_value": "mineral oil MOSH/MOAH (chronic chemical)",
+          "original_score": 3.67023,
+          "perturbed_score": 2.55785,
+          "delta": -1.11238,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "hazard→allergen",
+          "perturbation_he": "סיכון→אלרגן",
+          "field": "hazard_specific",
+          "new_value": "undeclared allergen: peanuts, sesame",
+          "original_score": 3.67023,
+          "perturbed_score": 2.61584,
+          "delta": -1.05439,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "severity→ClassI",
+          "perturbation_he": "חומרה→Class I",
+          "field": "severity_raw",
+          "new_value": "Class I",
+          "original_score": 3.67023,
+          "perturbed_score": 3.67023,
+          "delta": 0.0,
+          "direction": "→"
+        },
+        {
+          "perturbation": "severity→ClassIII",
+          "perturbation_he": "חומרה→Class III",
+          "field": "severity_raw",
+          "new_value": "Class III",
+          "original_score": 3.67023,
+          "perturbed_score": -2.66612,
+          "delta": -6.33635,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→nationwide",
+          "perturbation_he": "הפצה→ארצית",
+          "field": "distribution_countries",
+          "new_value": "[\"United States\"]",
+          "original_score": 3.67023,
+          "perturbed_score": 0.33468,
+          "delta": -3.33555,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→local_only",
+          "perturbation_he": "הפצה→מקומית",
+          "field": "distribution_countries",
+          "new_value": "[\"limited local area, single county\"]",
+          "original_score": 3.67023,
+          "perturbed_score": 1.02109,
+          "delta": -2.64914,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→+Israel",
+          "perturbation_he": "הפצה→+ישראל",
+          "field": "_append_israel",
+          "new_value": null,
+          "original_score": 3.67023,
+          "perturbed_score": 3.20271,
+          "delta": -0.46752,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "rte→add_RTE",
+          "perturbation_he": "מוצר→RTE",
+          "field": "_prepend_desc",
+          "new_value": "Ready-to-eat product. ",
+          "original_score": 3.67023,
+          "perturbed_score": 2.52133,
+          "delta": -1.1489,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "rte→cooked",
+          "perturbation_he": "מוצר→בישול נדרש",
+          "field": "_prepend_desc",
+          "new_value": "Requires thorough cooking before consumption. ",
+          "original_score": 3.67023,
+          "perturbed_score": 3.68987,
+          "delta": 0.01964,
+          "direction": "↑"
+        }
+      ]
+    },
+    {
+      "alert_id": "fda_enforcement::H-1160-2026",
+      "title": "D'Dioses Fruit Pops, Inc. — Class I — Ice Pop, D'Dioses Arroz con Leche, 4 oz (8",
+      "source_id": "fda_enforcement",
+      "hazard_specific": "",
+      "severity_raw": "Class I",
+      "original_score": 3.66695,
+      "original_percentile": null,
+      "top_driver": "severity→ClassIII",
+      "perturbations": [
+        {
+          "perturbation": "hazard→Listeria",
+          "perturbation_he": "סיכון→ליסטריה",
+          "field": "hazard_specific",
+          "new_value": "Listeria monocytogenes",
+          "original_score": 3.66695,
+          "perturbed_score": 4.45367,
+          "delta": 0.78672,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "hazard→mineral_oil",
+          "perturbation_he": "סיכון→שמן מינרלי",
+          "field": "hazard_specific",
+          "new_value": "mineral oil MOSH/MOAH (chronic chemical)",
+          "original_score": 3.66695,
+          "perturbed_score": 2.00787,
+          "delta": -1.65908,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "hazard→allergen",
+          "perturbation_he": "סיכון→אלרגן",
+          "field": "hazard_specific",
+          "new_value": "undeclared allergen: peanuts, sesame",
+          "original_score": 3.66695,
+          "perturbed_score": 2.23483,
+          "delta": -1.43212,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "severity→ClassI",
+          "perturbation_he": "חומרה→Class I",
+          "field": "severity_raw",
+          "new_value": "Class I",
+          "original_score": 3.66695,
+          "perturbed_score": 3.66695,
+          "delta": 0.0,
+          "direction": "→"
+        },
+        {
+          "perturbation": "severity→ClassIII",
+          "perturbation_he": "חומרה→Class III",
+          "field": "severity_raw",
+          "new_value": "Class III",
+          "original_score": 3.66695,
+          "perturbed_score": -3.4251,
+          "delta": -7.09205,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→nationwide",
+          "perturbation_he": "הפצה→ארצית",
+          "field": "distribution_countries",
+          "new_value": "[\"United States\"]",
+          "original_score": 3.66695,
+          "perturbed_score": 2.90608,
+          "delta": -0.76087,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→local_only",
+          "perturbation_he": "הפצה→מקומית",
+          "field": "distribution_countries",
+          "new_value": "[\"limited local area, single county\"]",
+          "original_score": 3.66695,
+          "perturbed_score": 1.40285,
+          "delta": -2.2641,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→+Israel",
+          "perturbation_he": "הפצה→+ישראל",
+          "field": "_append_israel",
+          "new_value": null,
+          "original_score": 3.66695,
+          "perturbed_score": 3.11492,
+          "delta": -0.55203,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "rte→add_RTE",
+          "perturbation_he": "מוצר→RTE",
+          "field": "_prepend_desc",
+          "new_value": "Ready-to-eat product. ",
+          "original_score": 3.66695,
+          "perturbed_score": 2.74054,
+          "delta": -0.92641,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "rte→cooked",
+          "perturbation_he": "מוצר→בישול נדרש",
+          "field": "_prepend_desc",
+          "new_value": "Requires thorough cooking before consumption. ",
+          "original_score": 3.66695,
+          "perturbed_score": 3.57386,
+          "delta": -0.09309,
+          "direction": "↓"
+        }
+      ]
+    },
+    {
+      "alert_id": "fda_enforcement::H-1161-2026",
+      "title": "D'Dioses Fruit Pops, Inc. — Class I — Ice Pop, D'Dioses Mamey, 1 Bar (81.7 g), w",
+      "source_id": "fda_enforcement",
+      "hazard_specific": "",
+      "severity_raw": "Class I",
+      "original_score": 3.65604,
+      "original_percentile": null,
+      "top_driver": "severity→ClassIII",
+      "perturbations": [
+        {
+          "perturbation": "hazard→Listeria",
+          "perturbation_he": "סיכון→ליסטריה",
+          "field": "hazard_specific",
+          "new_value": "Listeria monocytogenes",
+          "original_score": 3.65604,
+          "perturbed_score": 4.27758,
+          "delta": 0.62154,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "hazard→mineral_oil",
+          "perturbation_he": "סיכון→שמן מינרלי",
+          "field": "hazard_specific",
+          "new_value": "mineral oil MOSH/MOAH (chronic chemical)",
+          "original_score": 3.65604,
+          "perturbed_score": 2.50601,
+          "delta": -1.15003,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "hazard→allergen",
+          "perturbation_he": "סיכון→אלרגן",
+          "field": "hazard_specific",
+          "new_value": "undeclared allergen: peanuts, sesame",
+          "original_score": 3.65604,
+          "perturbed_score": 2.54931,
+          "delta": -1.10673,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "severity→ClassI",
+          "perturbation_he": "חומרה→Class I",
+          "field": "severity_raw",
+          "new_value": "Class I",
+          "original_score": 3.65604,
+          "perturbed_score": 3.65604,
+          "delta": 0.0,
+          "direction": "→"
+        },
+        {
+          "perturbation": "severity→ClassIII",
+          "perturbation_he": "חומרה→Class III",
+          "field": "severity_raw",
+          "new_value": "Class III",
+          "original_score": 3.65604,
+          "perturbed_score": -2.33183,
+          "delta": -5.98787,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→nationwide",
+          "perturbation_he": "הפצה→ארצית",
+          "field": "distribution_countries",
+          "new_value": "[\"United States\"]",
+          "original_score": 3.65604,
+          "perturbed_score": 0.9218,
+          "delta": -2.73424,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→local_only",
+          "perturbation_he": "הפצה→מקומית",
+          "field": "distribution_countries",
+          "new_value": "[\"limited local area, single county\"]",
+          "original_score": 3.65604,
+          "perturbed_score": 1.07011,
+          "delta": -2.58593,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→+Israel",
+          "perturbation_he": "הפצה→+ישראל",
+          "field": "_append_israel",
+          "new_value": null,
+          "original_score": 3.65604,
+          "perturbed_score": 3.33497,
+          "delta": -0.32107,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "rte→add_RTE",
+          "perturbation_he": "מוצר→RTE",
+          "field": "_prepend_desc",
+          "new_value": "Ready-to-eat product. ",
+          "original_score": 3.65604,
+          "perturbed_score": 2.72884,
+          "delta": -0.9272,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "rte→cooked",
+          "perturbation_he": "מוצר→בישול נדרש",
+          "field": "_prepend_desc",
+          "new_value": "Requires thorough cooking before consumption. ",
+          "original_score": 3.65604,
+          "perturbed_score": 3.72402,
+          "delta": 0.06798,
+          "direction": "↑"
+        }
+      ]
+    },
+    {
+      "alert_id": "fda_enforcement::H-1168-2026",
+      "title": "D'Dioses Fruit Pops, Inc. — Class I — Ice Pop, D'Dioses Pina Colada, 1 Bar (81.7",
+      "source_id": "fda_enforcement",
+      "hazard_specific": "",
+      "severity_raw": "Class I",
+      "original_score": 3.62926,
+      "original_percentile": null,
+      "top_driver": "severity→ClassIII",
+      "perturbations": [
+        {
+          "perturbation": "hazard→Listeria",
+          "perturbation_he": "סיכון→ליסטריה",
+          "field": "hazard_specific",
+          "new_value": "Listeria monocytogenes",
+          "original_score": 3.62926,
+          "perturbed_score": 4.35738,
+          "delta": 0.72812,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "hazard→mineral_oil",
+          "perturbation_he": "סיכון→שמן מינרלי",
+          "field": "hazard_specific",
+          "new_value": "mineral oil MOSH/MOAH (chronic chemical)",
+          "original_score": 3.62926,
+          "perturbed_score": 1.91202,
+          "delta": -1.71724,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "hazard→allergen",
+          "perturbation_he": "סיכון→אלרגן",
+          "field": "hazard_specific",
+          "new_value": "undeclared allergen: peanuts, sesame",
+          "original_score": 3.62926,
+          "perturbed_score": 2.39001,
+          "delta": -1.23925,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "severity→ClassI",
+          "perturbation_he": "חומרה→Class I",
+          "field": "severity_raw",
+          "new_value": "Class I",
+          "original_score": 3.62926,
+          "perturbed_score": 3.62926,
+          "delta": -0.0,
+          "direction": "→"
+        },
+        {
+          "perturbation": "severity→ClassIII",
+          "perturbation_he": "חומרה→Class III",
+          "field": "severity_raw",
+          "new_value": "Class III",
+          "original_score": 3.62926,
+          "perturbed_score": -3.00012,
+          "delta": -6.62938,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→nationwide",
+          "perturbation_he": "הפצה→ארצית",
+          "field": "distribution_countries",
+          "new_value": "[\"United States\"]",
+          "original_score": 3.62926,
+          "perturbed_score": 2.00594,
+          "delta": -1.62332,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→local_only",
+          "perturbation_he": "הפצה→מקומית",
+          "field": "distribution_countries",
+          "new_value": "[\"limited local area, single county\"]",
+          "original_score": 3.62926,
+          "perturbed_score": 1.01587,
+          "delta": -2.61339,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→+Israel",
+          "perturbation_he": "הפצה→+ישראל",
+          "field": "_append_israel",
+          "new_value": null,
+          "original_score": 3.62926,
+          "perturbed_score": 2.99061,
+          "delta": -0.63865,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "rte→add_RTE",
+          "perturbation_he": "מוצר→RTE",
+          "field": "_prepend_desc",
+          "new_value": "Ready-to-eat product. ",
+          "original_score": 3.62926,
+          "perturbed_score": 2.53353,
+          "delta": -1.09573,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "rte→cooked",
+          "perturbation_he": "מוצר→בישול נדרש",
+          "field": "_prepend_desc",
+          "new_value": "Requires thorough cooking before consumption. ",
+          "original_score": 3.62926,
+          "perturbed_score": 3.47271,
+          "delta": -0.15655,
+          "direction": "↓"
+        }
+      ]
+    },
+    {
+      "alert_id": "fda_enforcement::H-1173-2026",
+      "title": "D'Dioses Fruit Pops, Inc. — Class I — Ice Pop, D'Dioses Nanche, 1 Bar (81.7 g), ",
+      "source_id": "fda_enforcement",
+      "hazard_specific": "",
+      "severity_raw": "Class I",
+      "original_score": 3.53205,
+      "original_percentile": null,
+      "top_driver": "severity→ClassIII",
+      "perturbations": [
+        {
+          "perturbation": "hazard→Listeria",
+          "perturbation_he": "סיכון→ליסטריה",
+          "field": "hazard_specific",
+          "new_value": "Listeria monocytogenes",
+          "original_score": 3.53205,
+          "perturbed_score": 4.49378,
+          "delta": 0.96173,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "hazard→mineral_oil",
+          "perturbation_he": "סיכון→שמן מינרלי",
+          "field": "hazard_specific",
+          "new_value": "mineral oil MOSH/MOAH (chronic chemical)",
+          "original_score": 3.53205,
+          "perturbed_score": 2.47816,
+          "delta": -1.05389,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "hazard→allergen",
+          "perturbation_he": "סיכון→אלרגן",
+          "field": "hazard_specific",
+          "new_value": "undeclared allergen: peanuts, sesame",
+          "original_score": 3.53205,
+          "perturbed_score": 2.44176,
+          "delta": -1.09029,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "severity→ClassI",
+          "perturbation_he": "חומרה→Class I",
+          "field": "severity_raw",
+          "new_value": "Class I",
+          "original_score": 3.53205,
+          "perturbed_score": 3.53205,
+          "delta": -0.0,
+          "direction": "→"
+        },
+        {
+          "perturbation": "severity→ClassIII",
+          "perturbation_he": "חומרה→Class III",
+          "field": "severity_raw",
+          "new_value": "Class III",
+          "original_score": 3.53205,
+          "perturbed_score": -2.43826,
+          "delta": -5.97031,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→nationwide",
+          "perturbation_he": "הפצה→ארצית",
+          "field": "distribution_countries",
+          "new_value": "[\"United States\"]",
+          "original_score": 3.53205,
+          "perturbed_score": 0.39743,
+          "delta": -3.13462,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→local_only",
+          "perturbation_he": "הפצה→מקומית",
+          "field": "distribution_countries",
+          "new_value": "[\"limited local area, single county\"]",
+          "original_score": 3.53205,
+          "perturbed_score": 0.95946,
+          "delta": -2.57259,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→+Israel",
+          "perturbation_he": "הפצה→+ישראל",
+          "field": "_append_israel",
+          "new_value": null,
+          "original_score": 3.53205,
+          "perturbed_score": 3.05128,
+          "delta": -0.48077,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "rte→add_RTE",
+          "perturbation_he": "מוצר→RTE",
+          "field": "_prepend_desc",
+          "new_value": "Ready-to-eat product. ",
+          "original_score": 3.53205,
+          "perturbed_score": 2.42911,
+          "delta": -1.10294,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "rte→cooked",
+          "perturbation_he": "מוצר→בישול נדרש",
+          "field": "_prepend_desc",
+          "new_value": "Requires thorough cooking before consumption. ",
+          "original_score": 3.53205,
+          "perturbed_score": 3.54438,
+          "delta": 0.01233,
+          "direction": "↑"
+        }
+      ]
+    },
+    {
+      "alert_id": "fda_enforcement::H-1172-2026",
+      "title": "D'Dioses Fruit Pops, Inc. — Class I — Ice Pop, D'Dioses Tamarindo, 1 Bar (81.7 g",
+      "source_id": "fda_enforcement",
+      "hazard_specific": "",
+      "severity_raw": "Class I",
+      "original_score": 3.45542,
+      "original_percentile": null,
+      "top_driver": "severity→ClassIII",
+      "perturbations": [
+        {
+          "perturbation": "hazard→Listeria",
+          "perturbation_he": "סיכון→ליסטריה",
+          "field": "hazard_specific",
+          "new_value": "Listeria monocytogenes",
+          "original_score": 3.45542,
+          "perturbed_score": 4.06312,
+          "delta": 0.6077,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "hazard→mineral_oil",
+          "perturbation_he": "סיכון→שמן מינרלי",
+          "field": "hazard_specific",
+          "new_value": "mineral oil MOSH/MOAH (chronic chemical)",
+          "original_score": 3.45542,
+          "perturbed_score": 2.1825,
+          "delta": -1.27292,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "hazard→allergen",
+          "perturbation_he": "סיכון→אלרגן",
+          "field": "hazard_specific",
+          "new_value": "undeclared allergen: peanuts, sesame",
+          "original_score": 3.45542,
+          "perturbed_score": 2.52991,
+          "delta": -0.92551,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "severity→ClassI",
+          "perturbation_he": "חומרה→Class I",
+          "field": "severity_raw",
+          "new_value": "Class I",
+          "original_score": 3.45542,
+          "perturbed_score": 3.45542,
+          "delta": -0.0,
+          "direction": "→"
+        },
+        {
+          "perturbation": "severity→ClassIII",
+          "perturbation_he": "חומרה→Class III",
+          "field": "severity_raw",
+          "new_value": "Class III",
+          "original_score": 3.45542,
+          "perturbed_score": -2.93555,
+          "delta": -6.39097,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→nationwide",
+          "perturbation_he": "הפצה→ארצית",
+          "field": "distribution_countries",
+          "new_value": "[\"United States\"]",
+          "original_score": 3.45542,
+          "perturbed_score": 1.115,
+          "delta": -2.34042,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→local_only",
+          "perturbation_he": "הפצה→מקומית",
+          "field": "distribution_countries",
+          "new_value": "[\"limited local area, single county\"]",
+          "original_score": 3.45542,
+          "perturbed_score": 0.72973,
+          "delta": -2.72569,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→+Israel",
+          "perturbation_he": "הפצה→+ישראל",
+          "field": "_append_israel",
+          "new_value": null,
+          "original_score": 3.45542,
+          "perturbed_score": 2.98381,
+          "delta": -0.47161,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "rte→add_RTE",
+          "perturbation_he": "מוצר→RTE",
+          "field": "_prepend_desc",
+          "new_value": "Ready-to-eat product. ",
+          "original_score": 3.45542,
+          "perturbed_score": 2.45651,
+          "delta": -0.99891,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "rte→cooked",
+          "perturbation_he": "מוצר→בישול נדרש",
+          "field": "_prepend_desc",
+          "new_value": "Requires thorough cooking before consumption. ",
+          "original_score": 3.45542,
+          "perturbed_score": 3.40863,
+          "delta": -0.04679,
+          "direction": "↓"
+        }
+      ]
+    },
+    {
+      "alert_id": "rasff::2026.6645",
+      "title": "Salmonella spp in sesame seeds from Nigeria",
+      "source_id": "rasff",
+      "hazard_specific": "salmonella",
+      "severity_raw": "border rejection notification/serious",
+      "original_score": 3.41735,
+      "original_percentile": null,
+      "top_driver": "rte→add_RTE",
+      "perturbations": [
+        {
+          "perturbation": "hazard→Listeria",
+          "perturbation_he": "סיכון→ליסטריה",
+          "field": "hazard_specific",
+          "new_value": "Listeria monocytogenes",
+          "original_score": 3.41735,
+          "perturbed_score": 4.93845,
+          "delta": 1.5211,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "hazard→mineral_oil",
+          "perturbation_he": "סיכון→שמן מינרלי",
+          "field": "hazard_specific",
+          "new_value": "mineral oil MOSH/MOAH (chronic chemical)",
+          "original_score": 3.41735,
+          "perturbed_score": 1.94833,
+          "delta": -1.46902,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "hazard→allergen",
+          "perturbation_he": "סיכון→אלרגן",
+          "field": "hazard_specific",
+          "new_value": "undeclared allergen: peanuts, sesame",
+          "original_score": 3.41735,
+          "perturbed_score": 1.44593,
+          "delta": -1.97142,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "severity→ClassI",
+          "perturbation_he": "חומרה→Class I",
+          "field": "severity_raw",
+          "new_value": "Class I",
+          "original_score": 3.41735,
+          "perturbed_score": 3.77194,
+          "delta": 0.35459,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "severity→ClassIII",
+          "perturbation_he": "חומרה→Class III",
+          "field": "severity_raw",
+          "new_value": "Class III",
+          "original_score": 3.41735,
+          "perturbed_score": 1.59924,
+          "delta": -1.81811,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→nationwide",
+          "perturbation_he": "הפצה→ארצית",
+          "field": "distribution_countries",
+          "new_value": "[\"United States\"]",
+          "original_score": 3.41735,
+          "perturbed_score": 3.04345,
+          "delta": -0.3739,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→local_only",
+          "perturbation_he": "הפצה→מקומית",
+          "field": "distribution_countries",
+          "new_value": "[\"limited local area, single county\"]",
+          "original_score": 3.41735,
+          "perturbed_score": 3.73099,
+          "delta": 0.31364,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "dist→+Israel",
+          "perturbation_he": "הפצה→+ישראל",
+          "field": "_append_israel",
+          "new_value": null,
+          "original_score": 3.41735,
+          "perturbed_score": 3.25953,
+          "delta": -0.15782,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "rte→add_RTE",
+          "perturbation_he": "מוצר→RTE",
+          "field": "_prepend_desc",
+          "new_value": "Ready-to-eat product. ",
+          "original_score": 3.41735,
+          "perturbed_score": 1.37868,
+          "delta": -2.03867,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "rte→cooked",
+          "perturbation_he": "מוצר→בישול נדרש",
+          "field": "_prepend_desc",
+          "new_value": "Requires thorough cooking before consumption. ",
+          "original_score": 3.41735,
+          "perturbed_score": 2.74623,
+          "delta": -0.67112,
+          "direction": "↓"
+        }
+      ]
+    },
+    {
+      "alert_id": "rasff::2026.6652",
+      "title": "Salmonella Enteritidis detected in frozen chicken dumplings from Lithuania",
+      "source_id": "rasff",
+      "hazard_specific": "salmonella",
+      "severity_raw": "alert notification/serious",
+      "original_score": 2.73753,
+      "original_percentile": null,
+      "top_driver": "rte→add_RTE",
+      "perturbations": [
+        {
+          "perturbation": "hazard→Listeria",
+          "perturbation_he": "סיכון→ליסטריה",
+          "field": "hazard_specific",
+          "new_value": "Listeria monocytogenes",
+          "original_score": 2.73753,
+          "perturbed_score": 2.94514,
+          "delta": 0.20761,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "hazard→mineral_oil",
+          "perturbation_he": "סיכון→שמן מינרלי",
+          "field": "hazard_specific",
+          "new_value": "mineral oil MOSH/MOAH (chronic chemical)",
+          "original_score": 2.73753,
+          "perturbed_score": 1.6493,
+          "delta": -1.08823,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "hazard→allergen",
+          "perturbation_he": "סיכון→אלרגן",
+          "field": "hazard_specific",
+          "new_value": "undeclared allergen: peanuts, sesame",
+          "original_score": 2.73753,
+          "perturbed_score": 1.75694,
+          "delta": -0.98059,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "severity→ClassI",
+          "perturbation_he": "חומרה→Class I",
+          "field": "severity_raw",
+          "new_value": "Class I",
+          "original_score": 2.73753,
+          "perturbed_score": 3.65333,
+          "delta": 0.9158,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "severity→ClassIII",
+          "perturbation_he": "חומרה→Class III",
+          "field": "severity_raw",
+          "new_value": "Class III",
+          "original_score": 2.73753,
+          "perturbed_score": 2.11284,
+          "delta": -0.62469,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→nationwide",
+          "perturbation_he": "הפצה→ארצית",
+          "field": "distribution_countries",
+          "new_value": "[\"United States\"]",
+          "original_score": 2.73753,
+          "perturbed_score": 3.14255,
+          "delta": 0.40502,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "dist→local_only",
+          "perturbation_he": "הפצה→מקומית",
+          "field": "distribution_countries",
+          "new_value": "[\"limited local area, single county\"]",
+          "original_score": 2.73753,
+          "perturbed_score": 2.85153,
+          "delta": 0.114,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "dist→+Israel",
+          "perturbation_he": "הפצה→+ישראל",
+          "field": "_append_israel",
+          "new_value": null,
+          "original_score": 2.73753,
+          "perturbed_score": 2.59849,
+          "delta": -0.13904,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "rte→add_RTE",
+          "perturbation_he": "מוצר→RTE",
+          "field": "_prepend_desc",
+          "new_value": "Ready-to-eat product. ",
+          "original_score": 2.73753,
+          "perturbed_score": 1.28136,
+          "delta": -1.45617,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "rte→cooked",
+          "perturbation_he": "מוצר→בישול נדרש",
+          "field": "_prepend_desc",
+          "new_value": "Requires thorough cooking before consumption. ",
+          "original_score": 2.73753,
+          "perturbed_score": 2.21056,
+          "delta": -0.52697,
+          "direction": "↓"
+        }
+      ]
+    },
+    {
+      "alert_id": "fda_enforcement::H-1157-2026",
+      "title": "W.Y. Industries, Inc. — Class II — WY Duck Sauce, 0.35 oz. (10 g), flexible film",
+      "source_id": "fda_enforcement",
+      "hazard_specific": "",
+      "severity_raw": "Class II",
+      "original_score": 2.43815,
+      "original_percentile": null,
+      "top_driver": "dist→nationwide",
+      "perturbations": [
+        {
+          "perturbation": "hazard→Listeria",
+          "perturbation_he": "סיכון→ליסטריה",
+          "field": "hazard_specific",
+          "new_value": "Listeria monocytogenes",
+          "original_score": 2.43815,
+          "perturbed_score": 3.56722,
+          "delta": 1.12907,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "hazard→mineral_oil",
+          "perturbation_he": "סיכון→שמן מינרלי",
+          "field": "hazard_specific",
+          "new_value": "mineral oil MOSH/MOAH (chronic chemical)",
+          "original_score": 2.43815,
+          "perturbed_score": 0.26691,
+          "delta": -2.17124,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "hazard→allergen",
+          "perturbation_he": "סיכון→אלרגן",
+          "field": "hazard_specific",
+          "new_value": "undeclared allergen: peanuts, sesame",
+          "original_score": 2.43815,
+          "perturbed_score": 0.03832,
+          "delta": -2.39983,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "severity→ClassI",
+          "perturbation_he": "חומרה→Class I",
+          "field": "severity_raw",
+          "new_value": "Class I",
+          "original_score": 2.43815,
+          "perturbed_score": 5.37771,
+          "delta": 2.93956,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "severity→ClassIII",
+          "perturbation_he": "חומרה→Class III",
+          "field": "severity_raw",
+          "new_value": "Class III",
+          "original_score": 2.43815,
+          "perturbed_score": 1.88128,
+          "delta": -0.55687,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→nationwide",
+          "perturbation_he": "הפצה→ארצית",
+          "field": "distribution_countries",
+          "new_value": "[\"United States\"]",
+          "original_score": 2.43815,
+          "perturbed_score": -1.36156,
+          "delta": -3.79971,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→local_only",
+          "perturbation_he": "הפצה→מקומית",
+          "field": "distribution_countries",
+          "new_value": "[\"limited local area, single county\"]",
+          "original_score": 2.43815,
+          "perturbed_score": -0.82324,
+          "delta": -3.26139,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→+Israel",
+          "perturbation_he": "הפצה→+ישראל",
+          "field": "_append_israel",
+          "new_value": null,
+          "original_score": 2.43815,
+          "perturbed_score": 1.57806,
+          "delta": -0.86009,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "rte→add_RTE",
+          "perturbation_he": "מוצר→RTE",
+          "field": "_prepend_desc",
+          "new_value": "Ready-to-eat product. ",
+          "original_score": 2.43815,
+          "perturbed_score": 0.47482,
+          "delta": -1.96333,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "rte→cooked",
+          "perturbation_he": "מוצר→בישול נדרש",
+          "field": "_prepend_desc",
+          "new_value": "Requires thorough cooking before consumption. ",
+          "original_score": 2.43815,
+          "perturbed_score": 1.39672,
+          "delta": -1.04143,
+          "direction": "↓"
+        }
+      ]
+    },
+    {
+      "alert_id": "rasff::2026.6662",
+      "title": "aflatoxins in hazelnuts from Georgia",
+      "source_id": "rasff",
+      "hazard_specific": "aflatoxin",
+      "severity_raw": "border rejection notification/serious",
+      "original_score": 1.75463,
+      "original_percentile": null,
+      "top_driver": "hazard→Listeria",
+      "perturbations": [
+        {
+          "perturbation": "hazard→Listeria",
+          "perturbation_he": "סיכון→ליסטריה",
+          "field": "hazard_specific",
+          "new_value": "Listeria monocytogenes",
+          "original_score": 1.75463,
+          "perturbed_score": 3.82114,
+          "delta": 2.06651,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "hazard→mineral_oil",
+          "perturbation_he": "סיכון→שמן מינרלי",
+          "field": "hazard_specific",
+          "new_value": "mineral oil MOSH/MOAH (chronic chemical)",
+          "original_score": 1.75463,
+          "perturbed_score": 1.65421,
+          "delta": -0.10042,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "hazard→allergen",
+          "perturbation_he": "סיכון→אלרגן",
+          "field": "hazard_specific",
+          "new_value": "undeclared allergen: peanuts, sesame",
+          "original_score": 1.75463,
+          "perturbed_score": 1.42911,
+          "delta": -0.32552,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "severity→ClassI",
+          "perturbation_he": "חומרה→Class I",
+          "field": "severity_raw",
+          "new_value": "Class I",
+          "original_score": 1.75463,
+          "perturbed_score": 2.71933,
+          "delta": 0.9647,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "severity→ClassIII",
+          "perturbation_he": "חומרה→Class III",
+          "field": "severity_raw",
+          "new_value": "Class III",
+          "original_score": 1.75463,
+          "perturbed_score": 1.04449,
+          "delta": -0.71014,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→nationwide",
+          "perturbation_he": "הפצה→ארצית",
+          "field": "distribution_countries",
+          "new_value": "[\"United States\"]",
+          "original_score": 1.75463,
+          "perturbed_score": 1.88511,
+          "delta": 0.13048,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "dist→local_only",
+          "perturbation_he": "הפצה→מקומית",
+          "field": "distribution_countries",
+          "new_value": "[\"limited local area, single county\"]",
+          "original_score": 1.75463,
+          "perturbed_score": 2.4873,
+          "delta": 0.73267,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "dist→+Israel",
+          "perturbation_he": "הפצה→+ישראל",
+          "field": "_append_israel",
+          "new_value": null,
+          "original_score": 1.75463,
+          "perturbed_score": 1.48663,
+          "delta": -0.268,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "rte→add_RTE",
+          "perturbation_he": "מוצר→RTE",
+          "field": "_prepend_desc",
+          "new_value": "Ready-to-eat product. ",
+          "original_score": 1.75463,
+          "perturbed_score": 1.01355,
+          "delta": -0.74108,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "rte→cooked",
+          "perturbation_he": "מוצר→בישול נדרש",
+          "field": "_prepend_desc",
+          "new_value": "Requires thorough cooking before consumption. ",
+          "original_score": 1.75463,
+          "perturbed_score": 1.46463,
+          "delta": -0.29,
           "direction": "↓"
         }
       ]

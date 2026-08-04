@@ -56,6 +56,7 @@ SOURCE_LABELS = {
     "fsa_uk":             "FSA UK (United Kingdom)",
     "rasff":              "RASFF (European Union)",
     "cdc_food_safety_rss": "CDC Food Safety — pre-classification (USA)",
+    "cfia_recalls":       "CFIA Recalls (Canada)",
 }
 
 SOURCE_REGION = {
@@ -64,6 +65,7 @@ SOURCE_REGION = {
     "fsa_uk":             "🇬🇧 UK",
     "rasff":              "🇪🇺 EU",
     "cdc_food_safety_rss": "🇺🇸 USA",
+    "cfia_recalls":       "🇨🇦 Canada",
 }
 
 SOURCE_COLORS = {
@@ -72,6 +74,7 @@ SOURCE_COLORS = {
     "fsa_uk":             "#9c1a1c",
     "rasff":              "#f0b400",
     "cdc_food_safety_rss": "#5a4fcf",
+    "cfia_recalls":       "#d52b1e",
 }
 
 PERT_LABELS = {

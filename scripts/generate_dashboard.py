@@ -51,24 +51,27 @@ HAZARD_COLORS = {
 }
 
 SOURCE_LABELS = {
-    "fda_enforcement": "FDA Enforcement (USA)",
-    "fsis":            "USDA FSIS (USA)",
-    "fsa_uk":          "FSA UK (United Kingdom)",
-    "rasff":           "RASFF (European Union)",
+    "fda_enforcement":    "FDA Enforcement (USA)",
+    "fsis":               "USDA FSIS (USA)",
+    "fsa_uk":             "FSA UK (United Kingdom)",
+    "rasff":              "RASFF (European Union)",
+    "cdc_food_safety_rss": "CDC Food Safety — pre-classification (USA)",
 }
 
 SOURCE_REGION = {
-    "fda_enforcement": "🇺🇸 USA",
-    "fsis":            "🇺🇸 USA",
-    "fsa_uk":          "🇬🇧 UK",
-    "rasff":           "🇪🇺 EU",
+    "fda_enforcement":    "🇺🇸 USA",
+    "fsis":               "🇺🇸 USA",
+    "fsa_uk":             "🇬🇧 UK",
+    "rasff":              "🇪🇺 EU",
+    "cdc_food_safety_rss": "🇺🇸 USA",
 }
 
 SOURCE_COLORS = {
-    "fda_enforcement": "#003087",
-    "fsis":            "#007749",
-    "fsa_uk":          "#9c1a1c",
-    "rasff":           "#f0b400",
+    "fda_enforcement":    "#003087",
+    "fsis":               "#007749",
+    "fsa_uk":             "#9c1a1c",
+    "rasff":              "#f0b400",
+    "cdc_food_safety_rss": "#5a4fcf",
 }
 
 PERT_LABELS = {

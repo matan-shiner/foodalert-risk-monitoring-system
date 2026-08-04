@@ -6,11 +6,13 @@ SOURCE_LABELS: dict[str, str] = {
     "fda_enforcement": "FDA — Recall Enforcement (openFDA)",
     "fsis": "USDA FSIS",
     "fsa_uk": "FSA UK — Food Alerts",
+    "cdc_food_safety_rss": "CDC — Food Safety (pre-classification announcement)",
 }
 
 FDA_RECALLS_PORTAL = "https://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts"
 FSIS_RECALLS_INDEX = "https://www.fsis.usda.gov/recalls"
 FSA_ALERTS_INDEX = "https://www.food.gov.uk/news-alerts"
+CDC_FOOD_SAFETY_INDEX = "https://www.cdc.gov/foodsafety"
 
 
 def source_label(source_id: str) -> str:
@@ -54,6 +56,11 @@ def build_alert_links(
         if record_url:
             links.append({"label": "FSA UK page", "href": record_url})
         links.append({"label": "FSA Alerts", "href": FSA_ALERTS_INDEX})
+
+    elif source_id == "cdc_food_safety_rss":
+        if record_url:
+            links.append({"label": "Announcement", "href": record_url})
+        links.append({"label": "CDC Food Safety", "href": CDC_FOOD_SAFETY_INDEX})
 
     elif record_url:
         links.append({"label": "Source", "href": record_url})

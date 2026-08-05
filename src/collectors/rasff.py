@@ -181,9 +181,23 @@ _BIOLOGICAL_KW = [
 ]
 _CHEMICAL_KW = [
     "pesticide", "lead", "cadmium", "mercury", "arsenic", "chromium",
-    "ethylene oxide", "mineral oil", "dioxin", "pcb", "nitrate", "nitrite",
-    "sudan", "melamine", "residue", "contaminant", "chemical", "additive",
-    "colourant", "colorant", "preservative", "acrylamide", "bisphenol",
+    "ethylene oxide", "mineral oil", "moah", "mosh", "dioxin", "pcb", "nitrate",
+    "nitrite", "sudan", "melamine", "residue", "contaminant", "chemical",
+    "additive", "colourant", "colorant", "preservative", "acrylamide",
+    "bisphenol", "dehp", "dbp", "migration", "coumarin", "alkaloid",
+    "hydrocyanic", "mrl", "maximum residue", "maximum permitted level",
+    "unauthorised substance", "unauthorized substance",
+    # Specific pesticide/veterinary-drug/unauthorized-ingredient names seen
+    # in real RASFF subject lines — these never say the word "pesticide" or
+    # "chemical" at all, e.g. "Chlorpyrifos in turmeric from India". RASFF's
+    # own detail API confirms these carry hazardCategory "pesticide residues"
+    # (see rasff.py module docstring), but that field needs a second API call
+    # per record; matching the compound name directly in the subject text we
+    # already ingest is far cheaper and catches the same cases.
+    "chlorpyrifos", "acetamiprid", "dimethoate", "deltamethrin", "methoxychlor",
+    "thiamethoxam", "oxamyl", "avermectin", "spirotetramat", "propiconazole",
+    "flusilazole", "clothianidin", "dexamethasone", "sildenafil", "monacoline",
+    "dmaa", "yohimbine",
 ]
 _ALLERGEN_KW = [
     "allergen", "allergy", "allergic", "undeclared",
@@ -193,6 +207,23 @@ _ALLERGEN_KW = [
 # These food names only indicate allergen when paired with allergy context words
 _ALLERGEN_FOOD_KW = ["peanut", "tree nut", "soya", "soy", "sesame", "mustard", "lupin", "shellfish"]
 _PHYSICAL_KW = ["metal", "glass", "plastic", "fragment", "foreign body", "foreign object"]
+# RASFF's own hazard-substance data model doesn't cover these at all (its
+# `hazards` array is genuinely empty for e.g. "unauthorised novel food
+# ingredient" or "missing import controls" — verified against the live API,
+# not guessed) — no structured field to lean on, so these stay keyword-based.
+_LABELING_KW = [
+    "labelling error", "labeling error", "incorrect label", "incorrect use-by",
+    "incorrect best-before", "missing label", "mislabel", "wrong label",
+    "not declared on the label", "absence of health certificate",
+    "missing health certificate", "incorrect use by date",
+]
+_NONCOMPLIANCE_KW = [
+    "unauthorised", "unauthorized", "not authorised", "not authorized",
+    "novel food", "missing import controls", "skipped veterinary controls",
+    "breaking the cold chain", "cold chain", "non-compliant", "noncompliant",
+    "unauthorised gmo", "unauthorized gmo", "without authorisation",
+    "without authorization",
+]
 
 
 def _infer_hazard_category(subject: str) -> str | None:
@@ -214,6 +245,18 @@ def _infer_hazard_category(subject: str) -> str | None:
     for kw in _PHYSICAL_KW:
         if kw in text:
             return "physical"
+    # Checked last: these only fire when no biological/chemical/allergen/
+    # physical keyword matched, so a named hazardous substance (e.g.
+    # "unauthorised substance chlorpyrifos") is still classified as the
+    # more actionable "chemical" rather than the generic "regulatory" bucket.
+    # Names match generate_dashboard.py's HAZARD_COLORS, which already had
+    # "fraud"/"regulatory" entries defined but unused by any collector.
+    for kw in _LABELING_KW:
+        if kw in text:
+            return "fraud"
+    for kw in _NONCOMPLIANCE_KW:
+        if kw in text:
+            return "regulatory"
     return None
 
 

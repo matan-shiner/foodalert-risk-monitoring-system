@@ -49,8 +49,8 @@ class FSISCollector(BaseCollector):
 
     def normalize(self, raw: dict) -> dict:
         record_id = str(raw.get("field_recall_number") or "")
-        title = raw.get("field_title", "")
-        firm = raw.get("field_establishment", "")
+        title = _as_str(raw.get("field_title", ""))
+        firm = _as_str(raw.get("field_establishment", ""))
         summary = _as_str(raw.get("field_summary") or raw.get("field_recall_reason"))
         states_raw = raw.get("field_states", "")
         product_items = _as_str(raw.get("field_product_items", ""))
@@ -79,7 +79,7 @@ class FSISCollector(BaseCollector):
             "brand_names": json.dumps([]),
             "product_description": product_items or None,
             "product_category": "Meat & Poultry",
-            "hazard_category": None,
+            "hazard_category": _infer_hazard_category(reason, summary),
             "hazard_specific": _extract_hazard_specific(reason, summary),
             "severity_raw": classification or None,
             "severity_normalized": _normalize_fsis_class(classification, reason),
@@ -143,18 +143,51 @@ def _normalize_status(raw: dict) -> str | None:
     return None
 
 
+# hazard_category is derived FROM this table rather than a separately
+# maintained keyword scan, so the two fields can never disagree — this
+# collector previously had hazard_category hardcoded to None for every
+# record (100% unclassified) despite hazard_specific already working.
+_SPECIFIC_TO_CATEGORY: dict[str, str] = {
+    "listeria monocytogenes": "biological",
+    "listeria": "biological",
+    "l. monocytogenes": "biological",
+    "salmonella": "biological",
+    "e. coli": "biological",
+    "e.coli": "biological",
+    "escherichia coli": "biological",
+    "campylobacter": "biological",
+    "clostridium botulinum": "biological",
+    "clostridium": "biological",
+    "staphylococcus": "biological",
+    "norovirus": "biological",
+    "hepatitis a": "biological",
+    "insect": "biological",
+    "moth": "biological",
+    "undeclared allergen": "allergen",
+    "extraneous material": "physical",
+    "foreign material": "physical",
+    "foreign object": "physical",
+    # FSIS's own generic reason tags, not free text — no pathogen name to
+    # find, but the tag itself says enough. "Product Contamination" alone
+    # is genuinely ambiguous (any of biological/chemical/physical) and is
+    # deliberately left unmapped rather than guessed.
+    "misbranding": "fraud",
+    "import violation": "regulatory",
+    "produced without benefit of inspection": "regulatory",
+}
+
+
 def _extract_hazard_specific(reason: str | None, summary: str | None = "") -> str | None:
     text = ((reason or "") + " " + (summary or "")).lower()
-    for hazard in [
-        "listeria monocytogenes", "listeria",
-        "salmonella", "e. coli", "e.coli", "escherichia coli",
-        "campylobacter", "clostridium botulinum", "clostridium",
-        "staphylococcus", "norovirus", "hepatitis a",
-        "undeclared allergen", "extraneous material",
-    ]:
+    for hazard in _SPECIFIC_TO_CATEGORY:
         if hazard in text:
             return hazard
     return None
+
+
+def _infer_hazard_category(reason: str | None, summary: str | None = "") -> str | None:
+    specific = _extract_hazard_specific(reason, summary)
+    return _SPECIFIC_TO_CATEGORY[specific] if specific else None
 
 
 def _strip_html(text: str | None) -> str | None:

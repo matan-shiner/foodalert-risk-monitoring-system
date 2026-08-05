@@ -174,10 +174,13 @@ def _make_fingerprint(country: str | None, subject: str | None) -> str:
 
 
 _BIOLOGICAL_KW = [
-    "salmonella", "listeria", "e. coli", "e.coli", "campylobacter", "norovirus",
-    "clostridium", "staphylococcus", "enterobacter", "cronobacter", "vibrio",
-    "hepatitis", "pathogen", "bacterial", "mould", "mold", "mycotoxin",
-    "aflatoxin", "ochratoxin", "zearalenone", "deoxynivalenol", "patulin",
+    "listeria monocytogenes", "clostridium botulinum", "escherichia coli",
+    "salmonella", "listeria", "l. monocytogenes", "e. coli", "e.coli",
+    "campylobacter", "norovirus", "clostridium", "staphylococcus",
+    "enterobacter", "cronobacter", "vibrio", "hepatitis", "pathogen",
+    "bacterial", "mould", "mold", "mycotoxin", "aflatoxin", "ochratoxin",
+    "zearalenone", "deoxynivalenol", "patulin", "insect", "moth", "larvae",
+    "maggot", "weevil",
 ]
 _CHEMICAL_KW = [
     "pesticide", "lead", "cadmium", "mercury", "arsenic", "chromium",
@@ -197,7 +200,9 @@ _CHEMICAL_KW = [
     "chlorpyrifos", "acetamiprid", "dimethoate", "deltamethrin", "methoxychlor",
     "thiamethoxam", "oxamyl", "avermectin", "spirotetramat", "propiconazole",
     "flusilazole", "clothianidin", "dexamethasone", "sildenafil", "monacoline",
-    "dmaa", "yohimbine",
+    "dmaa", "yohimbine", "histamine", "nickel", "nitrofuran", "pfos", "pfoa",
+    "benzo(a)pyrene", "sibutramin", "equipalazone", "phenylbutazone",
+    "delta-9-thc", "thc", "cbd",
 ]
 _ALLERGEN_KW = [
     "allergen", "allergy", "allergic", "undeclared",
@@ -229,10 +234,8 @@ _NONCOMPLIANCE_KW = [
 def _infer_hazard_category(subject: str) -> str | None:
     text = (subject or "").lower()
     # Allergen: explicit allergen word, OR food ingredient + allergy context
-    allergen_context = any(kw in text for kw in ["allergen", "allergy", "allergic", "undeclared"])
+    allergen_context = any(kw in text for kw in _ALLERGEN_KW)
     if allergen_context:
-        return "allergen"
-    if any(kw in text for kw in _ALLERGEN_KW):
         return "allergen"
     if any(kw in text for kw in _ALLERGEN_FOOD_KW) and allergen_context:
         return "allergen"
@@ -261,17 +264,31 @@ def _infer_hazard_category(subject: str) -> str | None:
 
 
 def _extract_hazard_specific(subject: str) -> str | None:
+    """The specific keyword that drove _infer_hazard_category's decision —
+    matched from the exact same lists (in the same priority order: allergen
+    context, then biological, then chemical) rather than a separately
+    maintained candidate list. That third list used to disagree with
+    _infer_hazard_category for real records — e.g. this function would
+    return "sesame" as hazard_specific while _infer_hazard_category
+    returned None for hazard_category on the same text, because "sesame"
+    wasn't allergy-context-gated here the way it was there. Deriving both
+    from one source makes that class of bug structurally impossible.
+    """
     text = (subject or "").lower()
-    candidates = [
-        "salmonella", "listeria monocytogenes", "listeria", "e. coli", "e.coli",
-        "campylobacter", "norovirus", "clostridium botulinum", "hepatitis a",
-        "aflatoxin", "ochratoxin", "ethylene oxide", "lead", "cadmium", "mercury",
-        "arsenic", "pesticide residues", "mineral oil", "peanut", "gluten",
-        "sulphite", "sesame",
-    ]
-    for c in candidates:
-        if c in text:
-            return c
+    allergen_context = any(kw in text for kw in _ALLERGEN_KW)
+    if allergen_context:
+        for kw in _ALLERGEN_KW:
+            if kw in text:
+                return kw
+        for kw in _ALLERGEN_FOOD_KW:
+            if kw in text:
+                return kw
+    for kw in _BIOLOGICAL_KW:
+        if kw in text:
+            return kw
+    for kw in _CHEMICAL_KW:
+        if kw in text:
+            return kw
     return None
 
 

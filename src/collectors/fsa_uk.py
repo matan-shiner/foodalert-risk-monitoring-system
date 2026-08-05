@@ -114,36 +114,42 @@ def _parse_iso_date(s: str | None) -> str | None:
         return s[:10] if len(s) >= 10 else s
 
 
+_BIOLOGICAL_KW = ["salmonella", "listeria monocytogenes", "listeria", "l. monocytogenes",
+                  "e. coli", "e.coli", "campylobacter", "norovirus",
+                  "clostridium botulinum", "clostridium", "bacterial", "pathogen",
+                  "mould", "mold", "insect", "moth", "larvae"]
+_CHEMICAL_KW = ["pesticide", "lead", "cadmium", "mercury", "arsenic", "aflatoxin",
+                "mycotoxin", "ethylene oxide", "chemical", "residue", "histamine",
+                "nickel"]
+_PHYSICAL_KW = ["metal", "glass", "plastic piece", "foreign body", "fragment"]
+
+
 def _infer_hazard_category(type_codes: list, risk_text: str) -> str | None:
     if "AA" in type_codes:
         return "allergen"
     text = (risk_text or "").lower()
-    biological = ["salmonella", "listeria", "e. coli", "e.coli", "campylobacter",
-                  "norovirus", "clostridium", "bacterial", "pathogen", "mould", "mold"]
-    chemical = ["pesticide", "lead", "cadmium", "mercury", "arsenic", "aflatoxin",
-                "mycotoxin", "ethylene oxide", "chemical", "residue"]
-    physical = ["metal", "glass", "plastic piece", "foreign body", "fragment"]
-    for kw in biological:
+    for kw in _BIOLOGICAL_KW:
         if kw in text:
             return "biological"
-    for kw in chemical:
+    for kw in _CHEMICAL_KW:
         if kw in text:
             return "chemical"
-    for kw in physical:
+    for kw in _PHYSICAL_KW:
         if kw in text:
             return "physical"
     return None
 
 
 def _extract_hazard_specific(risk_text: str) -> str | None:
+    """Derived from the same _BIOLOGICAL_KW/_CHEMICAL_KW lists
+    _infer_hazard_category uses, not a separate candidate list — see
+    rasff.py's _extract_hazard_specific for why that matters."""
     if not risk_text:
         return None
     text = risk_text.lower()
-    for hazard in ["salmonella", "listeria monocytogenes", "listeria", "e. coli",
-                   "campylobacter", "norovirus", "clostridium botulinum",
-                   "aflatoxin", "lead", "cadmium", "mercury", "ethylene oxide"]:
-        if hazard in text:
-            return hazard
+    for kw in _BIOLOGICAL_KW + _CHEMICAL_KW:
+        if kw in text:
+            return kw
     return None
 
 

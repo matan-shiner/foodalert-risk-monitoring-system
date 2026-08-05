@@ -156,13 +156,15 @@ _ALLERGEN_FOOD_KW = [
     "pecan", "soy", "soya", "sesame", "milk", "egg", "wheat", "shellfish", "mustard",
 ]
 _BIOLOGICAL_KW = [
-    "salmonella", "listeria", "e. coli", "e.coli", "escherichia coli",
-    "campylobacter", "norovirus", "clostridium", "cronobacter", "cyclospora",
-    "hepatitis", "pathogen", "bacteria", "mold", "mould",
+    "listeria monocytogenes", "clostridium botulinum", "salmonella", "listeria",
+    "l. monocytogenes", "e. coli", "e.coli", "escherichia coli", "campylobacter",
+    "norovirus", "clostridium", "cronobacter", "cyclospora", "hepatitis a",
+    "hepatitis", "pathogen", "bacteria", "mold", "mould", "insect", "moth",
+    "larvae",
 ]
 _CHEMICAL_KW = [
     "pesticide", "lead", "cadmium", "mercury", "arsenic", "chemical",
-    "residue", "histamine", "toxin", "aflatoxin",
+    "residue", "histamine", "toxin", "aflatoxin", "nickel",
 ]
 _PHYSICAL_KW = [
     "extraneous material", "foreign material", "foreign object", "metal",
@@ -250,12 +252,15 @@ def _infer_hazard_category(text: str) -> str | None:
 
 
 def _extract_hazard_specific(text: str) -> str | None:
+    """Derived from the same _ALLERGEN_KW/_BIOLOGICAL_KW/_CHEMICAL_KW lists
+    _infer_hazard_category uses, not a separate candidate list — see
+    rasff.py's _extract_hazard_specific for why that matters."""
     t = text.lower()
-    for hazard in [
-        "salmonella", "listeria monocytogenes", "listeria", "e. coli", "e.coli",
-        "campylobacter", "cronobacter", "cyclospora", "norovirus",
-        "clostridium botulinum", "hepatitis a", "aflatoxin", "undeclared allergen",
-    ]:
+    if any(kw in t for kw in _ALLERGEN_KW):
+        for kw in _ALLERGEN_KW:
+            if kw in t:
+                return kw
+    for hazard in _BIOLOGICAL_KW + _CHEMICAL_KW:
         if hazard in t:
             return hazard
     return None

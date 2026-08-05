@@ -117,10 +117,21 @@ def _parse_iso_date(s: str | None) -> str | None:
 _BIOLOGICAL_KW = ["salmonella", "listeria monocytogenes", "listeria", "l. monocytogenes",
                   "e. coli", "e.coli", "campylobacter", "norovirus",
                   "clostridium botulinum", "clostridium", "bacterial", "pathogen",
-                  "mould", "mold", "insect", "moth", "larvae"]
-_CHEMICAL_KW = ["pesticide", "lead", "cadmium", "mercury", "arsenic", "aflatoxin",
-                "mycotoxin", "ethylene oxide", "chemical", "residue", "histamine",
-                "nickel"]
+                  "mould", "mold", "insect", "moth", "larvae", "stec", "microbial",
+                  "bacteria", "ergot", "alternaria",
+                  # Mycotoxins are fungal in origin — biological, matching
+                  # rasff.py's convention, not "chemical" just because
+                  # they're detected as a chemical assay result.
+                  "aflatoxin", "ochratoxin", "zearalenone", "deoxynivalenol",
+                  "patulin", "mycotoxin", "muscimol", "bacillus",
+                  "temperature abuse", "insanitary conditions",
+                  "unsanitary conditions", "contracaecum", "contracoecum",
+                  "s.infantis", "s. infantis", "inflammatory lesions",
+                  "toxin", "toxins"]
+_CHEMICAL_KW = ["pesticide", "lead", "cadmium", "mercury", "arsenic",
+                "fenthion", "monocrotophos",
+                "ethylene oxide", "chemical", "residue", "histamine",
+                "nickel", "metronidazole", "sorbic acid"]
 _PHYSICAL_KW = ["metal", "glass", "plastic piece", "foreign body", "fragment"]
 
 

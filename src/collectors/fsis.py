@@ -163,10 +163,49 @@ _SPECIFIC_TO_CATEGORY: dict[str, str] = {
     "hepatitis a": "biological",
     "insect": "biological",
     "moth": "biological",
+    "stec": "biological",
+    "microbial": "biological",
+    "ergot": "biological",
+    "alternaria": "biological",
+    "bacteria": "biological",
+    "aflatoxin": "biological",
+    "ochratoxin": "biological",
+    "zearalenone": "biological",
+    "deoxynivalenol": "biological",
+    "patulin": "biological",
+    "mycotoxin": "biological",
+    "muscimol": "biological",
+    "metronidazole": "chemical",
+    "sorbic acid": "chemical",
+    "fenthion": "chemical",
+    "monocrotophos": "chemical",
+    "contracaecum": "biological",
+    "contracoecum": "biological",
+    "s.infantis": "biological",
+    "s. infantis": "biological",
+    "inflammatory lesions": "biological",
+    "toxin": "biological",
+    "toxins": "biological",
     "undeclared allergen": "allergen",
+    "does not declare": "allergen",
     "extraneous material": "physical",
     "foreign material": "physical",
     "foreign object": "physical",
+    "bacillus": "biological",
+    "temperature abuse": "biological",
+    "insanitary conditions": "biological",
+    "unsanitary conditions": "biological",
+    # FSIS press releases are bilingual (English text followed by a full
+    # Spanish translation) — our keyword lists were English-only, so the
+    # Spanish half of every record was invisible to classification even
+    # when it plainly says what the hazard is. Several spelling variants
+    # because the Spanish text has OCR/typo noise in the source data
+    # ("Contaminacin", "Extrao" missing the ñ).
+    "material extraño": "physical",
+    "material extrao": "physical",
+    "materia extraña": "physical",
+    "materia extrana": "physical",
+    "materia externa": "physical",
     # FSIS's own generic reason tags, not free text — no pathogen name to
     # find, but the tag itself says enough. "Product Contamination" alone
     # is genuinely ambiguous (any of biological/chemical/physical) and is

@@ -39,7 +39,8 @@ _BRAND_TITLE_RE = re.compile(r"^(.*?)\s+brand\s+", re.IGNORECASE)
 _FALLBACK_FIRM_RE = re.compile(r"^(.*?)\s+recalls?\b", re.IGNORECASE)
 
 # Unambiguous on their own — safe to match without extra context.
-_ALLERGEN_KW = ["allergen", "allergy", "allergic", "undeclared", "gluten", "sulphite", "sulfite"]
+_ALLERGEN_KW = ["allergen", "allergy", "allergic", "undeclared", "gluten", "sulphite",
+                "sulfite", "improperly declared", "does not declare"]
 # Only mean "allergen recall" when paired with an _ALLERGEN_KW context word above —
 # bare "milk"/"egg"/"wheat" are just common ingredients, not an allergy signal on
 # their own (a Listeria-in-cheese recall's Product field says "milk" too).
@@ -52,10 +53,15 @@ _BIOLOGICAL_KW = [
     "l. monocytogenes", "e. coli", "e.coli", "escherichia coli", "campylobacter",
     "norovirus", "clostridium", "cronobacter", "hepatitis a", "hepatitis",
     "pathogen", "bacteria", "mould", "mold", "insect", "moth", "larvae",
+    "stec", "microbial", "ergot", "alternaria", "aflatoxin", "ochratoxin",
+    "zearalenone", "deoxynivalenol", "patulin", "mycotoxin", "muscimol",
+    "bacillus", "spoilage", "spoiled", "contracaecum", "contracoecum",
+    "s.infantis", "s. infantis", "inflammatory lesions", "toxin", "toxins",
 ]
 _CHEMICAL_KW = [
     "pesticide", "lead", "cadmium", "mercury", "arsenic", "chemical",
-    "residue", "histamine", "toxin", "nickel",
+    "residue", "histamine", "nickel", "metronidazole", "sorbic acid",
+    "fenthion", "monocrotophos",
 ]
 _PHYSICAL_KW = [
     "extraneous material", "metal", "glass", "plastic", "fragment",

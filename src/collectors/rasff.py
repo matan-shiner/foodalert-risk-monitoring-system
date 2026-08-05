@@ -180,7 +180,10 @@ _BIOLOGICAL_KW = [
     "enterobacter", "cronobacter", "vibrio", "hepatitis", "pathogen",
     "bacterial", "mould", "mold", "mycotoxin", "aflatoxin", "ochratoxin",
     "zearalenone", "deoxynivalenol", "patulin", "insect", "moth", "larvae",
-    "maggot", "weevil",
+    "maggot", "weevil", "stec", "microbial", "ergot", "alternaria", "bacteria",
+    "bacillus", "temperature abuse", "insanitary conditions",
+    "unsanitary conditions", "contracaecum", "contracoecum", "s.infantis",
+    "s. infantis", "inflammatory lesions", "toxin", "toxins",
 ]
 _CHEMICAL_KW = [
     "pesticide", "lead", "cadmium", "mercury", "arsenic", "chromium",
@@ -200,12 +203,17 @@ _CHEMICAL_KW = [
     "chlorpyrifos", "acetamiprid", "dimethoate", "deltamethrin", "methoxychlor",
     "thiamethoxam", "oxamyl", "avermectin", "spirotetramat", "propiconazole",
     "flusilazole", "clothianidin", "dexamethasone", "sildenafil", "monacoline",
-    "dmaa", "yohimbine", "histamine", "nickel", "nitrofuran", "pfos", "pfoa",
-    "benzo(a)pyrene", "sibutramin", "equipalazone", "phenylbutazone",
-    "delta-9-thc", "thc", "cbd",
+    "dmaa", "yohimbine", "yohimbe", "histamine", "nickel", "nitrofuran", "pfos",
+    "pfoa", "benzo(a)pyrene", "sibutramin", "equipalazone", "phenylbutazone",
+    "delta-9-thc", "thc", "cbd", "chlorothalonil", "chlorate", "narasin",
+    "phenthoate", "phenthoat", "hexaconazole", "penconazole", "metronidazole",
+    "glycidol", "glycidyl", "sorbic acid", "imazethapyr", "imazetapyr",
+    "fenvalerate", "cypermethrin", "procymidone", "fenthion", "monocrotophos",
+    "trichloroanisole",
+    "trichloranisol",
 ]
 _ALLERGEN_KW = [
-    "allergen", "allergy", "allergic", "undeclared",
+    "allergen", "allergy", "allergic", "undeclared", "does not declare",
     "gluten", "casein", "lactose",
     "sulphite", "sulphur dioxide", "sulfite",
 ]
@@ -221,13 +229,18 @@ _LABELING_KW = [
     "incorrect best-before", "missing label", "mislabel", "wrong label",
     "not declared on the label", "absence of health certificate",
     "missing health certificate", "incorrect use by date",
+    "improper official certificate", "improper certificate",
+    "mismatching identification code", "no registration number",
+    "failure to list", "incorrectly labelled", "incorrectly labeled",
+    "incorrect information",
 ]
 _NONCOMPLIANCE_KW = [
     "unauthorised", "unauthorized", "not authorised", "not authorized",
     "novel food", "missing import controls", "skipped veterinary controls",
     "breaking the cold chain", "cold chain", "non-compliant", "noncompliant",
     "unauthorised gmo", "unauthorized gmo", "without authorisation",
-    "without authorization",
+    "without authorization", "not subjected to official control",
+    "not subjected to an official control", "illegal import",
 ]
 
 

@@ -147,7 +147,10 @@ def _is_israel_relevant(raw: dict) -> int:
 # same way those do.
 
 # Unambiguous on their own — safe to match without extra context.
-_ALLERGEN_KW = ["allergen", "allergy", "allergic", "undeclared", "gluten", "sulphite", "sulfite"]
+_ALLERGEN_KW = [
+    "allergen", "allergy", "allergic", "undeclared", "gluten", "sulphite",
+    "sulfite", "does not declare",
+]
 # Only mean "allergen recall" when paired with an _ALLERGEN_KW context word above —
 # bare "milk"/"egg"/"wheat" are just common ingredients, not an allergy signal on
 # their own (a Listeria-in-cheese recall's product_description says "milk" too).
@@ -160,12 +163,39 @@ _BIOLOGICAL_KW = [
     "l. monocytogenes", "e. coli", "e.coli", "escherichia coli", "campylobacter",
     "norovirus", "clostridium", "cronobacter", "cyclospora", "hepatitis a",
     "hepatitis", "pathogen", "bacteria", "mold", "mould", "insect", "moth",
-    "larvae",
+    "larvae", "stec", "microbial", "ergot", "alternaria",
+    # Mycotoxins are fungal in origin — treated as biological, matching
+    # rasff.py's convention (the most complete of the 6 collectors), not
+    # dropped into "chemical" just because they're detected as a chemical
+    # assay result. "aflatoxin" was previously miscategorized as chemical
+    # here despite rasff.py already treating it as biological.
+    "aflatoxin", "ochratoxin", "zearalenone", "deoxynivalenol", "patulin",
+    "mycotoxin", "muscimol", "bacillus",
+    # Spoilage/hygiene-failure language — no pathogen named, but the failure
+    # mode itself is the biological risk (temperature abuse and inadequate
+    # pasteurization both mean surviving/growing pathogens, not a named one).
+    "temperature abuse", "insanitary conditions", "unsanitary conditions",
+    "not adequately pasteurized", "inadequately pasteurized",
+    "pasteurization was not achieved", "spoiled", "contracaecum",
+    "contracoecum", "s.infantis", "s. infantis", "inflammatory lesions",
+    "toxin", "toxins",
 ]
 _CHEMICAL_KW = [
     "pesticide", "lead", "cadmium", "mercury", "arsenic", "chemical",
-    "residue", "histamine", "toxin", "aflatoxin", "nickel",
+    "residue", "histamine", "nickel", "metronidazole", "fenthion",
+    "monocrotophos",
+    "sorbic acid", "fluid from a reach truck", "hydraulic fluid",
+    # No dedicated "radiological" bucket exists in the dashboard's hazard
+    # taxonomy (HAZARD_COLORS has biological/chemical/allergen/physical/
+    # fraud/regulatory only) — filed under chemical as the closest fit
+    # rather than left unclassified or inventing a 7th category unasked.
+    "cesium-137", "cs-137",
 ]
+# Checked last in _infer_hazard_category, same reasoning as rasff.py's
+# _NONCOMPLIANCE_KW: only reached when nothing more specific matched, so a
+# named hazardous substance still wins as "chemical"/"biological" over the
+# generic "regulatory" bucket.
+_NONCOMPLIANCE_KW = ["unapproved drug claim", "unapproved new drug"]
 _PHYSICAL_KW = [
     "extraneous material", "foreign material", "foreign object", "metal",
     "glass", "plastic", "rubber", "fragment",
@@ -248,6 +278,9 @@ def _infer_hazard_category(text: str) -> str | None:
     for kw in _PHYSICAL_KW:
         if kw in t:
             return "physical"
+    for kw in _NONCOMPLIANCE_KW:
+        if kw in t:
+            return "regulatory"
     return None
 
 
@@ -261,6 +294,9 @@ def _extract_hazard_specific(text: str) -> str | None:
             if kw in t:
                 return kw
     for hazard in _BIOLOGICAL_KW + _CHEMICAL_KW:
+        if hazard in t:
+            return hazard
+    for hazard in _NONCOMPLIANCE_KW:
         if hazard in t:
             return hazard
     return None

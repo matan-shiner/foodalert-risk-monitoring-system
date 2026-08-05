@@ -44,15 +44,21 @@ _BIOLOGICAL_KW = [
     "listeria monocytogenes", "clostridium botulinum", "salmonella", "listeria",
     "l. monocytogenes", "e. coli", "e.coli", "campylobacter", "norovirus",
     "clostridium", "cyclospora", "hepatitis a", "hepatitis", "pathogen",
-    "bacteria", "insect", "moth", "larvae",
+    "bacteria", "insect", "moth", "larvae", "stec", "microbial", "ergot",
+    "alternaria", "aflatoxin", "ochratoxin", "zearalenone", "deoxynivalenol",
+    "patulin", "mycotoxin", "muscimol", "bacillus", "temperature abuse",
+    "insanitary conditions", "unsanitary conditions", "contracaecum",
+    "contracoecum", "s.infantis", "s. infantis", "inflammatory lesions",
+    "toxin", "toxins",
 ]
 _CHEMICAL_KW = [
     "pesticide", "lead", "cadmium", "mercury", "arsenic", "chemical", "residue",
-    "histamine", "nickel",
+    "histamine", "nickel", "metronidazole", "sorbic acid", "fenthion",
+    "monocrotophos",
 ]
 # Unambiguous on their own — deliberately no bare food names ("milk"/"egg"/"wheat")
 # here, since those are just common ingredients, not an allergy signal by themselves.
-_ALLERGEN_KW = ["allergen", "allergy", "allergic", "undeclared"]
+_ALLERGEN_KW = ["allergen", "allergy", "allergic", "undeclared", "does not declare"]
 _PHYSICAL_KW = ["metal", "glass", "plastic", "fragment", "foreign object", "foreign matter"]
 
 

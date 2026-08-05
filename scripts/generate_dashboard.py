@@ -659,8 +659,19 @@ def main() -> None:
 
     data_json = json.dumps(DATA, ensure_ascii=False, separators=(",", ":"))
 
+    # Built from SOURCE_LABELS rather than hardcoded in the template, so a
+    # newly-added collector's source_id shows up in the filter automatically
+    # instead of silently missing (as fda_enforcement/fsis/fsa_uk/rasff were
+    # hardcoded and cdc_food_safety_rss/cfia_recalls had to be found missing).
+    source_options_html = "\n".join(
+        f'        <label class="ms-item"><input type="checkbox" class="ms-opt" data-t="source" '
+        f'value="{sid}" onchange="toggleMsOption(\'source\',this)"> {label}</label>'
+        for sid, label in SOURCE_LABELS.items()
+    )
+
     # ── Render HTML ────────────────────────────────────────────────────────
     html = _HTML_TEMPLATE.replace("__DATA_PLACEHOLDER__", data_json)
+    html = html.replace("__SOURCE_OPTIONS__", source_options_html)
 
     out_prefix = args.out or Path(f"reports/dashboard_{ref_date.isoformat()}")
     out_prefix.parent.mkdir(parents=True, exist_ok=True)
@@ -894,10 +905,7 @@ footer{text-align:center;padding:20px;font-size:12px;color:var(--muted);border-t
       <div class="ms-panel" id="msp-source">
         <label class="ms-item"><input type="checkbox" id="ms-all-source" checked onchange="toggleMsAll('source',this)"> All</label>
         <hr class="ms-sep">
-        <label class="ms-item"><input type="checkbox" class="ms-opt" data-t="source" value="rasff"           onchange="toggleMsOption('source',this)"> RASFF</label>
-        <label class="ms-item"><input type="checkbox" class="ms-opt" data-t="source" value="fda_enforcement" onchange="toggleMsOption('source',this)"> FDA Enforcement</label>
-        <label class="ms-item"><input type="checkbox" class="ms-opt" data-t="source" value="fsis"            onchange="toggleMsOption('source',this)"> USDA FSIS</label>
-        <label class="ms-item"><input type="checkbox" class="ms-opt" data-t="source" value="fsa_uk"          onchange="toggleMsOption('source',this)"> FSA UK</label>
+__SOURCE_OPTIONS__
       </div>
     </div>
     <!-- Product dropdown (options populated by JS) -->

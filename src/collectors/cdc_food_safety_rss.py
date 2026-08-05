@@ -47,10 +47,9 @@ _BIOLOGICAL_KW = [
 _CHEMICAL_KW = [
     "pesticide", "lead", "cadmium", "mercury", "arsenic", "chemical", "residue",
 ]
-_ALLERGEN_KW = [
-    "allergen", "allergy", "allergic", "undeclared", "gluten", "peanut",
-    "tree nut", "soy", "soya", "sesame", "milk", "egg", "wheat", "shellfish",
-]
+# Unambiguous on their own — deliberately no bare food names ("milk"/"egg"/"wheat")
+# here, since those are just common ingredients, not an allergy signal by themselves.
+_ALLERGEN_KW = ["allergen", "allergy", "allergic", "undeclared"]
 _PHYSICAL_KW = ["metal", "glass", "plastic", "fragment", "foreign object", "foreign matter"]
 
 
@@ -148,8 +147,7 @@ def _extract_firm(title: str) -> str | None:
 
 def _infer_hazard_category(text: str) -> str | None:
     t = text.lower()
-    allergen_context = any(kw in t for kw in ["allergen", "allergy", "allergic", "undeclared"])
-    if allergen_context:
+    if any(kw in t for kw in _ALLERGEN_KW):
         return "allergen"
     for kw in _BIOLOGICAL_KW:
         if kw in t:

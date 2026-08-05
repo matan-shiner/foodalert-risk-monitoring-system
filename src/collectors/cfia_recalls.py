@@ -38,10 +38,14 @@ ENDPOINT = "https://recalls-rappels.canada.ca/sites/default/files/opendata-donne
 _BRAND_TITLE_RE = re.compile(r"^(.*?)\s+brand\s+", re.IGNORECASE)
 _FALLBACK_FIRM_RE = re.compile(r"^(.*?)\s+recalls?\b", re.IGNORECASE)
 
-_ALLERGEN_KW = [
-    "allergen", "allergy", "allergic", "undeclared", "gluten", "peanut",
-    "tree nut", "almond", "soy", "soya", "sesame", "milk", "egg", "wheat",
-    "shellfish", "mustard", "sulphite", "sulfite",
+# Unambiguous on their own — safe to match without extra context.
+_ALLERGEN_KW = ["allergen", "allergy", "allergic", "undeclared", "gluten", "sulphite", "sulfite"]
+# Only mean "allergen recall" when paired with an _ALLERGEN_KW context word above —
+# bare "milk"/"egg"/"wheat" are just common ingredients, not an allergy signal on
+# their own (a Listeria-in-cheese recall's Product field says "milk" too).
+_ALLERGEN_FOOD_KW = [
+    "peanut", "tree nut", "almond", "soy", "soya", "sesame", "milk", "egg",
+    "wheat", "shellfish", "mustard",
 ]
 _BIOLOGICAL_KW = [
     "salmonella", "listeria", "e. coli", "e.coli", "escherichia coli",
@@ -146,9 +150,10 @@ def _normalize_class(cls: str | None) -> str | None:
 
 def _infer_hazard_category(text: str) -> str | None:
     t = text.lower()
-    for kw in _ALLERGEN_KW:
-        if kw in t:
-            return "allergen"
+    if any(kw in t for kw in _ALLERGEN_KW):
+        return "allergen"
+    if "sensitiv" in t and any(kw in t for kw in _ALLERGEN_FOOD_KW):
+        return "allergen"
     for kw in _BIOLOGICAL_KW:
         if kw in t:
             return "biological"

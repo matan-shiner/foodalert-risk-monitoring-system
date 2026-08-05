@@ -57,6 +57,7 @@ class FDAEnforcementCollector(BaseCollector):
         title = self._build_title(raw)
         description = raw.get("reason_for_recall", "")
         product_desc = raw.get("product_description", "")
+        classify_text = f"{product_desc} {description}"
 
         return {
             "id": f"fda_enforcement::{record_id}",
@@ -74,9 +75,9 @@ class FDAEnforcementCollector(BaseCollector):
             "recalling_firm": raw.get("recalling_firm"),
             "brand_names": json.dumps([]),
             "product_description": product_desc,
-            "product_category": None,  # filled by enrichment step later
-            "hazard_category": None,
-            "hazard_specific": None,
+            "product_category": _infer_product_category(classify_text),
+            "hazard_category": _infer_hazard_category(classify_text),
+            "hazard_specific": _extract_hazard_specific(classify_text),
             "severity_raw": raw.get("classification"),
             "severity_normalized": _normalize_fda_class(raw.get("classification")),
             "population_at_risk": None,
@@ -134,3 +135,127 @@ def _extract_distribution(distribution_pattern: str) -> list:
 def _is_israel_relevant(raw: dict) -> int:
     blob = json.dumps(raw, default=str).lower()
     return 1 if "israel" in blob else 0
+
+
+# ── hazard / product classification ─────────────────────────────────────────
+# openFDA's food/enforcement.json has no category or hazard-type field at all
+# (its `openfda` cross-reference block, populated for drugs/devices, is always
+# empty for food records) — everything below is inferred from free text in
+# `product_description` + `reason_for_recall`. Same keyword-matching approach
+# already used in fsa_uk.py / rasff.py / cfia_recalls.py / cdc_food_safety_rss.py;
+# it will miss non-contamination recalls (labeling, process violations) the
+# same way those do.
+
+# Unambiguous on their own — safe to match without extra context.
+_ALLERGEN_KW = ["allergen", "allergy", "allergic", "undeclared", "gluten", "sulphite", "sulfite"]
+# Only mean "allergen recall" when paired with an _ALLERGEN_KW context word above —
+# bare "milk"/"egg"/"wheat" are just common ingredients, not an allergy signal on
+# their own (a Listeria-in-cheese recall's product_description says "milk" too).
+_ALLERGEN_FOOD_KW = [
+    "peanut", "tree nut", "almond", "walnut", "cashew", "pistachio", "hazelnut",
+    "pecan", "soy", "soya", "sesame", "milk", "egg", "wheat", "shellfish", "mustard",
+]
+_BIOLOGICAL_KW = [
+    "salmonella", "listeria", "e. coli", "e.coli", "escherichia coli",
+    "campylobacter", "norovirus", "clostridium", "cronobacter", "cyclospora",
+    "hepatitis", "pathogen", "bacteria", "mold", "mould",
+]
+_CHEMICAL_KW = [
+    "pesticide", "lead", "cadmium", "mercury", "arsenic", "chemical",
+    "residue", "histamine", "toxin", "aflatoxin",
+]
+_PHYSICAL_KW = [
+    "extraneous material", "foreign material", "foreign object", "metal",
+    "glass", "plastic", "rubber", "fragment",
+]
+
+# (label, keyword list) — checked in order, first match wins. Order favors
+# more specific categories (supplements, infant food, prepared/RTE dishes)
+# over generic ingredient-based ones, so e.g. a chicken salad kit lands in
+# "prepared dishes and salads" rather than "meat and poultry products".
+_PRODUCT_CATEGORIES: list[tuple[str, list[str]]] = [
+    ("dietary supplements", [
+        "dietary supplement", "capsule", "softgel", "herbal supplement",
+        "vitamin", "protein powder", "moringa",
+    ]),
+    ("infant and toddler food", [
+        "infant formula", "baby food", "infant", "toddler",
+    ]),
+    ("prepared dishes and salads", [
+        "salad kit", "ready-to-eat", "ready to eat", "prepared meal",
+        "entrée", "entree", "sandwich", "wrap", "burrito", "salad",
+    ]),
+    ("seafood and fish products", [
+        "fish", "shrimp", "salmon", "tuna", "shellfish", "seafood", "crab",
+        "lobster", "oyster", "clam", "scallop",
+    ]),
+    ("meat and poultry products", [
+        "beef", "pork", "chicken", "turkey", "poultry", "sausage", "bacon",
+        "ham", "meat",
+    ]),
+    ("dairy and eggs", [
+        "milk", "cheese", "yogurt", "yoghurt", "dairy", "butter", "cream", "egg",
+    ]),
+    ("bakery and grain products", [
+        "bread", "bakery", "cookie", "cracker", "cereal", "flour", "pasta",
+        "oat", "rice", "tortilla", "bagel",
+    ]),
+    ("confectionery and snacks", [
+        "chocolate", "candy", "snack", "chip", "confection", "gummy",
+    ]),
+    ("nuts, seeds and nut products", [
+        "peanut", "almond", "walnut", "cashew", "pistachio", "sesame seed",
+        "sunflower seed", "nut butter", "hazelnut", "pecan",
+    ]),
+    ("herbs and spices", [
+        "spice", "herb", "seasoning", "cumin", "cinnamon", "paprika",
+        "turmeric", "oregano", "basil",
+    ]),
+    ("sauces, condiments and beverages", [
+        "sauce", "condiment", "dressing", "salsa", "juice", "beverage",
+        "drink", "tea", "coffee",
+    ]),
+    ("fruits and vegetables", [
+        "lettuce", "tomato", "spinach", "kale", "produce", "vegetable",
+        "fruit", "berries", "apple", "onion", "potato", "mushroom",
+        "cucumber", "pepper", "carrot",
+    ]),
+]
+
+
+def _infer_product_category(text: str) -> str | None:
+    t = text.lower()
+    for label, keywords in _PRODUCT_CATEGORIES:
+        if any(kw in t for kw in keywords):
+            return label
+    return None
+
+
+def _infer_hazard_category(text: str) -> str | None:
+    t = text.lower()
+    if any(kw in t for kw in _ALLERGEN_KW):
+        return "allergen"
+    if "sensitiv" in t and any(kw in t for kw in _ALLERGEN_FOOD_KW):
+        return "allergen"
+    for kw in _BIOLOGICAL_KW:
+        if kw in t:
+            return "biological"
+    for kw in _CHEMICAL_KW:
+        if kw in t:
+            return "chemical"
+    for kw in _PHYSICAL_KW:
+        if kw in t:
+            return "physical"
+    return None
+
+
+def _extract_hazard_specific(text: str) -> str | None:
+    t = text.lower()
+    for hazard in [
+        "salmonella", "listeria monocytogenes", "listeria", "e. coli", "e.coli",
+        "campylobacter", "cronobacter", "cyclospora", "norovirus",
+        "clostridium botulinum", "hepatitis a", "aflatoxin", "undeclared allergen",
+    ]:
+        if hazard in t:
+            return hazard
+    return None

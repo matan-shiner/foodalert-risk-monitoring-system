@@ -1,5 +1,5 @@
 {
-  "n_alerts": 696,
+  "n_alerts": 697,
   "analyses": [
     {
       "alert_id": "fsis::092-2019",
@@ -77949,6 +77949,118 @@
           "original_score": 2.3068,
           "perturbed_score": 1.91693,
           "delta": -0.38987,
+          "direction": "↓"
+        }
+      ]
+    },
+    {
+      "alert_id": "cdc_food_safety_rss::766205",
+      "title": "Taylor Fresh Foods Recalls Products Made With Jalapeno Peppers Because of Possib",
+      "source_id": "cdc_food_safety_rss",
+      "hazard_specific": "salmonella",
+      "severity_raw": "",
+      "original_score": 4.98471,
+      "original_percentile": null,
+      "top_driver": "hazard→allergen",
+      "perturbations": [
+        {
+          "perturbation": "hazard→Listeria",
+          "perturbation_he": "סיכון→ליסטריה",
+          "field": "hazard_specific",
+          "new_value": "Listeria monocytogenes",
+          "original_score": 4.98471,
+          "perturbed_score": 5.53839,
+          "delta": 0.55368,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "hazard→mineral_oil",
+          "perturbation_he": "סיכון→שמן מינרלי",
+          "field": "hazard_specific",
+          "new_value": "mineral oil MOSH/MOAH (chronic chemical)",
+          "original_score": 4.98471,
+          "perturbed_score": 4.84591,
+          "delta": -0.1388,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "hazard→allergen",
+          "perturbation_he": "סיכון→אלרגן",
+          "field": "hazard_specific",
+          "new_value": "undeclared allergen: peanuts, sesame",
+          "original_score": 4.98471,
+          "perturbed_score": 4.01349,
+          "delta": -0.97122,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "severity→ClassI",
+          "perturbation_he": "חומרה→Class I",
+          "field": "severity_raw",
+          "new_value": "Class I",
+          "original_score": 4.98471,
+          "perturbed_score": 5.34703,
+          "delta": 0.36232,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "severity→ClassIII",
+          "perturbation_he": "חומרה→Class III",
+          "field": "severity_raw",
+          "new_value": "Class III",
+          "original_score": 4.98471,
+          "perturbed_score": 4.7875,
+          "delta": -0.19721,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→nationwide",
+          "perturbation_he": "הפצה→ארצית",
+          "field": "distribution_countries",
+          "new_value": "[\"United States\"]",
+          "original_score": 4.98471,
+          "perturbed_score": 4.98471,
+          "delta": 0.0,
+          "direction": "→"
+        },
+        {
+          "perturbation": "dist→local_only",
+          "perturbation_he": "הפצה→מקומית",
+          "field": "distribution_countries",
+          "new_value": "[\"limited local area, single county\"]",
+          "original_score": 4.98471,
+          "perturbed_score": 5.19783,
+          "delta": 0.21312,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "dist→+Israel",
+          "perturbation_he": "הפצה→+ישראל",
+          "field": "_append_israel",
+          "new_value": null,
+          "original_score": 4.98471,
+          "perturbed_score": 4.99507,
+          "delta": 0.01036,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "rte→add_RTE",
+          "perturbation_he": "מוצר→RTE",
+          "field": "_prepend_desc",
+          "new_value": "Ready-to-eat product. ",
+          "original_score": 4.98471,
+          "perturbed_score": 4.21602,
+          "delta": -0.76869,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "rte→cooked",
+          "perturbation_he": "מוצר→בישול נדרש",
+          "field": "_prepend_desc",
+          "new_value": "Requires thorough cooking before consumption. ",
+          "original_score": 4.98471,
+          "perturbed_score": 4.58348,
+          "delta": -0.40123,
           "direction": "↓"
         }
       ]

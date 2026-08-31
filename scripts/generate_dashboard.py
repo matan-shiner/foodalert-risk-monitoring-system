@@ -60,6 +60,7 @@ SOURCE_LABELS = {
     "fsanz_australia":    "FSANZ (Australia)",
     "fsai_ireland":       "FSAI (Ireland)",
     "sfa_singapore":      "SFA (Singapore)",
+    "cfs_hongkong":       "CFS (Hong Kong)",
 }
 
 SOURCE_REGION = {
@@ -72,6 +73,7 @@ SOURCE_REGION = {
     "fsanz_australia":    "🇦🇺 Australia",
     "fsai_ireland":       "🇮🇪 Ireland",
     "sfa_singapore":      "🇸🇬 Singapore",
+    "cfs_hongkong":       "🇭🇰 Hong Kong",
 }
 
 SOURCE_COLORS = {
@@ -84,6 +86,7 @@ SOURCE_COLORS = {
     "fsanz_australia":    "#00843d",
     "fsai_ireland":       "#169b62",
     "sfa_singapore":      "#ed2939",
+    "cfs_hongkong":       "#de2910",
 }
 
 PERT_LABELS = {

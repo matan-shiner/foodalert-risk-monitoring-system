@@ -7,6 +7,7 @@ from .cfia_recalls import CFIARecallsCollector
 from .fsanz_australia import FSANZAustraliaCollector
 from .fsai_ireland import FSAIIrelandCollector
 from .sfa_singapore import SFASingaporeCollector
+from .cfs_hongkong import CFSHongKongCollector
 
 COLLECTORS = {
     "fda_enforcement": FDAEnforcementCollector,
@@ -18,4 +19,5 @@ COLLECTORS = {
     "fsanz_australia": FSANZAustraliaCollector,
     "fsai_ireland": FSAIIrelandCollector,
     "sfa_singapore": SFASingaporeCollector,
+    "cfs_hongkong": CFSHongKongCollector,
 }

@@ -11,6 +11,7 @@ SOURCE_LABELS: dict[str, str] = {
     "fsanz_australia": "FSANZ — Australia Food Recalls",
     "fsai_ireland": "FSAI — Food Safety Authority of Ireland",
     "sfa_singapore": "SFA — Singapore Food Agency",
+    "cfs_hongkong": "CFS — Centre for Food Safety (Hong Kong)",
 }
 
 FDA_RECALLS_PORTAL = "https://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts"
@@ -21,6 +22,7 @@ CFIA_RECALLS_INDEX = "https://recalls-rappels.canada.ca/en"
 FSANZ_RECALLS_INDEX = "https://www.foodstandards.gov.au/food-recalls"
 FSAI_ALERTS_INDEX = "https://www.fsai.ie/news-alerts/food"
 SFA_ALERTS_INDEX = "https://www.sfa.gov.sg/news-publications/newsroom"
+CFS_ALERTS_INDEX = "https://www.cfs.gov.hk/english/whatsnew/whatsnew_fa/whatsnew_fa.html"
 
 
 def source_label(source_id: str) -> str:
@@ -89,6 +91,11 @@ def build_alert_links(
         if record_url:
             links.append({"label": "SFA notice", "href": record_url})
         links.append({"label": "SFA Newsroom", "href": SFA_ALERTS_INDEX})
+
+    elif source_id == "cfs_hongkong":
+        if record_url:
+            links.append({"label": "CFS notice", "href": record_url})
+        links.append({"label": "CFS Alerts", "href": CFS_ALERTS_INDEX})
 
     elif record_url:
         links.append({"label": "Source", "href": record_url})

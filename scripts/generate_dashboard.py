@@ -58,6 +58,7 @@ SOURCE_LABELS = {
     "cdc_food_safety_rss": "CDC Food Safety — pre-classification (USA)",
     "cfia_recalls":       "CFIA Recalls (Canada)",
     "fsanz_australia":    "FSANZ (Australia)",
+    "fsai_ireland":       "FSAI (Ireland)",
 }
 
 SOURCE_REGION = {
@@ -68,6 +69,7 @@ SOURCE_REGION = {
     "cdc_food_safety_rss": "🇺🇸 USA",
     "cfia_recalls":       "🇨🇦 Canada",
     "fsanz_australia":    "🇦🇺 Australia",
+    "fsai_ireland":       "🇮🇪 Ireland",
 }
 
 SOURCE_COLORS = {
@@ -78,6 +80,7 @@ SOURCE_COLORS = {
     "cdc_food_safety_rss": "#5a4fcf",
     "cfia_recalls":       "#d52b1e",
     "fsanz_australia":    "#00843d",
+    "fsai_ireland":       "#169b62",
 }
 
 PERT_LABELS = {

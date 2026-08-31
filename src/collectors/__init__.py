@@ -5,6 +5,7 @@ from .rasff import RASFFCollector
 from .cdc_food_safety_rss import CDCFoodSafetyRSSCollector
 from .cfia_recalls import CFIARecallsCollector
 from .fsanz_australia import FSANZAustraliaCollector
+from .fsai_ireland import FSAIIrelandCollector
 
 COLLECTORS = {
     "fda_enforcement": FDAEnforcementCollector,
@@ -14,4 +15,5 @@ COLLECTORS = {
     "cdc_food_safety_rss": CDCFoodSafetyRSSCollector,
     "cfia_recalls": CFIARecallsCollector,
     "fsanz_australia": FSANZAustraliaCollector,
+    "fsai_ireland": FSAIIrelandCollector,
 }

@@ -5,6 +5,26 @@ Docs:     https://webgate.ec.europa.eu/rasff-window/screen/search  (public porta
 
 No authentication required. Returns up to ~31k notifications (food + feed).
 Paginated DESC by ecValidationDate — incremental fetch stops early on `since`.
+
+Israel relevance (found 2026-08-31): the bulk search endpoint above only
+returns `subject`/`notifyingCountry`/`originCountries` — free text plus two
+of RASFF's four organisation roles. RASFF also tags a per-notification
+"Organisations" list with all four roles (Notifying/Origin/Distribution/
+**Operator** — the country of the business entity implicated, independent
+of geography) via a separate per-notification detail endpoint:
+  GET https://webgate.ec.europa.eu/rasff-window/backend/public/notification/view/id/{notifId}/en/
+  → `organizationFlags`: [{"organization": {"code": "IL", "description":
+     "Israel", ...}, "notificationFlags": [{"flagType": "OPERATOR"}, ...]}]
+A country can appear here (e.g. as an Operator) without ever being named in
+the free-text subject, so the old `"israel" in subject.lower()` check missed
+real cases — e.g. notification 2026.7490 involved an Israeli operator but
+never says "Israel" in its subject. Fixed by fetching this detail endpoint
+per record and checking for country code "IL" in the organisation list,
+in addition to (not instead of) the subject-text check. This adds one HTTP
+call per record, acceptable for normal day-to-day incremental ingestion
+(a handful of new records/day) — a one-time backfill script was used
+separately to retrofit `israel_relevance_flag` on the pre-existing ~11k
+historical rows without re-ingesting them.
 """
 from __future__ import annotations
 
@@ -19,6 +39,10 @@ from .base import BaseCollector, make_retry_session
 SEARCH_URL = (
     "https://webgate.ec.europa.eu/rasff-window/backend/public"
     "/notification/search/consolidated/"
+)
+DETAIL_URL_TPL = (
+    "https://webgate.ec.europa.eu/rasff-window/backend/public"
+    "/notification/view/id/{notif_id}/en/"
 )
 PAGE_SIZE = 100
 TIMEOUT = 30
@@ -82,6 +106,10 @@ class RASFFCollector(BaseCollector):
                     if pub and pub < since_date:
                         return
 
+                notif_id = item.get("notifId")
+                if notif_id:
+                    item["_israel_operator"] = _check_israel_organisation(session, notif_id)
+
                 yield item
                 fetched += 1
                 if limit and fetched >= limit:
@@ -132,7 +160,9 @@ class RASFFCollector(BaseCollector):
             "distribution_countries": json.dumps(
                 list({notifying} | set(origin_countries)) if notifying else origin_countries
             ),
-            "israel_relevance_flag": 1 if "israel" in subject.lower() else 0,
+            "israel_relevance_flag": 1 if (
+                "israel" in subject.lower() or raw.get("_israel_operator")
+            ) else 0,
             "recalling_firm": None,
             "brand_names": json.dumps([]),
             "product_description": subject or None,
@@ -152,6 +182,23 @@ class RASFFCollector(BaseCollector):
 
 
 # ── helpers ───────────────────────────────────────────────────────────────────
+
+def _check_israel_organisation(session, notif_id) -> bool:
+    """True if Israel (country code IL) appears anywhere in the notification's
+    Organisations list — as Notifying, Origin, Distribution, or Operator —
+    regardless of whether it's additionally flagged for follow-up/attention.
+    See module docstring for why this catches cases the subject-text check
+    misses. Fails soft (returns False) on any request/parsing error — this
+    is a best-effort enrichment on top of the subject-text check, not the
+    sole source of truth."""
+    try:
+        r = session.get(DETAIL_URL_TPL.format(notif_id=notif_id), timeout=TIMEOUT)
+        r.raise_for_status()
+        orgs = r.json().get("organizationFlags", [])
+        return any((o.get("organization") or {}).get("code") == "IL" for o in orgs)
+    except Exception:
+        return False
+
 
 def _parse_rasff_date(s: str | None) -> str | None:
     """Convert 'DD-MM-YYYY HH:MM:SS' → 'YYYY-MM-DD'."""

@@ -59,6 +59,7 @@ SOURCE_LABELS = {
     "cfia_recalls":       "CFIA Recalls (Canada)",
     "fsanz_australia":    "FSANZ (Australia)",
     "fsai_ireland":       "FSAI (Ireland)",
+    "sfa_singapore":      "SFA (Singapore)",
 }
 
 SOURCE_REGION = {
@@ -70,6 +71,7 @@ SOURCE_REGION = {
     "cfia_recalls":       "🇨🇦 Canada",
     "fsanz_australia":    "🇦🇺 Australia",
     "fsai_ireland":       "🇮🇪 Ireland",
+    "sfa_singapore":      "🇸🇬 Singapore",
 }
 
 SOURCE_COLORS = {
@@ -81,6 +83,7 @@ SOURCE_COLORS = {
     "cfia_recalls":       "#d52b1e",
     "fsanz_australia":    "#00843d",
     "fsai_ireland":       "#169b62",
+    "sfa_singapore":      "#ed2939",
 }
 
 PERT_LABELS = {

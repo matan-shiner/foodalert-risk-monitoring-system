@@ -8,6 +8,8 @@ from .fsanz_australia import FSANZAustraliaCollector
 from .fsai_ireland import FSAIIrelandCollector
 from .sfa_singapore import SFASingaporeCollector
 from .cfs_hongkong import CFSHongKongCollector
+from .samr_china import SAMRChinaCollector
+from .caa_japan import CAAJapanCollector
 
 COLLECTORS = {
     "fda_enforcement": FDAEnforcementCollector,
@@ -20,4 +22,6 @@ COLLECTORS = {
     "fsai_ireland": FSAIIrelandCollector,
     "sfa_singapore": SFASingaporeCollector,
     "cfs_hongkong": CFSHongKongCollector,
+    "samr_china": SAMRChinaCollector,
+    "caa_japan": CAAJapanCollector,
 }

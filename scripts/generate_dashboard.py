@@ -61,6 +61,8 @@ SOURCE_LABELS = {
     "fsai_ireland":       "FSAI (Ireland)",
     "sfa_singapore":      "SFA (Singapore)",
     "cfs_hongkong":       "CFS (Hong Kong)",
+    "samr_china":         "SAMR (China)",
+    "caa_japan":          "CAA (Japan)",
 }
 
 SOURCE_REGION = {
@@ -74,6 +76,8 @@ SOURCE_REGION = {
     "fsai_ireland":       "🇮🇪 Ireland",
     "sfa_singapore":      "🇸🇬 Singapore",
     "cfs_hongkong":       "🇭🇰 Hong Kong",
+    "samr_china":         "🇨🇳 China",
+    "caa_japan":          "🇯🇵 Japan",
 }
 
 SOURCE_COLORS = {
@@ -87,6 +91,8 @@ SOURCE_COLORS = {
     "fsai_ireland":       "#169b62",
     "sfa_singapore":      "#ed2939",
     "cfs_hongkong":       "#de2910",
+    "samr_china":         "#ffde00",
+    "caa_japan":          "#bc002d",
 }
 
 PERT_LABELS = {
@@ -1089,6 +1095,11 @@ __SOURCE_OPTIONS__
   <!-- SECTION 2: Israel Watch -->
   <div id="toc-israel" class="section">
     <div class="section-title">🇮🇱 Israel Watch</div>
+    <div id="israel-sort-control" style="display:flex;align-items:center;gap:8px;margin:0 0 10px;padding:0 2px">
+      <span style="font-size:12px;color:var(--muted)">Sort by:</span>
+      <button id="israel-sort-score-btn" class="sort-pill sort-active" onclick="setIsraelSortBy('score')">Score</button>
+      <button id="israel-sort-date-btn"  class="sort-pill"             onclick="setIsraelSortBy('date')">Date</button>
+    </div>
     <div id="israel-section"></div>
   </div>
 
@@ -1531,10 +1542,22 @@ function scrollToTierById(id, toggleMed){
 }
 
 // ── Israel Watch ──────────────────────────────────────────────────────────
-(function(){
+let _israelSortMode = 'score';
+
+function _sortByMode(arr, mode){
+  const copy = [...arr];
+  if(mode === 'date'){
+    copy.sort((a,b) => b.source_published_date.localeCompare(a.source_published_date));
+  } else {
+    copy.sort((a,b) => b.absolute_score - a.absolute_score);
+  }
+  return copy;
+}
+
+function renderIsraelSection(){
   const el = document.getElementById('israel-section');
   if(DATA.israel_alerts.length > 0){
-    el.innerHTML = DATA.israel_alerts.map(a=>renderCard(a,'israel-feed')).join('');
+    el.innerHTML = _sortByMode(DATA.israel_alerts, _israelSortMode).map(a=>renderCard(a,'israel-feed')).join('');
   } else {
     let html = `<div class="all-clear">
       <span class="icon">✅</span>
@@ -1549,12 +1572,21 @@ function scrollToTierById(id, toggleMed){
           Most recent Israel-relevant alerts (outside current window) ▸
         </summary>
         <div class="fallback-note" style="margin-top:8px">These alerts are outside the current ${m.window_days}-day window. Shown for reference only.</div>
-        ${DATA.israel_fallback.map(a=>renderCard(a,'israel-feed')).join('')}
+        ${_sortByMode(DATA.israel_fallback, _israelSortMode).map(a=>renderCard(a,'israel-feed')).join('')}
       </details>`;
     }
     el.innerHTML = html;
   }
-})();
+}
+
+function setIsraelSortBy(mode){
+  _israelSortMode = mode;
+  document.getElementById('israel-sort-score-btn').classList.toggle('sort-active', mode==='score');
+  document.getElementById('israel-sort-date-btn').classList.toggle('sort-active',  mode==='date');
+  renderIsraelSection();
+}
+
+renderIsraelSection();
 
 // ── Alert Feed ────────────────────────────────────────────────────────────
 const INITIAL_SHOW = 10;

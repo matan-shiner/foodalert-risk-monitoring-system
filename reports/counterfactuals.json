@@ -1,5 +1,5 @@
 {
-  "n_alerts": 834,
+  "n_alerts": 839,
   "analyses": [
     {
       "alert_id": "fsis::092-2019",
@@ -93406,6 +93406,566 @@
           "perturbed_score": 0.64136,
           "delta": -0.64016,
           "direction": "↓"
+        }
+      ]
+    },
+    {
+      "alert_id": "fda_enforcement::H-0643-2025",
+      "title": "Chefs Warehouse — Class I — 10lbs.  Cucumbers Sliced 1/4\",  5 lbs.   Cucumber Sl",
+      "source_id": "fda_enforcement",
+      "hazard_specific": "salmonella",
+      "severity_raw": "Class I",
+      "original_score": 6.64013,
+      "original_percentile": null,
+      "top_driver": "rte→add_RTE",
+      "perturbations": [
+        {
+          "perturbation": "hazard→Listeria",
+          "perturbation_he": "סיכון→ליסטריה",
+          "field": "hazard_specific",
+          "new_value": "Listeria monocytogenes",
+          "original_score": 6.64013,
+          "perturbed_score": 6.52996,
+          "delta": -0.11017,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "hazard→mineral_oil",
+          "perturbation_he": "סיכון→שמן מינרלי",
+          "field": "hazard_specific",
+          "new_value": "mineral oil MOSH/MOAH (chronic chemical)",
+          "original_score": 6.64013,
+          "perturbed_score": 6.48703,
+          "delta": -0.1531,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "hazard→allergen",
+          "perturbation_he": "סיכון→אלרגן",
+          "field": "hazard_specific",
+          "new_value": "undeclared allergen: peanuts, sesame",
+          "original_score": 6.64013,
+          "perturbed_score": 6.13197,
+          "delta": -0.50816,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "severity→ClassI",
+          "perturbation_he": "חומרה→Class I",
+          "field": "severity_raw",
+          "new_value": "Class I",
+          "original_score": 6.64013,
+          "perturbed_score": 6.64013,
+          "delta": -0.0,
+          "direction": "→"
+        },
+        {
+          "perturbation": "severity→ClassIII",
+          "perturbation_he": "חומרה→Class III",
+          "field": "severity_raw",
+          "new_value": "Class III",
+          "original_score": 6.64013,
+          "perturbed_score": 6.12624,
+          "delta": -0.51389,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→nationwide",
+          "perturbation_he": "הפצה→ארצית",
+          "field": "distribution_countries",
+          "new_value": "[\"United States\"]",
+          "original_score": 6.64013,
+          "perturbed_score": 5.5592,
+          "delta": -1.08093,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→local_only",
+          "perturbation_he": "הפצה→מקומית",
+          "field": "distribution_countries",
+          "new_value": "[\"limited local area, single county\"]",
+          "original_score": 6.64013,
+          "perturbed_score": 5.56291,
+          "delta": -1.07722,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→+Israel",
+          "perturbation_he": "הפצה→+ישראל",
+          "field": "_append_israel",
+          "new_value": null,
+          "original_score": 6.64013,
+          "perturbed_score": 6.41303,
+          "delta": -0.2271,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "rte→add_RTE",
+          "perturbation_he": "מוצר→RTE",
+          "field": "_prepend_desc",
+          "new_value": "Ready-to-eat product. ",
+          "original_score": 6.64013,
+          "perturbed_score": 4.97053,
+          "delta": -1.6696,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "rte→cooked",
+          "perturbation_he": "מוצר→בישול נדרש",
+          "field": "_prepend_desc",
+          "new_value": "Requires thorough cooking before consumption. ",
+          "original_score": 6.64013,
+          "perturbed_score": 6.19887,
+          "delta": -0.44126,
+          "direction": "↓"
+        }
+      ]
+    },
+    {
+      "alert_id": "fsis::PHA-04272022-01",
+      "title": "FSIS Issues Public Health Alert for Ground Beef Products  Due to Possible E. col",
+      "source_id": "fsis",
+      "hazard_specific": "e. coli",
+      "severity_raw": "Public Health Alert",
+      "original_score": 6.57438,
+      "original_percentile": null,
+      "top_driver": "hazard→Listeria",
+      "perturbations": [
+        {
+          "perturbation": "hazard→Listeria",
+          "perturbation_he": "סיכון→ליסטריה",
+          "field": "hazard_specific",
+          "new_value": "Listeria monocytogenes",
+          "original_score": 6.57438,
+          "perturbed_score": 6.57438,
+          "delta": 0.0,
+          "direction": "→"
+        },
+        {
+          "perturbation": "hazard→mineral_oil",
+          "perturbation_he": "סיכון→שמן מינרלי",
+          "field": "hazard_specific",
+          "new_value": "mineral oil MOSH/MOAH (chronic chemical)",
+          "original_score": 6.57438,
+          "perturbed_score": 6.57438,
+          "delta": 0.0,
+          "direction": "→"
+        },
+        {
+          "perturbation": "hazard→allergen",
+          "perturbation_he": "סיכון→אלרגן",
+          "field": "hazard_specific",
+          "new_value": "undeclared allergen: peanuts, sesame",
+          "original_score": 6.57438,
+          "perturbed_score": 6.57438,
+          "delta": 0.0,
+          "direction": "→"
+        },
+        {
+          "perturbation": "severity→ClassI",
+          "perturbation_he": "חומרה→Class I",
+          "field": "severity_raw",
+          "new_value": "Class I",
+          "original_score": 6.57438,
+          "perturbed_score": 6.57438,
+          "delta": 0.0,
+          "direction": "→"
+        },
+        {
+          "perturbation": "severity→ClassIII",
+          "perturbation_he": "חומרה→Class III",
+          "field": "severity_raw",
+          "new_value": "Class III",
+          "original_score": 6.57438,
+          "perturbed_score": 6.57438,
+          "delta": 0.0,
+          "direction": "→"
+        },
+        {
+          "perturbation": "dist→nationwide",
+          "perturbation_he": "הפצה→ארצית",
+          "field": "distribution_countries",
+          "new_value": "[\"United States\"]",
+          "original_score": 6.57438,
+          "perturbed_score": 6.57438,
+          "delta": 0.0,
+          "direction": "→"
+        },
+        {
+          "perturbation": "dist→local_only",
+          "perturbation_he": "הפצה→מקומית",
+          "field": "distribution_countries",
+          "new_value": "[\"limited local area, single county\"]",
+          "original_score": 6.57438,
+          "perturbed_score": 6.57438,
+          "delta": 0.0,
+          "direction": "→"
+        },
+        {
+          "perturbation": "dist→+Israel",
+          "perturbation_he": "הפצה→+ישראל",
+          "field": "_append_israel",
+          "new_value": null,
+          "original_score": 6.57438,
+          "perturbed_score": 6.57438,
+          "delta": 0.0,
+          "direction": "→"
+        },
+        {
+          "perturbation": "rte→add_RTE",
+          "perturbation_he": "מוצר→RTE",
+          "field": "_prepend_desc",
+          "new_value": "Ready-to-eat product. ",
+          "original_score": 6.57438,
+          "perturbed_score": 6.57438,
+          "delta": 0.0,
+          "direction": "→"
+        },
+        {
+          "perturbation": "rte→cooked",
+          "perturbation_he": "מוצר→בישול נדרש",
+          "field": "_prepend_desc",
+          "new_value": "Requires thorough cooking before consumption. ",
+          "original_score": 6.57438,
+          "perturbed_score": 6.57438,
+          "delta": 0.0,
+          "direction": "→"
+        }
+      ]
+    },
+    {
+      "alert_id": "fda_enforcement::H-0631-2025",
+      "title": "Middlefield Original Cheese Cooperative — Class I — 1) Middlefield Original Chee",
+      "source_id": "fda_enforcement",
+      "hazard_specific": "listeria monocytogenes",
+      "severity_raw": "Class I",
+      "original_score": 6.56425,
+      "original_percentile": null,
+      "top_driver": "rte→add_RTE",
+      "perturbations": [
+        {
+          "perturbation": "hazard→Listeria",
+          "perturbation_he": "סיכון→ליסטריה",
+          "field": "hazard_specific",
+          "new_value": "Listeria monocytogenes",
+          "original_score": 6.56425,
+          "perturbed_score": 6.55118,
+          "delta": -0.01307,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "hazard→mineral_oil",
+          "perturbation_he": "סיכון→שמן מינרלי",
+          "field": "hazard_specific",
+          "new_value": "mineral oil MOSH/MOAH (chronic chemical)",
+          "original_score": 6.56425,
+          "perturbed_score": 6.32255,
+          "delta": -0.2417,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "hazard→allergen",
+          "perturbation_he": "סיכון→אלרגן",
+          "field": "hazard_specific",
+          "new_value": "undeclared allergen: peanuts, sesame",
+          "original_score": 6.56425,
+          "perturbed_score": 6.20521,
+          "delta": -0.35904,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "severity→ClassI",
+          "perturbation_he": "חומרה→Class I",
+          "field": "severity_raw",
+          "new_value": "Class I",
+          "original_score": 6.56425,
+          "perturbed_score": 6.56425,
+          "delta": -0.0,
+          "direction": "→"
+        },
+        {
+          "perturbation": "severity→ClassIII",
+          "perturbation_he": "חומרה→Class III",
+          "field": "severity_raw",
+          "new_value": "Class III",
+          "original_score": 6.56425,
+          "perturbed_score": 6.23853,
+          "delta": -0.32572,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→nationwide",
+          "perturbation_he": "הפצה→ארצית",
+          "field": "distribution_countries",
+          "new_value": "[\"United States\"]",
+          "original_score": 6.56425,
+          "perturbed_score": 6.44451,
+          "delta": -0.11974,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→local_only",
+          "perturbation_he": "הפצה→מקומית",
+          "field": "distribution_countries",
+          "new_value": "[\"limited local area, single county\"]",
+          "original_score": 6.56425,
+          "perturbed_score": 6.46847,
+          "delta": -0.09578,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→+Israel",
+          "perturbation_he": "הפצה→+ישראל",
+          "field": "_append_israel",
+          "new_value": null,
+          "original_score": 6.56425,
+          "perturbed_score": 6.51615,
+          "delta": -0.0481,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "rte→add_RTE",
+          "perturbation_he": "מוצר→RTE",
+          "field": "_prepend_desc",
+          "new_value": "Ready-to-eat product. ",
+          "original_score": 6.56425,
+          "perturbed_score": 5.37332,
+          "delta": -1.19093,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "rte→cooked",
+          "perturbation_he": "מוצר→בישול נדרש",
+          "field": "_prepend_desc",
+          "new_value": "Requires thorough cooking before consumption. ",
+          "original_score": 6.56425,
+          "perturbed_score": 6.34136,
+          "delta": -0.22289,
+          "direction": "↓"
+        }
+      ]
+    },
+    {
+      "alert_id": "fda_enforcement::H-0421-2026",
+      "title": "Plant Based Innovations, LLC — Class II — HIGHER HARVEST by H-E-B brand; Dairy F",
+      "source_id": "fda_enforcement",
+      "hazard_specific": "undeclared",
+      "severity_raw": "Class II",
+      "original_score": -5.68069,
+      "original_percentile": null,
+      "top_driver": "hazard→Listeria",
+      "perturbations": [
+        {
+          "perturbation": "hazard→Listeria",
+          "perturbation_he": "סיכון→ליסטריה",
+          "field": "hazard_specific",
+          "new_value": "Listeria monocytogenes",
+          "original_score": -5.68069,
+          "perturbed_score": -3.63756,
+          "delta": 2.04313,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "hazard→mineral_oil",
+          "perturbation_he": "סיכון→שמן מינרלי",
+          "field": "hazard_specific",
+          "new_value": "mineral oil MOSH/MOAH (chronic chemical)",
+          "original_score": -5.68069,
+          "perturbed_score": -5.67653,
+          "delta": 0.00416,
+          "direction": "→"
+        },
+        {
+          "perturbation": "hazard→allergen",
+          "perturbation_he": "סיכון→אלרגן",
+          "field": "hazard_specific",
+          "new_value": "undeclared allergen: peanuts, sesame",
+          "original_score": -5.68069,
+          "perturbed_score": -5.68147,
+          "delta": -0.00078,
+          "direction": "→"
+        },
+        {
+          "perturbation": "severity→ClassI",
+          "perturbation_he": "חומרה→Class I",
+          "field": "severity_raw",
+          "new_value": "Class I",
+          "original_score": -5.68069,
+          "perturbed_score": -4.38787,
+          "delta": 1.29282,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "severity→ClassIII",
+          "perturbation_he": "חומרה→Class III",
+          "field": "severity_raw",
+          "new_value": "Class III",
+          "original_score": -5.68069,
+          "perturbed_score": -5.67961,
+          "delta": 0.00108,
+          "direction": "→"
+        },
+        {
+          "perturbation": "dist→nationwide",
+          "perturbation_he": "הפצה→ארצית",
+          "field": "distribution_countries",
+          "new_value": "[\"United States\"]",
+          "original_score": -5.68069,
+          "perturbed_score": -5.67985,
+          "delta": 0.00084,
+          "direction": "→"
+        },
+        {
+          "perturbation": "dist→local_only",
+          "perturbation_he": "הפצה→מקומית",
+          "field": "distribution_countries",
+          "new_value": "[\"limited local area, single county\"]",
+          "original_score": -5.68069,
+          "perturbed_score": -5.67923,
+          "delta": 0.00146,
+          "direction": "→"
+        },
+        {
+          "perturbation": "dist→+Israel",
+          "perturbation_he": "הפצה→+ישראל",
+          "field": "_append_israel",
+          "new_value": null,
+          "original_score": -5.68069,
+          "perturbed_score": -5.6767,
+          "delta": 0.00399,
+          "direction": "→"
+        },
+        {
+          "perturbation": "rte→add_RTE",
+          "perturbation_he": "מוצר→RTE",
+          "field": "_prepend_desc",
+          "new_value": "Ready-to-eat product. ",
+          "original_score": -5.68069,
+          "perturbed_score": -5.68092,
+          "delta": -0.00023,
+          "direction": "→"
+        },
+        {
+          "perturbation": "rte→cooked",
+          "perturbation_he": "מוצר→בישול נדרש",
+          "field": "_prepend_desc",
+          "new_value": "Requires thorough cooking before consumption. ",
+          "original_score": -5.68069,
+          "perturbed_score": -5.68057,
+          "delta": 0.00012,
+          "direction": "→"
+        }
+      ]
+    },
+    {
+      "alert_id": "fda_enforcement::H-0489-2025",
+      "title": "The Bonami Baking Company, Inc. — Class II — Wheat Hamburger Buns --- Ingredient",
+      "source_id": "fda_enforcement",
+      "hazard_specific": "allergen",
+      "severity_raw": "Class II",
+      "original_score": -5.63961,
+      "original_percentile": null,
+      "top_driver": "hazard→Listeria",
+      "perturbations": [
+        {
+          "perturbation": "hazard→Listeria",
+          "perturbation_he": "סיכון→ליסטריה",
+          "field": "hazard_specific",
+          "new_value": "Listeria monocytogenes",
+          "original_score": -5.63961,
+          "perturbed_score": -3.33366,
+          "delta": 2.30595,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "hazard→mineral_oil",
+          "perturbation_he": "סיכון→שמן מינרלי",
+          "field": "hazard_specific",
+          "new_value": "mineral oil MOSH/MOAH (chronic chemical)",
+          "original_score": -5.63961,
+          "perturbed_score": -5.62928,
+          "delta": 0.01033,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "hazard→allergen",
+          "perturbation_he": "סיכון→אלרגן",
+          "field": "hazard_specific",
+          "new_value": "undeclared allergen: peanuts, sesame",
+          "original_score": -5.63961,
+          "perturbed_score": -5.63401,
+          "delta": 0.0056,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "severity→ClassI",
+          "perturbation_he": "חומרה→Class I",
+          "field": "severity_raw",
+          "new_value": "Class I",
+          "original_score": -5.63961,
+          "perturbed_score": -3.85765,
+          "delta": 1.78196,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "severity→ClassIII",
+          "perturbation_he": "חומרה→Class III",
+          "field": "severity_raw",
+          "new_value": "Class III",
+          "original_score": -5.63961,
+          "perturbed_score": -5.64001,
+          "delta": -0.0004,
+          "direction": "→"
+        },
+        {
+          "perturbation": "dist→nationwide",
+          "perturbation_he": "הפצה→ארצית",
+          "field": "distribution_countries",
+          "new_value": "[\"United States\"]",
+          "original_score": -5.63961,
+          "perturbed_score": -5.64229,
+          "delta": -0.00268,
+          "direction": "→"
+        },
+        {
+          "perturbation": "dist→local_only",
+          "perturbation_he": "הפצה→מקומית",
+          "field": "distribution_countries",
+          "new_value": "[\"limited local area, single county\"]",
+          "original_score": -5.63961,
+          "perturbed_score": -5.63297,
+          "delta": 0.00664,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "dist→+Israel",
+          "perturbation_he": "הפצה→+ישראל",
+          "field": "_append_israel",
+          "new_value": null,
+          "original_score": -5.63961,
+          "perturbed_score": -5.63127,
+          "delta": 0.00834,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "rte→add_RTE",
+          "perturbation_he": "מוצר→RTE",
+          "field": "_prepend_desc",
+          "new_value": "Ready-to-eat product. ",
+          "original_score": -5.63961,
+          "perturbed_score": -5.64128,
+          "delta": -0.00167,
+          "direction": "→"
+        },
+        {
+          "perturbation": "rte→cooked",
+          "perturbation_he": "מוצר→בישול נדרש",
+          "field": "_prepend_desc",
+          "new_value": "Requires thorough cooking before consumption. ",
+          "original_score": -5.63961,
+          "perturbed_score": -5.63945,
+          "delta": 0.00016,
+          "direction": "→"
         }
       ]
     }

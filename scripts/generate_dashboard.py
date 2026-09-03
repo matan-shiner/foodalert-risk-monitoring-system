@@ -2223,7 +2223,9 @@ function _updateBreakdowns(filtered) {
     const cdTotal = cd.data.reduce((s,v)=>s+v,0);
     _charts.country.data.labels = cd.labels;
     _charts.country.data.datasets[0].data = cd.data;
+    _charts.country.options.plugins.tooltip.callbacks.title = items => cd.labels[items[0].dataIndex];
     _charts.country.options.plugins.tooltip.callbacks.label = item => ` ${item.raw}  (${cdTotal ? Math.round(item.raw/cdTotal*100) : 0}%)`;
+    _charts.country.options.scales.y.ticks.callback = (val,i) => _truncLabel(cd.labels[i]||'',4);
     _charts.country.update();
   }
 

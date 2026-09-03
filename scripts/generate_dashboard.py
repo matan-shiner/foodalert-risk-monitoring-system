@@ -63,6 +63,7 @@ SOURCE_LABELS = {
     "cfs_hongkong":       "CFS (Hong Kong)",
     "samr_china":         "SAMR (China)",
     "caa_japan":          "CAA (Japan)",
+    "fda_thailand":       "Thai FDA (Thailand)",
 }
 
 SOURCE_REGION = {
@@ -78,6 +79,7 @@ SOURCE_REGION = {
     "cfs_hongkong":       "🇭🇰 Hong Kong",
     "samr_china":         "🇨🇳 China",
     "caa_japan":          "🇯🇵 Japan",
+    "fda_thailand":       "🇹🇭 Thailand",
 }
 
 SOURCE_COLORS = {
@@ -93,6 +95,7 @@ SOURCE_COLORS = {
     "cfs_hongkong":       "#de2910",
     "samr_china":         "#ffde00",
     "caa_japan":          "#bc002d",
+    "fda_thailand":       "#2d2a4a",
 }
 
 PERT_LABELS = {

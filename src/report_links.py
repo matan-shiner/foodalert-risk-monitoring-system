@@ -14,6 +14,7 @@ SOURCE_LABELS: dict[str, str] = {
     "cfs_hongkong": "CFS — Centre for Food Safety (Hong Kong)",
     "samr_china": "SAMR — State Administration for Market Regulation (China)",
     "caa_japan": "CAA — Consumer Affairs Agency (Japan)",
+    "fda_thailand": "Thai FDA — Consumer Alert News",
 }
 
 FDA_RECALLS_PORTAL = "https://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts"
@@ -27,6 +28,7 @@ SFA_ALERTS_INDEX = "https://www.sfa.gov.sg/news-publications/newsroom"
 CFS_ALERTS_INDEX = "https://www.cfs.gov.hk/english/whatsnew/whatsnew_fa/whatsnew_fa.html"
 SAMR_ALERTS_INDEX = "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/spcjs/index.html"
 CAA_ALERTS_INDEX = "https://www.recall.caa.go.jp/result/index.php?screenkbn=01&category=1"
+THAILAND_FDA_ALERTS_INDEX = "https://food.fda.moph.go.th/consumer-alertnews"
 
 
 def source_label(source_id: str) -> str:
@@ -110,6 +112,11 @@ def build_alert_links(
         if record_url:
             links.append({"label": "CAA notice", "href": record_url})
         links.append({"label": "CAA Food Recalls", "href": CAA_ALERTS_INDEX})
+
+    elif source_id == "fda_thailand":
+        if record_url:
+            links.append({"label": "Thai FDA notice", "href": record_url})
+        links.append({"label": "Thai FDA Alerts", "href": THAILAND_FDA_ALERTS_INDEX})
 
     elif record_url:
         links.append({"label": "Source", "href": record_url})

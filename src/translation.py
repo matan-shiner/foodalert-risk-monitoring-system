@@ -183,6 +183,32 @@ def _has_text(text: str, lang: str) -> bool:
     return bool(_LANGUAGES[lang]["char_re"].search(text or ""))
 
 
+def _generate_kwargs() -> dict:
+    # Greedy decoding (the previous default) is prone to degenerate loops
+    # ("cans, cans, cans, cans...") and fluent-sounding hallucination
+    # ("I'm sorry, I'm sorry...") on the short, non-sentence-like fragments
+    # these collectors feed it (product codes, table cells, legal
+    # boilerplate) — content the model never saw in training. Beam search
+    # with repetition controls substantially reduces both failure modes.
+    return dict(
+        max_new_tokens=128,
+        num_beams=4,
+        no_repeat_ngram_size=3,
+        repetition_penalty=1.3,
+        early_stopping=True,
+    )
+
+
+_WORD_RUN_RE = re.compile(r"\b(\S+)(?:[\s,.]+\1\b){2,}", re.IGNORECASE)
+
+
+def _collapse_repeats(text: str) -> str:
+    """Collapse a run of the same word/phrase repeated 3+ times in a row
+    into a single occurrence — a safety net for degenerate output that
+    survives even beam search + repetition penalty."""
+    return _WORD_RUN_RE.sub(r"\1", text)
+
+
 @lru_cache(maxsize=4096)
 def _translate_cached(text: str, lang: str) -> str:
     known = known_term_lookup(text, lang)
@@ -190,8 +216,9 @@ def _translate_cached(text: str, lang: str) -> str:
         return known
     model, tokenizer = _load_model(lang)
     batch = tokenizer([text], return_tensors="pt", padding=True, truncation=True)
-    generated = model.generate(**batch, max_new_tokens=128)
-    return tokenizer.batch_decode(generated, skip_special_tokens=True)[0].strip()
+    generated = model.generate(**batch, **_generate_kwargs())
+    decoded = tokenizer.batch_decode(generated, skip_special_tokens=True)[0].strip()
+    return _collapse_repeats(decoded)
 
 
 def translate_batch(texts: list[str], lang: str) -> list[str]:
@@ -215,10 +242,10 @@ def translate_batch(texts: list[str], lang: str) -> list[str]:
         model, tokenizer = _load_model(lang)
         batch_texts = [t for _, t in to_translate]
         batch = tokenizer(batch_texts, return_tensors="pt", padding=True, truncation=True)
-        generated = model.generate(**batch, max_new_tokens=128)
+        generated = model.generate(**batch, **_generate_kwargs())
         decoded = tokenizer.batch_decode(generated, skip_special_tokens=True)
         for (idx, _original), translated in zip(to_translate, decoded):
-            results[idx] = translated.strip()
+            results[idx] = _collapse_repeats(translated.strip())
 
     return [r if r is not None else "" for r in results]
 

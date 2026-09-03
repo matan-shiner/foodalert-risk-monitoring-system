@@ -45,7 +45,7 @@ import re
 from datetime import datetime, timezone
 from typing import Iterator
 
-from .base import BaseCollector, make_retry_session
+from .base import BaseCollector, make_retry_session, infer_product_category
 from ..translation import translate_batch
 
 BASE_URL = "https://food.fda.moph.go.th"
@@ -91,6 +91,23 @@ _PHYSICAL_KW = ["สิ่งแปลกปลอม", "เศษแก้ว",
 _ALLERGEN_KW = ["สารก่อภูมิแพ้", "แพ้อาหาร"]
 _LABELING_KW = ["ไม่มีฉลาก", "ฉลากไม่ถูกต้อง", "ปลอมเลขสารบบ", "แสดงฉลากไม่ถูกต้อง"]
 _NONCOMPLIANCE_KW = ["ไม่ได้ขึ้นทะเบียน", "โรงงานเถื่อน", "ไม่ได้รับอนุญาต"]
+
+# Checked in this order (most specific first) against the Thai product name
+# text, same convention as caa_japan.py's _PRODUCT_CATEGORY_KW.
+_PRODUCT_CATEGORY_KW: dict[str, list[str]] = {
+    "seafood and fish products": ["ปลา", "กุ้ง", "ปู", "หอย", "อาหารทะเล", "ปลาหมึก"],
+    "meat and poultry products": ["เนื้อหมู", "เนื้อวัว", "ไก่", "เนื้อสัตว์", "ไส้กรอก", "แฮม"],
+    "dairy and eggs": ["นม", "ผลิตภัณฑ์นม", "ไข่", "เนย", "ชีส", "โยเกิร์ต"],
+    "fruits and vegetables": ["ผัก", "ผลไม้", "มะเขือเทศ", "แตงกวา"],
+    "cereals and bakery products": ["ขนมปัง", "ข้าว", "เส้นก๋วยเตี๋ยว", "แป้ง", "บะหมี่"],
+    "confectionery and snacks": ["ขนมหวาน", "ช็อกโกแลต", "ลูกอม", "ขนมขบเคี้ยว"],
+    "beverages": ["เครื่องดื่ม", "น้ำผลไม้", "ชา", "กาแฟ", "สุรา", "เบียร์", "ไวน์"],
+    "sauces, condiments and seasonings": ["เครื่องปรุง", "ซอส", "น้ำปลา", "ซีอิ๊ว"],
+    "dietary supplements": ["ผลิตภัณฑ์เสริมอาหาร", "อาหารเสริม"],
+    "nuts, seeds and grains": ["ถั่ว", "เมล็ดพันธุ์"],
+    "oils and fats": ["น้ำมัน", "น้ำมันพืช"],
+    "prepared dishes and meals": ["อาหารสำเร็จรูป", "อาหารแช่แข็ง"],
+}
 
 
 class FDAThailandCollector(BaseCollector):
@@ -151,6 +168,7 @@ class FDAThailandCollector(BaseCollector):
         hazard_category = _infer_hazard_category(classify_text)
         hazard_specific_th = _extract_hazard_specific(classify_text)
         hazard_specific_en = translate_batch([hazard_specific_th], "th")[0] if hazard_specific_th else None
+        product_category = infer_product_category(raw["product_th"], _PRODUCT_CATEGORY_KW)
 
         record_id = f"{raw['slug']}::{raw['entry_index']}"
 
@@ -170,7 +188,7 @@ class FDAThailandCollector(BaseCollector):
             "recalling_firm": raw["firm_en"] or None,
             "brand_names": json.dumps([]),
             "product_description": raw["product_en"] or None,
-            "product_category": None,
+            "product_category": product_category,
             "hazard_category": hazard_category,
             "hazard_specific": hazard_specific_en or None,
             # No formal classification scale exists here — left honestly null,

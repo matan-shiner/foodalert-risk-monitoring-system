@@ -29,6 +29,17 @@ def make_retry_session(retries: int = 3, backoff: float = 1.5) -> requests.Sessi
     return session
 
 
+def infer_product_category(text: str, keyword_map: dict[str, list[str]]) -> str | None:
+    """First matching category from an ordered {category: [keywords]} map,
+    checked most-specific-first by the caller's ordering (e.g. "seafood"
+    before a generic "prepared dishes" catch-all, so a frozen squid dish
+    doesn't fall through to the catch-all just because it's also frozen)."""
+    for category, keywords in keyword_map.items():
+        if any(kw in text for kw in keywords):
+            return category
+    return None
+
+
 class BaseCollector(ABC):
     """A collector pulls raw records from one source and yields normalized alert dicts."""
 

@@ -51,7 +51,7 @@ from typing import Iterator
 
 import requests
 
-from .base import BaseCollector, make_retry_session
+from .base import BaseCollector, make_retry_session, infer_product_category
 from ..translation import translate_batch_ja_to_en, known_term_lookup
 
 BASE_URL = "https://www.recall.caa.go.jp"
@@ -91,6 +91,34 @@ _CHEMICAL_KW = [
 _PHYSICAL_KW = ["異物混入", "金属", "ガラス片", "プラスチック", "虫混入", "毛髪", "破裂"]
 _LABELING_KW = ["表示欠落", "誤表示", "期限表示誤り", "賞味期限誤表示", "消費期限誤表示", "食品表示法違反"]
 _NONCOMPLIANCE_KW = ["無許可", "未承認", "回収命令"]
+
+# Checked in this order (most specific first) against the product name text
+# so e.g. a frozen squid dish matches "seafood" before falling through to
+# the generic "prepared dishes" catch-all just because it's also frozen.
+_PRODUCT_CATEGORY_KW: dict[str, list[str]] = {
+    "seafood and fish products": [
+        "いか", "まぐろ", "サバ", "鯖", "えび", "エビ", "海老", "カニ", "蟹",
+        "魚", "貝", "タコ", "しらす", "サケ", "鮭", "うなぎ", "鰻", "ちくわ",
+        "かまぼこ", "明太子", "たらこ", "海苔",
+    ],
+    "meat and poultry products": [
+        "牛肉", "豚肉", "鶏肉", "とり肉", "肉", "ハム", "ソーセージ", "ベーコン",
+        "焼肉",
+    ],
+    "dairy and eggs": ["牛乳", "乳製品", "チーズ", "ヨーグルト", "卵", "たまご", "バター"],
+    "fruits and vegetables": [
+        "野菜", "果物", "フルーツ", "りんご", "みかん", "いちご", "トマト",
+        "きゅうり", "たまねぎ", "玉ねぎ",
+    ],
+    "cereals and bakery products": ["パン", "米", "麺", "めん", "小麦", "ケーキ", "クッキー", "うどん", "そば"],
+    "confectionery and snacks": ["菓子", "チョコレート", "キャンディ", "スナック", "アイス", "せんべい"],
+    "beverages": ["飲料", "ジュース", "お茶", "コーヒー", "酒", "ビール", "ワイン"],
+    "sauces, condiments and seasonings": ["調味料", "ソース", "醤油", "味噌", "ドレッシング", "たれ"],
+    "dietary supplements": ["サプリメント", "健康食品"],
+    "nuts, seeds and grains": ["ナッツ", "種子", "ごま", "大豆"],
+    "oils and fats": ["油", "オリーブオイル"],
+    "prepared dishes and meals": ["惣菜", "弁当", "冷凍食品", "レトルト"],
+}
 
 
 class CAAJapanCollector(BaseCollector):
@@ -159,6 +187,9 @@ class CAAJapanCollector(BaseCollector):
         hazard_specific_en = (translate_batch_ja_to_en([hazard_specific_ja])[0]
                                if hazard_specific_ja else None)
 
+        product_ja = fields.get("商品名", raw["title_ja"])
+        product_category = infer_product_category(product_ja, _PRODUCT_CATEGORY_KW)
+
         illness_match = _ILLNESS_RE.search(raw["reason_ja"])
         illness_count = int(illness_match.group(1)) if illness_match else None
 
@@ -179,7 +210,7 @@ class CAAJapanCollector(BaseCollector):
             "recalling_firm": firm_en or None,
             "brand_names": json.dumps([]),
             "product_description": product_en or None,
-            "product_category": None,
+            "product_category": product_category,
             "hazard_category": hazard_category,
             "hazard_specific": hazard_specific_en or None,
             # No formal classification scale exists here — left honestly null,

@@ -72,7 +72,7 @@ import re
 from datetime import datetime, timezone
 from typing import Iterator
 
-from .base import BaseCollector, make_retry_session
+from .base import BaseCollector, make_retry_session, infer_product_category
 from ..translation import translate_batch_zh_to_en, known_term_lookup
 
 BASE_URL = "https://www.samr.gov.cn"
@@ -141,6 +141,24 @@ _SECTION_CATEGORY_MAP = {
     "重金属污染问题": "chemical",
     "兽药残留超标问题": "chemical",
     "生物毒素污染问题": "biological",
+}
+
+# Checked in this order (most specific first) against the Chinese product
+# name text, same convention as caa_japan.py's _PRODUCT_CATEGORY_KW.
+_PRODUCT_CATEGORY_KW: dict[str, list[str]] = {
+    "seafood and fish products": ["鱼", "虾", "蟹", "贝", "海产品", "海鲜", "鱿鱼", "带鱼"],
+    "meat and poultry products": ["猪肉", "牛肉", "鸡肉", "肉制品", "火腿", "香肠", "腊肉", "肉"],
+    "dairy and eggs": ["牛奶", "乳制品", "奶粉", "酸奶", "奶酪", "鸡蛋", "蛋制品"],
+    "fruits and vegetables": ["蔬菜", "水果", "黄瓜", "苹果", "番茄", "白菜", "菌菇", "食用菌"],
+    "cereals and bakery products": ["面包", "糕点", "面条", "大米", "面粉", "馒头", "饼干"],
+    "confectionery and snacks": ["糖果", "巧克力", "膨化食品", "休闲食品", "蜜饯", "凉果"],
+    "beverages": ["饮料", "果汁", "茶叶", "咖啡", "酒", "白酒", "啤酒", "葡萄酒"],
+    "sauces, condiments and seasonings": ["调味品", "酱油", "食醋", "酱料", "调味料", "腐乳"],
+    "herbs and spices": ["香辛料", "白芷", "花椒", "八角"],
+    "dietary supplements": ["保健食品", "膳食补充剂"],
+    "nuts, seeds and grains": ["坚果", "炒货", "种子", "食用油料"],
+    "oils and fats": ["食用油", "食用植物油"],
+    "prepared dishes and meals": ["熟食", "方便食品", "速冻食品", "预制菜"],
 }
 
 
@@ -219,6 +237,8 @@ class SAMRChinaCollector(BaseCollector):
         if hazard_category is None:
             hazard_category = _infer_hazard_category_from_zh(raw["substance_zh"])
 
+        product_category = infer_product_category(raw["product_zh"], _PRODUCT_CATEGORY_KW)
+
         return {
             "id": f"samr_china::{record_id}",
             "source_id": self.source_id,
@@ -235,7 +255,7 @@ class SAMRChinaCollector(BaseCollector):
             "recalling_firm": manufacturer_en or None,
             "brand_names": json.dumps([]),
             "product_description": product_en or None,
-            "product_category": None,
+            "product_category": product_category,
             "hazard_category": hazard_category,
             "hazard_specific": substance_en or None,
             # No formal classification scale exists here — left honestly null,

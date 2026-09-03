@@ -755,12 +755,18 @@ a{color:var(--israel);text-decoration:none} a:hover{text-decoration:underline}
 .section{margin-bottom:36px}
 
 /* ── Floating TOC ── */
-#floating-toc{position:fixed;left:18px;top:50%;transform:translateY(-50%);background:var(--card);border:1px solid var(--border);border-radius:10px;box-shadow:0 4px 20px rgba(0,0,0,.10);padding:10px 0;z-index:200;min-width:150px;max-width:172px;display:none}
-#floating-toc .toc-header{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);padding:0 13px 8px;border-bottom:1px solid var(--border);margin-bottom:4px}
+#floating-toc{position:fixed;left:18px;top:50%;transform:translateY(-50%);background:var(--card);border:1px solid var(--border);border-radius:10px;box-shadow:0 4px 20px rgba(0,0,0,.10);padding:10px 0;z-index:200;min-width:150px;max-width:172px;display:none;transition:min-width .15s ease,max-width .15s ease,padding .15s ease}
+#floating-toc .toc-header{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);padding:0 13px 8px;border-bottom:1px solid var(--border);margin-bottom:4px;cursor:pointer;display:flex;align-items:center;gap:6px;justify-content:space-between;white-space:nowrap}
+#floating-toc .toc-icon{display:none;font-size:14px}
 #floating-toc ul{list-style:none;padding:0;margin:0}
 #floating-toc li a{display:flex;align-items:center;gap:6px;padding:5px 13px;font-size:12px;color:var(--muted);cursor:pointer;border-left:3px solid transparent;transition:all .15s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.4}
 #floating-toc li a:hover{color:var(--text);background:#f5f7fa}
 #floating-toc li a.toc-active{color:var(--israel);font-weight:700;border-left-color:var(--israel);background:#eaf2fb}
+#floating-toc.fp-collapsed{min-width:0;max-width:none;padding:10px 6px}
+#floating-toc.fp-collapsed .toc-header{border-bottom:none;margin-bottom:0;padding:0;justify-content:center}
+#floating-toc.fp-collapsed .toc-label,#floating-toc.fp-collapsed .toc-caret{display:none}
+#floating-toc.fp-collapsed .toc-icon{display:inline-block}
+#floating-toc.fp-collapsed .toc-body{display:none}
 @media(min-width:1280px){#floating-toc{display:block}}
 .section-title{font-size:17px;font-weight:700;margin-bottom:12px;padding-bottom:6px;border-bottom:2px solid var(--border);display:flex;align-items:center;gap:8px}
 .section-title .count{font-size:13px;font-weight:400;color:var(--muted);margin-left:4px}
@@ -829,9 +835,15 @@ details.alert-card[open] summary{border-bottom:1px solid var(--border)}
 .sort-pill.sort-active{background:var(--text);color:#fff;border-color:var(--text)}
 img.emoji{height:1em;width:1em;margin:0 .05em 0 .1em;vertical-align:-.1em;display:inline}
 /* ── Floating filters ── */
-#floating-filters{position:fixed;right:18px;top:80px;background:var(--card);border:1px solid var(--border);border-radius:10px;box-shadow:0 4px 20px rgba(0,0,0,.10);padding:0;z-index:90;width:210px;display:none}
-#floating-filters .ff-header{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);padding:8px 12px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+#floating-filters{position:fixed;right:18px;top:80px;background:var(--card);border:1px solid var(--border);border-radius:10px;box-shadow:0 4px 20px rgba(0,0,0,.10);padding:0;z-index:90;width:210px;display:none;transition:width .15s ease}
+#floating-filters .ff-header{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);padding:8px 12px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:6px;justify-content:space-between;cursor:pointer;white-space:nowrap}
 #floating-filters .ff-body{padding:8px 10px;display:flex;flex-direction:column;gap:7px}
+#floating-filters .ff-icon{display:none;font-size:14px}
+#floating-filters.fp-collapsed{width:auto}
+#floating-filters.fp-collapsed .ff-header{border-bottom:none;padding:10px;justify-content:center}
+#floating-filters.fp-collapsed .ff-label,#floating-filters.fp-collapsed .ff-caret{display:none}
+#floating-filters.fp-collapsed .ff-icon{display:inline-block}
+#floating-filters.fp-collapsed .ff-body{display:none}
 @media(min-width:1280px){#floating-filters{display:block}}
 /* multi-select dropdown */
 .ms-wrap{position:relative}
@@ -898,10 +910,12 @@ footer{text-align:center;padding:20px;font-size:12px;color:var(--muted);border-t
   </div>
 </div>
 
-<div id="floating-filters">
-  <div class="ff-header">
-    <span>Filters</span>
+<div id="floating-filters" class="fp-collapsed">
+  <div class="ff-header" onclick="toggleFloatingPanel('floating-filters')">
+    <span class="ff-icon">🔎</span>
+    <span class="ff-label">Filters</span>
     <span id="filter-badge"></span>
+    <span class="ff-caret">▾</span>
   </div>
   <div class="ff-body">
     <!-- Hazard dropdown -->
@@ -955,8 +969,13 @@ __SOURCE_OPTIONS__
   </div>
 </div>
 
-<nav id="floating-toc">
-  <div class="toc-header">On This Page</div>
+<nav id="floating-toc" class="fp-collapsed">
+  <div class="toc-header" onclick="toggleFloatingPanel('floating-toc')">
+    <span class="toc-icon">📑</span>
+    <span class="toc-label">On This Page</span>
+    <span class="toc-caret">▾</span>
+  </div>
+  <div class="toc-body">
   <ul>
     <li><a onclick="tocScrollTo('toc-overview')"><span>📊</span> Overview</a></li>
     <li><a onclick="tocScrollTo('toc-trends')"><span>📈</span> Alert Trends</a></li>
@@ -1013,6 +1032,7 @@ __SOURCE_OPTIONS__
       ⬇ Download CSV
     </button>
     <div id="toc-export-status" style="font-size:10px;color:var(--muted);margin-top:4px;text-align:center"></div>
+  </div>
   </div>
 </nav>
 
@@ -1857,6 +1877,17 @@ function setSortBy(mode){
     if(hdr) document.getElementById('floating-filters').style.top = (hdr.offsetHeight + 10) + 'px';
   })();
 
+  // Restore collapsed/expanded state for the floating TOC and Filters panels.
+  // Both default to collapsed (a small tab) so they don't cover the charts;
+  // clicking a header expands it, and the choice is remembered per browser.
+  ['floating-toc','floating-filters'].forEach(id => {
+    try {
+      if (localStorage.getItem('fp-collapsed-' + id) === '0') {
+        document.getElementById(id).classList.remove('fp-collapsed');
+      }
+    } catch(e) {}
+  });
+
   const medToggleBtn = document.getElementById('medium-toggle-btn');
   if(_feedAlerts.medium.length > 0){
     medToggleBtn.textContent = `▾ Show (${_feedAlerts.medium.length})`;
@@ -2277,6 +2308,16 @@ function _updateBreakdowns(filtered) {
     requestAnimationFrame(doScroll);
   }
   window.tocScrollTo = tocScrollTo;
+
+  // Expand/collapse the floating TOC and Filters panels; remember choice per browser.
+  function toggleFloatingPanel(id){
+    const el = document.getElementById(id);
+    el.classList.toggle('fp-collapsed');
+    try {
+      localStorage.setItem('fp-collapsed-' + id, el.classList.contains('fp-collapsed') ? '1' : '0');
+    } catch(e) {}
+  }
+  window.toggleFloatingPanel = toggleFloatingPanel;
 
   // Scroll spy: highlight which section is currently in view
   let currentActive = null;

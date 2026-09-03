@@ -762,10 +762,13 @@ a{color:var(--israel);text-decoration:none} a:hover{text-decoration:underline}
 #floating-toc li a{display:flex;align-items:center;gap:6px;padding:5px 13px;font-size:12px;color:var(--muted);cursor:pointer;border-left:3px solid transparent;transition:all .15s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.4}
 #floating-toc li a:hover{color:var(--text);background:#f5f7fa}
 #floating-toc li a.toc-active{color:var(--israel);font-weight:700;border-left-color:var(--israel);background:#eaf2fb}
-#floating-toc.fp-collapsed{min-width:0;max-width:none;padding:10px 6px}
-#floating-toc.fp-collapsed .toc-header{border-bottom:none;margin-bottom:0;padding:0;justify-content:center}
-#floating-toc.fp-collapsed .toc-label,#floating-toc.fp-collapsed .toc-caret{display:none}
-#floating-toc.fp-collapsed .toc-icon{display:inline-block}
+#floating-toc.fp-collapsed{min-width:0;max-width:none;padding:0;background:var(--text);border-color:var(--text);box-shadow:0 4px 14px rgba(26,31,46,.35)}
+#floating-toc.fp-collapsed .toc-header{border-bottom:none;margin-bottom:0;padding:12px 14px;justify-content:center;flex-direction:column;gap:4px;color:#fff;border-radius:10px;transition:transform .12s ease}
+#floating-toc.fp-collapsed .toc-header:hover{transform:scale(1.06)}
+#floating-toc.fp-collapsed .toc-caret,#floating-toc.fp-collapsed .toc-label{display:none}
+#floating-toc.fp-collapsed .toc-icon{display:inline-block;font-size:16px}
+#floating-toc .toc-label-short{display:none}
+#floating-toc.fp-collapsed .toc-label-short{display:block;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#fff}
 #floating-toc.fp-collapsed .toc-body{display:none}
 @media(min-width:1280px){#floating-toc{display:block}}
 .section-title{font-size:17px;font-weight:700;margin-bottom:12px;padding-bottom:6px;border-bottom:2px solid var(--border);display:flex;align-items:center;gap:8px}
@@ -839,10 +842,14 @@ img.emoji{height:1em;width:1em;margin:0 .05em 0 .1em;vertical-align:-.1em;displa
 #floating-filters .ff-header{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);padding:8px 12px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:6px;justify-content:space-between;cursor:pointer;white-space:nowrap}
 #floating-filters .ff-body{padding:8px 10px;display:flex;flex-direction:column;gap:7px}
 #floating-filters .ff-icon{display:none;font-size:14px}
-#floating-filters.fp-collapsed{width:auto}
-#floating-filters.fp-collapsed .ff-header{border-bottom:none;padding:10px;justify-content:center}
-#floating-filters.fp-collapsed .ff-label,#floating-filters.fp-collapsed .ff-caret{display:none}
-#floating-filters.fp-collapsed .ff-icon{display:inline-block}
+#floating-filters.fp-collapsed{width:auto;background:var(--text);border-color:var(--text);box-shadow:0 4px 14px rgba(26,31,46,.35)}
+#floating-filters.fp-collapsed .ff-header{border-bottom:none;padding:12px 14px;flex-direction:column;gap:4px;color:#fff;border-radius:10px;transition:transform .12s ease}
+#floating-filters.fp-collapsed .ff-header:hover{transform:scale(1.06)}
+#floating-filters.fp-collapsed .ff-caret{display:none}
+#floating-filters.fp-collapsed .ff-icon{display:inline-block;font-size:16px}
+#floating-filters.fp-collapsed .ff-label{display:block;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#fff}
+#floating-filters.fp-collapsed #filter-badge{position:absolute;top:-6px;right:-6px}
+#floating-filters .ff-header{position:relative}
 #floating-filters.fp-collapsed .ff-body{display:none}
 @media(min-width:1280px){#floating-filters{display:block}}
 /* multi-select dropdown */
@@ -973,6 +980,7 @@ __SOURCE_OPTIONS__
   <div class="toc-header" onclick="toggleFloatingPanel('floating-toc')">
     <span class="toc-icon">📑</span>
     <span class="toc-label">On This Page</span>
+    <span class="toc-label-short">Menu</span>
     <span class="toc-caret">▾</span>
   </div>
   <div class="toc-body">

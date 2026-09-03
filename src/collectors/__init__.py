@@ -10,6 +10,7 @@ from .sfa_singapore import SFASingaporeCollector
 from .cfs_hongkong import CFSHongKongCollector
 from .samr_china import SAMRChinaCollector
 from .caa_japan import CAAJapanCollector
+from .fda_thailand import FDAThailandCollector
 
 COLLECTORS = {
     "fda_enforcement": FDAEnforcementCollector,
@@ -24,4 +25,5 @@ COLLECTORS = {
     "cfs_hongkong": CFSHongKongCollector,
     "samr_china": SAMRChinaCollector,
     "caa_japan": CAAJapanCollector,
+    "fda_thailand": FDAThailandCollector,
 }

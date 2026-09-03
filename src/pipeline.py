@@ -29,7 +29,7 @@ def run_source(conn, source_id: str, since: datetime | None = None, limit: int |
                 inserted += 1
             elif action == "updated":
                 updated += 1
-            if fetched % 500 == 0:
+            if fetched % 20 == 0:
                 conn.commit()
                 logger.info(f"[{source_id}] processed {fetched} records")
         conn.commit()

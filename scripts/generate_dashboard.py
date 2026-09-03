@@ -1879,11 +1879,25 @@ function setSortBy(mode){
     _prodPanel.appendChild(lbl);
   });
 
-  // Position floating-filters below the sticky header
-  (function positionFilters(){
+  // Position floating-filters below the sticky header, and keep the
+  // collapsed TOC tab at that same height (its expanded form still centers
+  // vertically via CSS — it's a tall nav list, easier to reach that way).
+  function _syncFloatingPositions(){
     const hdr = document.querySelector('.header');
-    if(hdr) document.getElementById('floating-filters').style.top = (hdr.offsetHeight + 10) + 'px';
-  })();
+    if(!hdr) return;
+    const top = (hdr.offsetHeight + 10) + 'px';
+    document.getElementById('floating-filters').style.top = top;
+    const toc = document.getElementById('floating-toc');
+    if(toc.classList.contains('fp-collapsed')){
+      toc.style.top = top;
+      toc.style.transform = 'none';
+    } else {
+      toc.style.top = '';
+      toc.style.transform = '';
+    }
+  }
+  _syncFloatingPositions();
+  window._syncFloatingPositions = _syncFloatingPositions;
 
   // Restore collapsed/expanded state for the floating TOC and Filters panels.
   // Both default to collapsed (a small tab) so they don't cover the charts;
@@ -1895,6 +1909,7 @@ function setSortBy(mode){
       }
     } catch(e) {}
   });
+  _syncFloatingPositions();
 
   const medToggleBtn = document.getElementById('medium-toggle-btn');
   if(_feedAlerts.medium.length > 0){
@@ -2324,6 +2339,7 @@ function _updateBreakdowns(filtered) {
     try {
       localStorage.setItem('fp-collapsed-' + id, el.classList.contains('fp-collapsed') ? '1' : '0');
     } catch(e) {}
+    if (window._syncFloatingPositions) window._syncFloatingPositions();
   }
   window.toggleFloatingPanel = toggleFloatingPanel;
 

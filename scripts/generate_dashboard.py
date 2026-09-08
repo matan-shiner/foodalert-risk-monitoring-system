@@ -555,6 +555,30 @@ def main() -> None:
         ],
     }
 
+    # ── Query C3: lightweight per-alert index for the trends chart ──────────
+    # Just enough fields to reproduce _passesFilters() client-side, so the
+    # Trends chart can be recomputed for the active Hazard/Source/Product/
+    # Country filters instead of always showing the unfiltered 13-month
+    # total (the trends and card feeds cover different windows — 13 months
+    # vs. `window_days` — so this can't just reuse `alerts`/`feed_alerts`).
+    trend_index_rows = conn.execute("""
+        SELECT strftime('%Y-%m', a.source_published_date) AS month,
+               a.hazard_category, a.product_category, a.source_id,
+               a.origin_country, a.distribution_countries
+        FROM alerts a JOIN alert_scores s ON s.alert_id = a.id
+        WHERE a.source_published_date BETWEEN ? AND ?
+    """, (thirteen_mo_ago.isoformat(), ref_date.isoformat())).fetchall()
+    trend_index = [
+        {
+            "m": r["month"],
+            "h": (r["hazard_category"] or "unclassified").lower(),
+            "p": (r["product_category"] or "unclassified").lower(),
+            "s": r["source_id"],
+            "c": (" ".join([r["origin_country"] or ""] + _dist_list(r["distribution_countries"]))).lower(),
+        }
+        for r in trend_index_rows
+    ]
+
     # ── Queries D1–D4: breakdowns ──────────────────────────────────────────
     def _breakdown(col: str, limit: int = 20) -> dict:
         rows2 = conn.execute(f"""
@@ -674,6 +698,8 @@ def main() -> None:
         "counterfactuals": cf_map,
         "trends":          trends,
         "trends_product":  trends_product,
+        "trend_months":    months_set,
+        "trend_index":     trend_index,
         "breakdowns":      breakdowns,
         "pert_labels":     PERT_LABELS,
     }
@@ -1587,23 +1613,30 @@ function _sortByMode(arr, mode){
 
 function renderIsraelSection(){
   const el = document.getElementById('israel-section');
-  if(DATA.israel_alerts.length > 0){
-    el.innerHTML = _sortByMode(DATA.israel_alerts, _israelSortMode).map(a=>renderCard(a,'israel-feed')).join('');
+  const israelAlerts  = DATA.israel_alerts.filter(_passesFilters);
+  const israelFallback = DATA.israel_fallback.filter(_passesFilters);
+  const filtersActive = _filters.hazard.size + _filters.source.size + _filters.product.size + _filters.country.size > 0;
+
+  if(israelAlerts.length > 0){
+    el.innerHTML = _sortByMode(israelAlerts, _israelSortMode).map(a=>renderCard(a,'israel-feed')).join('');
   } else {
+    const clearedLine = filtersActive
+      ? `No Israel-relevant alerts match the current filters in the ${m.window_days}-day window.`
+      : `All clear — no Israel-relevant alerts in the current ${m.window_days}-day window.`;
     let html = `<div class="all-clear">
       <span class="icon">✅</span>
       <div>
-        <div>All clear — no Israel-relevant alerts in the current ${m.window_days}-day window.</div>
-        <div class="sub">No food safety alerts mentioning Israel were detected between ${m.window_start} and ${m.ref_date}.</div>
+        <div>${clearedLine}</div>
+        <div class="sub">No food safety alerts mentioning Israel were detected between ${m.window_start} and ${m.ref_date}${filtersActive ? ' matching the active filters' : ''}.</div>
       </div>
     </div>`;
-    if(DATA.israel_fallback.length > 0){
+    if(israelFallback.length > 0){
       html += `<details style="margin-top:12px">
         <summary style="cursor:pointer;color:var(--muted);font-size:13px;padding:6px 0">
           Most recent Israel-relevant alerts (outside current window) ▸
         </summary>
         <div class="fallback-note" style="margin-top:8px">These alerts are outside the current ${m.window_days}-day window. Shown for reference only.</div>
-        ${_sortByMode(DATA.israel_fallback, _israelSortMode).map(a=>renderCard(a,'israel-feed')).join('')}
+        ${_sortByMode(israelFallback, _israelSortMode).map(a=>renderCard(a,'israel-feed')).join('')}
       </details>`;
     }
     el.innerHTML = html;
@@ -1617,7 +1650,9 @@ function setIsraelSortBy(mode){
   renderIsraelSection();
 }
 
-renderIsraelSection();
+// NOTE: not called here — renderIsraelSection() reads _filters/_passesFilters,
+// which aren't declared until below (const TDZ), so the initial render
+// happens in the _feedAlerts init IIFE further down instead.
 
 // ── Alert Feed ────────────────────────────────────────────────────────────
 const INITIAL_SHOW = 10;
@@ -1712,6 +1747,8 @@ function _applyAll() {
   badge.style.display    = n ? 'inline' : 'none';
 
   _rerenderFeeds();
+  renderIsraelSection();
+  if (_trendChart) switchTrendBreakdown(_trendMode);
 
   document.getElementById('critical-count').textContent = _feedAlerts.critical.filter(_passesFilters).length;
   document.getElementById('high-count').textContent     = _feedAlerts.high.filter(_passesFilters).length;
@@ -1802,7 +1839,13 @@ function _sortedAlerts(arr){
 function renderFeedSection(alerts, containerId, btnId, label){
   const container = document.getElementById(containerId);
   const btn       = document.getElementById(btnId);
-  if(!alerts.length){ btn.style.display='none'; return; }
+  if(!alerts.length){
+    // Must clear stale cards from a previous (less restrictive) filter —
+    // otherwise the header count reads 0 while old cards stay visible.
+    container.innerHTML = '';
+    btn.style.display = 'none';
+    return;
+  }
 
   let showing = Math.min(INITIAL_SHOW, alerts.length);
 
@@ -1843,6 +1886,7 @@ function setSortBy(mode){
   document.getElementById('medium-count').textContent   = _feedAlerts.medium.length;
 
   _rerenderFeeds();
+  renderIsraelSection();
 
   // After all cards are in the DOM, handle deep-link hash navigation
   if (window.location.hash) openAlertFromHash();
@@ -1996,6 +2040,45 @@ function fmtMonth(lbl){ // "2025-05" → "May 25"
   return (MONTH_ABBR[idx] || lbl) + ' ' + (y||'').slice(2);
 }
 
+// Mirrors _passesFilters() but for the compact trend_index shape
+// ({h,p,s,c} instead of full alert objects) — kept separate because
+// embedding full field names for ~13 months of records would bloat the
+// page; see the trend_index query comment in generate_dashboard.py.
+function _trendPassesFilters(t){
+  if (_filters.hazard.size && !_filters.hazard.has(t.h)) return false;
+  if (_filters.source.size && !_filters.source.has(t.s)) return false;
+  if (_filters.product.size && !_filters.product.has(t.p)) return false;
+  if (_filters.country.size && ![..._filters.country].some(q => t.c.includes(q))) return false;
+  return true;
+}
+
+// Recompute {labels: [...], datasets: [...]} for the trends chart from the
+// raw per-alert index, honoring the active Hazard/Source/Product/Country
+// filters. The category SET and its colors stay fixed (taken from the
+// unfiltered server-computed trends/trends_product) so the legend doesn't
+// reshuffle as filters are applied — only the per-category counts change.
+function _filteredTrendData(mode){
+  const base = mode === 'hazard' ? DATA.trends : DATA.trends_product;
+  const months = DATA.trend_months;
+  const field = mode === 'hazard' ? 'h' : 'p';
+  const filtered = DATA.trend_index.filter(_trendPassesFilters);
+
+  const counts = {}; // "month|cat" -> n
+  filtered.forEach(t => {
+    const key = t.m + '|' + t[field];
+    counts[key] = (counts[key] || 0) + 1;
+  });
+
+  return {
+    labels: months,
+    datasets: base.datasets.map(ds => ({
+      label: ds.label,
+      color: ds.color,
+      data: months.map(m => counts[m + '|' + ds.label.toLowerCase()] || 0),
+    })),
+  };
+}
+
 function buildTrendDatasets(trendData){
   const monthTotals = trendData.labels.map((_,i) =>
     trendData.datasets.reduce((s,ds) => s + (ds.data[i]||0), 0)
@@ -2025,8 +2108,11 @@ function buildTrendDatasets(trendData){
   };
 }
 
+let _trendMode = 'hazard';
+
 function switchTrendBreakdown(mode){
-  const trendData = mode === 'hazard' ? DATA.trends : DATA.trends_product;
+  _trendMode = mode;
+  const trendData = _filteredTrendData(mode);
   const {monthTotals, chartDatasets} = buildTrendDatasets(trendData);
 
   // Update button styles
@@ -2051,10 +2137,11 @@ function switchTrendBreakdown(mode){
 }
 
 (function(){
-  const {monthTotals, chartDatasets} = buildTrendDatasets(DATA.trends);
+  const initialTrendData = _filteredTrendData('hazard');
+  const {monthTotals, chartDatasets} = buildTrendDatasets(initialTrendData);
   _trendChart = new Chart(document.getElementById('trendsLineChart'),{
     type:'bar',
-    data:{ labels: DATA.trends.labels.map(fmtMonth), datasets: chartDatasets },
+    data:{ labels: initialTrendData.labels.map(fmtMonth), datasets: chartDatasets },
     options:{
       responsive:true, maintainAspectRatio:false,
       interaction:{mode:'index', intersect:false},

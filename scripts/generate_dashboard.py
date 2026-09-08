@@ -765,6 +765,8 @@ a{color:var(--israel);text-decoration:none} a:hover{text-decoration:underline}
 .overview-donut-center .dl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin-top:2px}
 .overview-stats{display:flex;flex-direction:column;gap:3px}
 .ov-stat{display:flex;align-items:center;gap:8px;cursor:pointer;padding:5px 8px;border-radius:6px;transition:background .15s;user-select:none;white-space:nowrap}
+.ov-stat.ov-stat-static{cursor:default}
+.ov-stat.ov-stat-static:hover{background:transparent}
 .ov-stat:hover{background:#f0f2f5}
 .ov-dot{width:11px;height:11px;border-radius:50%;flex-shrink:0}
 .ov-label{font-size:13px;color:var(--muted);width:64px}
@@ -1522,8 +1524,8 @@ function renderSeverityDonut(){
 
   // Stats list (label + absolute number, no pct — pct shown on donut itself)
   const statsEl = document.getElementById('overview-stats');
-  statsEl.innerHTML = TIERS.filter(t=>t.label!=='Low').map(t =>
-    `<div class="ov-stat" onclick="scrollToTierById('${t.scrollTo}', ${t.toggleMed||false})">
+  statsEl.innerHTML = TIERS.map(t =>
+    `<div class="ov-stat${t.scrollTo ? '' : ' ov-stat-static'}" ${t.scrollTo ? `onclick="scrollToTierById('${t.scrollTo}', ${t.toggleMed||false})"` : ''}>
       <div class="ov-dot" style="background:${t.color}"></div>
       <div class="ov-label">${t.label}</div>
       <div class="ov-val">${t.n}</div>

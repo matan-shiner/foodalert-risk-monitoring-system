@@ -462,7 +462,7 @@ def main() -> None:
     # medium+ for the visual feed; low tier embedded separately (slim fields, CSV-only)
     feed_alerts = [_clean_alert(a) for a in alerts_raw if a["tier"] != "low"]
     CSV_FIELDS = ("alert_id","source_published_date","tier","absolute_score","title",
-                  "source_id","hazard_specific","hazard_category","severity_normalized",
+                  "source_id","hazard_specific","hazard_category","product_category","severity_normalized",
                   "origin_country","distribution_countries","israel_relevance_flag","record_url")
     low_alerts = [
         {k: _clean_alert(a).get(k) for k in CSV_FIELDS}
@@ -1486,16 +1486,22 @@ document.getElementById('gen-time').textContent = m.generated_at;
 document.getElementById('breakdown-window').textContent =
   `last ${m.window_days} days: ${m.window_start} – ${m.ref_date}`;
 // ── Overview donut ───────────────────────────────────────────────────────
-(function(){
-  const total = m.n_in_window;
-  const n_other = total - m.n_critical - m.n_high - m.n_medium;
+function renderSeverityDonut(){
+  const filtersActive = _filters.hazard.size + _filters.source.size + _filters.product.size + _filters.country.size > 0;
+  const n_critical = filtersActive ? _feedAlerts.critical.filter(_passesFilters).length : m.n_critical;
+  const n_high     = filtersActive ? _feedAlerts.high.filter(_passesFilters).length     : m.n_high;
+  const n_medium   = filtersActive ? _feedAlerts.medium.filter(_passesFilters).length   : m.n_medium;
+  const n_low      = filtersActive ? (DATA.low_alerts||[]).filter(_passesFilters).length
+                                    : (m.n_in_window - m.n_critical - m.n_high - m.n_medium);
+  const n_israel   = filtersActive ? DATA.israel_alerts.filter(_passesFilters).length : m.n_israel;
+  const total = n_critical + n_high + n_medium + n_low;
   document.getElementById('donut-total').textContent = total;
 
   const TIERS = [
-    { label:'Critical', n: m.n_critical, color:'#c0392b', scrollTo:'critical-section-anchor' },
-    { label:'High',     n: m.n_high,     color:'#d35400', scrollTo:'high-feed' },
-    { label:'Medium',   n: m.n_medium,   color:'#d4ac0d', scrollTo:'toc-medium', toggleMed:true },
-    { label:'Low',      n: n_other,      color:'#aab4c8', scrollTo:null },
+    { label:'Critical', n: n_critical, color:'#c0392b', scrollTo:'critical-section-anchor' },
+    { label:'High',     n: n_high,     color:'#d35400', scrollTo:'high-feed' },
+    { label:'Medium',   n: n_medium,   color:'#d4ac0d', scrollTo:'toc-medium', toggleMed:true },
+    { label:'Low',      n: n_low,      color:'#aab4c8', scrollTo:null },
   ];
 
   function scrollWithOffset(el){
@@ -1527,7 +1533,7 @@ document.getElementById('breakdown-window').textContent =
     <div class="ov-stat ov-israel" onclick="scrollToTierById('israel-section',false)">
       <div class="ov-dot">🇮🇱</div>
       <div class="ov-label">Israel Watch</div>
-      <div class="ov-val">${m.n_israel}</div>
+      <div class="ov-val">${n_israel}</div>
       <span class="info-btn" style="margin-left:6px" onclick="event.stopPropagation();toggleIsraelInfo()" title="Israel Watch logic">ⓘ</span>
     </div>
     <div id="israel-info-box" class="info-box" style="display:none;left:0;top:100%;max-width:320px">
@@ -1539,8 +1545,23 @@ document.getElementById('breakdown-window').textContent =
 
   // Chart — percentages shown directly on segments via datalabels plugin
   Chart.register(ChartDataLabels);
+  if(_charts.severity){
+    _charts.severity.data.datasets[0].data = TIERS.map(t=>t.n);
+    _charts.severity.options.plugins.tooltip.callbacks.label =
+      c => ` ${c.label}: ${c.raw} (${total ? Math.round(c.raw/total*100) : 0}%)`;
+    _charts.severity.options.plugins.datalabels.formatter = value => {
+      const pct = total ? Math.round(value / total * 100) : 0;
+      return pct >= 4 ? pct + '%' : '';
+    };
+    _charts.severity.options.onClick = (evt, elements) => {
+      if(!elements.length) return;
+      scrollToTier(TIERS[elements[0].index]);
+    };
+    _charts.severity.update();
+    return;
+  }
   const ctx = document.getElementById('tierDonut').getContext('2d');
-  new Chart(ctx, {
+  _charts.severity = new Chart(ctx, {
     type: 'doughnut',
     data: {
       labels: TIERS.map(t=>t.label),
@@ -1567,7 +1588,10 @@ document.getElementById('breakdown-window').textContent =
       }
     }
   });
-})();
+}
+// Not called here — reads _filters/_charts, not yet declared at this point
+// in the script (const TDZ); initial render happens after those exist,
+// alongside renderIsraelSection() in the _feedAlerts init block below.
 
 function toggleTierInfo(){
   const box = document.getElementById('tier-info-box');
@@ -1749,6 +1773,7 @@ function _applyAll() {
   _rerenderFeeds();
   renderIsraelSection();
   if (_trendChart) switchTrendBreakdown(_trendMode);
+  renderSeverityDonut();
 
   document.getElementById('critical-count').textContent = _feedAlerts.critical.filter(_passesFilters).length;
   document.getElementById('high-count').textContent     = _feedAlerts.high.filter(_passesFilters).length;
@@ -1887,6 +1912,7 @@ function setSortBy(mode){
 
   _rerenderFeeds();
   renderIsraelSection();
+  renderSeverityDonut();
 
   // After all cards are in the DOM, handle deep-link hash navigation
   if (window.location.hash) openAlertFromHash();

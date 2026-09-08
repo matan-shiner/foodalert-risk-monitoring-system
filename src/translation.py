@@ -12,10 +12,29 @@ company names) is imperfect on its own — e.g. it renders Chinese "大肠菌群
 Japanese proper nouns like "成城石井" (a real supermarket chain) as "Ishii
 Ishii". So a small curated per-language dictionary of recurring hazard
 terms is checked first; MT is the fallback for everything the dictionary
-doesn't cover (product names, company names, rarer substances). The
-dictionary only needs to cover hazard *terminology* precisely —
-product/company name translation is inherently approximate and MT is good
-enough there.
+doesn't cover (product names, company names, rarer substances).
+
+Three further mitigations, added after finding that neither bigger local
+models (tested NLLB-200 at 600M and 1.3B — both hallucinate proper nouns
+just as confidently as MarianMT, sometimes worse, e.g. turning "美团"
+Meituan into "the United States") nor more decoding tricks meaningfully
+close the gap on this kind of terse, code-mixed regulatory text:
+
+1. Recurring entity names (e-commerce platforms, "Co., Ltd." suffixes)
+   get substituted with their English form directly in the source text
+   BEFORE translation, via _ENTITY_TERMS — MT models generally leave an
+   already-English span alone rather than mistranslating it, which beats
+   asking the model to translate "美团" itself (see `known_term_lookup`
+   for the older, narrower exact-match dictionary this complements).
+2. Dates and multi-segment reference codes (expiry dates, batch/product
+   numbers like "74-1-171-5-50003") are stripped out before translation
+   and reappended verbatim afterward — they're pure noise to a
+   translation model and a frequent source of the "65: 65: 65:3"-style
+   garbling seen in Thai records especially.
+3. Long strings are split into sentences on native punctuation and
+   translated one sentence at a time, then rejoined — small MT models
+   handle single sentences noticeably better than run-on multi-clause
+   paragraphs.
 """
 from __future__ import annotations
 import re
@@ -130,11 +149,53 @@ _TH_TERMS: dict[str, str] = {
     "สารก่อภูมิแพ้": "allergen",
 }
 
+# Recurring entity names — e-commerce/delivery platforms and company-suffix
+# words that show up constantly in these bulletins and that MT reliably
+# mangles (e.g. NLLB rendered "美团" Meituan as "the United States";
+# MarianMT has produced "Halo House Shop" for a mangled place name in the
+# same sentence). Substituted directly into the source text before
+# translation — unlike `known_term_lookup`, these match as substrings
+# anywhere in a larger sentence, not just a whole standalone string.
+# Longest keys first so multi-character platform names match before any
+# shorter substring they might contain.
+_ZH_ENTITY_TERMS: dict[str, str] = {
+    "京东到家": "JD Daojia",
+    "美团": "Meituan",
+    "饿了么": "Ele.me",
+    "淘宝": "Taobao",
+    "天猫": "Tmall",
+    "拼多多": "Pinduoduo",
+    "京东": "JD.com",
+    "抖音": "Douyin",
+    "微信": "WeChat",
+    "小红书": "Xiaohongshu",
+    "手机APP": "mobile app",
+    # Deliberately NOT substituting "有限公司"/"有限责任公司" ("Co., Ltd.") —
+    # injecting a multi-word, punctuated English phrase mid-sentence
+    # confused the model's word reordering worse than leaving it in
+    # Chinese (verified: "Co., a dehydrated cucumber film produced by
+    # Ltd. (whose operator is..."). Single-token proper nouns like
+    # platform names substitute cleanly; punctuated phrases don't.
+}
+
+_JA_ENTITY_TERMS: dict[str, str] = {
+    "株式会社": "Co., Ltd.",
+    "有限会社": "Ltd.",
+}
+
+_TH_ENTITY_TERMS: dict[str, str] = {
+    "บริษัท": "Company",
+    "จำกัด": "Co., Ltd.",
+}
+
 _LANGUAGES = {
     "zh": {
         "model": "Helsinki-NLP/opus-mt-zh-en",
         "char_re": re.compile(r"[一-鿿]"),
         "terms": _ZH_TERMS,
+        "entity_terms": _ZH_ENTITY_TERMS,
+        # Chinese sentence-ending punctuation (full-width).
+        "sentence_split_re": re.compile(r"(?<=[。！？])"),
     },
     "ja": {
         "model": "Helsinki-NLP/opus-mt-ja-en",
@@ -143,11 +204,17 @@ _LANGUAGES = {
         # source language per-collector, so that ambiguity never matters.
         "char_re": re.compile(r"[぀-ゟ゠-ヿ一-鿿]"),
         "terms": _JA_TERMS,
+        "entity_terms": _JA_ENTITY_TERMS,
+        "sentence_split_re": re.compile(r"(?<=[。！？])"),
     },
     "th": {
         "model": "Helsinki-NLP/opus-mt-th-en",
         "char_re": re.compile(r"[฀-๿]"),
         "terms": _TH_TERMS,
+        "entity_terms": _TH_ENTITY_TERMS,
+        # Thai doesn't use a sentence-final punctuation mark, so there's
+        # no reliable native split point — left unsegmented.
+        "sentence_split_re": None,
     },
 }
 
@@ -209,24 +276,100 @@ def _collapse_repeats(text: str) -> str:
     return _WORD_RUN_RE.sub(r"\1", text)
 
 
+def _substitute_entities(text: str, lang: str) -> str:
+    """Replace known recurring entity names with their English form
+    directly in the source text, longest match first, before translation."""
+    terms = _LANGUAGES[lang]["entity_terms"]
+    for k in sorted(terms, key=len, reverse=True):
+        if k in text:
+            text = text.replace(k, terms[k])
+    return text
+
+
+# Dates ("13/12/2568", "16/01/69", "2026-08-21") and multi-segment
+# reference/batch codes ("74-1-171-5-50003", "12-1-088-0368" — 3+ numeric
+# segments joined by '-' or '/'). Deliberately requires 3+ segments so a
+# genuine short date (2 segments) isn't double-matched here, and so simple
+# in-sentence numbers/ratios aren't touched.
+_DATE_RE = re.compile(r"\b\d{1,2}[/.]\d{1,2}[/.]\d{2,4}\b|\b\d{4}-\d{1,2}-\d{1,2}\b")
+_REF_CODE_RE = re.compile(r"\b\d+(?:[-/]\d+){2,}\b")
+_STRIP_RE = re.compile(f"(?:{_DATE_RE.pattern})|(?:{_REF_CODE_RE.pattern})")
+
+
+def _extract_structured_tokens(text: str) -> tuple[str, list[str]]:
+    """Pull dates/reference codes out of `text` so the MT model never has
+    to translate them — it doesn't reproduce them faithfully (real example:
+    "16/01/69 Exp:/01/71" mangled into "65: 65: 65:3" repeated). Returns
+    (cleaned_text, [stripped_tokens_in_order]); the caller reappends them
+    verbatim after translation."""
+    tokens: list[str] = []
+
+    def _sub(m: re.Match) -> str:
+        tokens.append(m.group(0))
+        return " "
+
+    cleaned = _STRIP_RE.sub(_sub, text)
+    cleaned = re.sub(r"[:,]\s*(?=[:,.]|$)", "", cleaned)  # dangling punctuation left behind
+    cleaned = re.sub(r"\s{2,}", " ", cleaned).strip()
+    return cleaned, tokens
+
+
+def _split_sentences(text: str, lang: str) -> list[str]:
+    """Split into sentences on native punctuation so a small MT model
+    translates one clause at a time instead of a whole run-on paragraph
+    (no-op for languages without a reliable sentence-final mark, e.g. Thai)."""
+    pattern = _LANGUAGES[lang]["sentence_split_re"]
+    if not pattern:
+        return [text]
+    parts = [p.strip() for p in pattern.split(text) if p.strip()]
+    return parts or [text]
+
+
+def _preprocess(text: str, lang: str) -> tuple[list[str], list[str]]:
+    """Full pipeline before handing text to the MT model: substitute known
+    entities, strip structured tokens, split into sentences. Returns
+    (sentences_to_translate, structured_tokens_to_reappend) — sentences is
+    empty when the text was entirely structured tokens (e.g. just a date),
+    so there's nothing left to run through the model at all."""
+    substituted = _substitute_entities(text, lang)
+    cleaned, tokens = _extract_structured_tokens(substituted)
+    if not cleaned:
+        return [], tokens
+    return _split_sentences(cleaned, lang), tokens
+
+
+def _reassemble(translated_sentences: list[str], tokens: list[str]) -> str:
+    piece = " ".join(s for s in translated_sentences if s).strip()
+    if tokens:
+        piece = (piece + " [" + ", ".join(tokens) + "]").strip()
+    return piece
+
+
 @lru_cache(maxsize=4096)
 def _translate_cached(text: str, lang: str) -> str:
     known = known_term_lookup(text, lang)
     if known:
         return known
+    sentences, tokens = _preprocess(text, lang)
+    if not sentences:
+        return _reassemble([], tokens)
     model, tokenizer = _load_model(lang)
-    batch = tokenizer([text], return_tensors="pt", padding=True, truncation=True)
+    batch = tokenizer(sentences, return_tensors="pt", padding=True, truncation=True)
     generated = model.generate(**batch, **_generate_kwargs())
-    decoded = tokenizer.batch_decode(generated, skip_special_tokens=True)[0].strip()
-    return _collapse_repeats(decoded)
+    decoded = [_collapse_repeats(d.strip()) for d in tokenizer.batch_decode(generated, skip_special_tokens=True)]
+    return _reassemble(decoded, tokens)
 
 
 def translate_batch(texts: list[str], lang: str) -> list[str]:
     """Batch-translate `texts` (source language `lang`) to English. Much
     faster than translating one at a time for anything not already
-    cached/dictionary-covered, since model inference batches efficiently."""
+    cached/dictionary-covered, since model inference batches efficiently.
+    Each text is preprocessed independently (entity substitution, structured
+    -token stripping, sentence splitting) but all resulting sentences across
+    all texts are flattened into one model.generate() call for throughput,
+    then regrouped back per original text."""
     results: list[str | None] = []
-    to_translate: list[tuple[int, str]] = []
+    to_translate: list[tuple[int, list[str], list[str]]] = []
     for i, text in enumerate(texts):
         if not text or not _has_text(text, lang):
             results.append(text)
@@ -235,17 +378,23 @@ def translate_batch(texts: list[str], lang: str) -> list[str]:
         if known:
             results.append(known)
             continue
+        sentences, tokens = _preprocess(text, lang)
         results.append(None)
-        to_translate.append((i, text))
+        to_translate.append((i, sentences, tokens))
 
     if to_translate:
         model, tokenizer = _load_model(lang)
-        batch_texts = [t for _, t in to_translate]
-        batch = tokenizer(batch_texts, return_tensors="pt", padding=True, truncation=True)
-        generated = model.generate(**batch, **_generate_kwargs())
-        decoded = tokenizer.batch_decode(generated, skip_special_tokens=True)
-        for (idx, _original), translated in zip(to_translate, decoded):
-            results[idx] = _collapse_repeats(translated.strip())
+        flat_sentences = [s for _, sents, _ in to_translate for s in sents]
+        decoded: list[str] = []
+        if flat_sentences:
+            batch = tokenizer(flat_sentences, return_tensors="pt", padding=True, truncation=True)
+            generated = model.generate(**batch, **_generate_kwargs())
+            decoded = [_collapse_repeats(d.strip()) for d in tokenizer.batch_decode(generated, skip_special_tokens=True)]
+        cursor = 0
+        for idx, sentences, tokens in to_translate:
+            n = len(sentences)
+            results[idx] = _reassemble(decoded[cursor:cursor + n], tokens)
+            cursor += n
 
     return [r if r is not None else "" for r in results]
 

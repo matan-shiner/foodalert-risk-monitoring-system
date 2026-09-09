@@ -72,7 +72,7 @@ import re
 from datetime import datetime, timezone
 from typing import Iterator
 
-from .base import BaseCollector, make_retry_session, infer_product_category
+from .base import BaseCollector, make_retry_session, infer_product_category, infer_product_category_en
 from ..translation import translate_batch_zh_to_en, known_term_lookup
 
 BASE_URL = "https://www.samr.gov.cn"
@@ -237,7 +237,8 @@ class SAMRChinaCollector(BaseCollector):
         if hazard_category is None:
             hazard_category = _infer_hazard_category_from_zh(raw["substance_zh"])
 
-        product_category = infer_product_category(raw["product_zh"], _PRODUCT_CATEGORY_KW)
+        product_category = (infer_product_category(raw["product_zh"], _PRODUCT_CATEGORY_KW)
+                             or infer_product_category_en(product_en))
 
         return {
             "id": f"samr_china::{record_id}",

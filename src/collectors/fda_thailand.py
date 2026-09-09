@@ -45,7 +45,7 @@ import re
 from datetime import datetime, timezone
 from typing import Iterator
 
-from .base import BaseCollector, make_retry_session, infer_product_category
+from .base import BaseCollector, make_retry_session, infer_product_category, infer_product_category_en
 from ..translation import translate_batch
 
 BASE_URL = "https://food.fda.moph.go.th"
@@ -168,7 +168,8 @@ class FDAThailandCollector(BaseCollector):
         hazard_category = _infer_hazard_category(classify_text)
         hazard_specific_th = _extract_hazard_specific(classify_text)
         hazard_specific_en = translate_batch([hazard_specific_th], "th")[0] if hazard_specific_th else None
-        product_category = infer_product_category(raw["product_th"], _PRODUCT_CATEGORY_KW)
+        product_category = (infer_product_category(raw["product_th"], _PRODUCT_CATEGORY_KW)
+                             or infer_product_category_en(raw["product_en"]))
 
         record_id = f"{raw['slug']}::{raw['entry_index']}"
 

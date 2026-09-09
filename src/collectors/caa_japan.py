@@ -51,7 +51,7 @@ from typing import Iterator
 
 import requests
 
-from .base import BaseCollector, make_retry_session, infer_product_category
+from .base import BaseCollector, make_retry_session, infer_product_category, infer_product_category_en
 from ..translation import translate_batch_ja_to_en, known_term_lookup
 
 BASE_URL = "https://www.recall.caa.go.jp"
@@ -188,7 +188,8 @@ class CAAJapanCollector(BaseCollector):
                                if hazard_specific_ja else None)
 
         product_ja = fields.get("商品名", raw["title_ja"])
-        product_category = infer_product_category(product_ja, _PRODUCT_CATEGORY_KW)
+        product_category = (infer_product_category(product_ja, _PRODUCT_CATEGORY_KW)
+                             or infer_product_category_en(product_en))
 
         illness_match = _ILLNESS_RE.search(raw["reason_ja"])
         illness_count = int(illness_match.group(1)) if illness_match else None

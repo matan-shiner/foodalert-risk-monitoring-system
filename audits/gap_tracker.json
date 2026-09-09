@@ -1,0 +1,32 @@
+{
+  "last_run": "2026-09-09",
+  "pending_gaps": [
+    {
+      "company": "Marché d'ici et d'ailleurs inc. (via MAPAQ public health alert)",
+      "product": "Sauce aux Piments / Chili sauce",
+      "country": "Canada (Quebec)",
+      "hazard": "Clostridium botulinum (may support growth of)",
+      "source_post_url": "https://efoodalert.com/2026/09/05/recalls-and-alerts-september-4-5-2026/",
+      "first_flagged": "2026-09-09",
+      "checks_missing": 1
+    },
+    {
+      "company": "FreshPoint",
+      "product": "Created Fresh! brand Cranberry Chicken Salad Wedge sandwiches (4.5oz)",
+      "country": "United States",
+      "hazard": "undeclared egg",
+      "source_post_url": "https://efoodalert.com/2026/09/08/recalls-and-alerts-september-8-2026/",
+      "first_flagged": "2026-09-09",
+      "checks_missing": 1
+    },
+    {
+      "company": "Lemond Food Corp. / Seoul Trading Corp.",
+      "product": "Ofood brand Mild Ssamjang Original Seasoned Soybean Paste (170g, 500g, 1kg)",
+      "country": "United States",
+      "hazard": "undeclared peanut",
+      "source_post_url": "https://efoodalert.com/2026/09/08/recalls-and-alerts-september-8-2026/",
+      "first_flagged": "2026-09-09",
+      "checks_missing": 1
+    }
+  ]
+}

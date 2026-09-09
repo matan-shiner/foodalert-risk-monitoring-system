@@ -351,3 +351,24 @@ def classify(text: str) -> str | None:
 
 def all_codes() -> list[str]:
     return list(_NODES.keys())
+
+
+def top_level_category(stored_value: str | None) -> str | None:
+    """Roll a full-depth stored value (e.g. "08.1.1 Fresh meat, poultry and
+    game, whole pieces or cuts") up to its top-level "<code>.0 <label>" form
+    (e.g. "08.0 Meat and meat products, including poultry and game").
+
+    Full-depth classification is kept in the DB for future use (finer
+    filtering/analysis later); the dashboard only ever displays this
+    rolled-up top-level form — see generate_dashboard.py, which registers
+    this as a SQLite function so every query groups/labels by the top-level
+    category directly, rather than rolling up already-grouped fine-grained
+    counts (which would double-count/fragment groups that should merge).
+    """
+    if not stored_value:
+        return None
+    code = stored_value.split(" ", 1)[0].strip()
+    top_code = code.split(".")[0] + ".0"
+    if top_code not in _NODES:
+        return stored_value  # not a recognized GSFA code — pass through as-is
+    return format_category(top_code)

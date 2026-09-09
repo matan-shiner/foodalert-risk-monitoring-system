@@ -22,6 +22,7 @@ import re
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from src import db
+from src.gsfa_taxonomy import top_level_category
 
 # ── thresholds (mirror rank_daily.py) ────────────────────────────────────────
 CRITICAL_THRESHOLD = 0.95
@@ -430,6 +431,13 @@ def main() -> None:
     thirteen_mo_ago   = ref_date - timedelta(days=395)
 
     conn = db.connect()
+    # Full-depth GSFA classification stays in the DB for future use; the
+    # dashboard only ever displays the rolled-up top-level category. Doing
+    # the rollup in SQL (rather than in Python after fetching) matters for
+    # the GROUP BY queries below — grouping by the already-fine-grained
+    # value first would fragment/double-count categories that should merge
+    # once rolled up.
+    conn.create_function("top_level_cat", 1, top_level_category)
 
     # ── Query A: window alerts ─────────────────────────────────────────────
     rows = conn.execute("""
@@ -437,7 +445,8 @@ def main() -> None:
                a.source_id, a.source_published_date, a.title, a.product_description,
                a.hazard_specific, a.hazard_category, a.severity_raw, a.severity_normalized,
                a.distribution_countries, a.recalling_firm, a.origin_country,
-               a.israel_relevance_flag, a.product_category, a.population_at_risk,
+               a.israel_relevance_flag, top_level_cat(a.product_category) AS product_category,
+               a.population_at_risk,
                a.illness_count_reported, a.record_url, a.description,
                a.event_initiation_date
         FROM alert_scores s JOIN alerts a ON a.id = s.alert_id
@@ -477,7 +486,7 @@ def main() -> None:
             SELECT a.id as alert_id, a.source_id, a.source_published_date,
                    a.title, a.product_description, a.hazard_specific, a.hazard_category,
                    a.severity_raw, a.severity_normalized, a.distribution_countries,
-                   a.origin_country, a.recalling_firm, a.product_category,
+                   a.origin_country, a.recalling_firm, top_level_cat(a.product_category) AS product_category,
                    a.population_at_risk, a.illness_count_reported, a.record_url,
                    a.description, a.israel_relevance_flag,
                    s.bi_encoder_score, s.bi_encoder_percentile
@@ -522,7 +531,7 @@ def main() -> None:
     # ── Query C2: 13-month trends by product_category (top 10 cats only) ────
     prod_trend_rows = conn.execute("""
         SELECT strftime('%Y-%m', a.source_published_date) AS month,
-               COALESCE(a.product_category, 'unclassified') AS cat,
+               COALESCE(top_level_cat(a.product_category), 'unclassified') AS cat,
                COUNT(*) AS cnt
         FROM alerts a JOIN alert_scores s ON s.alert_id = a.id
         WHERE a.source_published_date BETWEEN ? AND ?
@@ -563,8 +572,8 @@ def main() -> None:
     # vs. `window_days` — so this can't just reuse `alerts`/`feed_alerts`).
     trend_index_rows = conn.execute("""
         SELECT strftime('%Y-%m', a.source_published_date) AS month,
-               a.hazard_category, a.product_category, a.source_id,
-               a.origin_country, a.distribution_countries
+               a.hazard_category, top_level_cat(a.product_category) AS product_category,
+               a.source_id, a.origin_country, a.distribution_countries
         FROM alerts a JOIN alert_scores s ON s.alert_id = a.id
         WHERE a.source_published_date BETWEEN ? AND ?
     """, (thirteen_mo_ago.isoformat(), ref_date.isoformat())).fetchall()
@@ -609,7 +618,7 @@ def main() -> None:
 
     breakdowns = {
         "hazard_category":  _hazard_breakdown(),
-        "product_category": _breakdown("product_category", 10),
+        "product_category": _breakdown("top_level_cat(product_category)", 10),
         "origin_country":   _breakdown("origin_country",   10),
         "source": {
             "labels": list(SOURCE_LABELS.values()),

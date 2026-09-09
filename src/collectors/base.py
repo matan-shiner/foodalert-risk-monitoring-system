@@ -116,8 +116,16 @@ ENGLISH_PRODUCT_CATEGORY_KW: dict[str, list[str]] = {
         "quiche", "instant noodle",
     ],
 }
+# `(?:es|s)?` after each keyword so plurals match too (e.g. "food
+# supplements" — found via testing that "supplement" alone missed it,
+# since \bsupplement\b requires a boundary right after the "t", which a
+# following "s" defeats). Not linguistically exhaustive (misses -ies
+# plurals like "cherries"), but a big, safe recall win for the common case.
 _ENGLISH_PRODUCT_CATEGORY_RE = {
-    category: re.compile(r"\b(?:" + "|".join(re.escape(kw) for kw in keywords) + r")\b", re.IGNORECASE)
+    category: re.compile(
+        r"\b(?:" + "|".join(re.escape(kw) + r"(?:es|s)?" for kw in keywords) + r")\b",
+        re.IGNORECASE,
+    )
     for category, keywords in ENGLISH_PRODUCT_CATEGORY_KW.items()
 }
 

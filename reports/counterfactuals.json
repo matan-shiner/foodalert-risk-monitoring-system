@@ -1,5 +1,5 @@
 {
-  "n_alerts": 952,
+  "n_alerts": 955,
   "analyses": [
     {
       "alert_id": "fsis::092-2019",
@@ -106621,6 +106621,342 @@
           "original_score": 3.46495,
           "perturbed_score": 2.74814,
           "delta": -0.71681,
+          "direction": "↓"
+        }
+      ]
+    },
+    {
+      "alert_id": "rasff::2026.8135",
+      "title": "Salmonella in Mussels from the Netherlands",
+      "source_id": "rasff",
+      "hazard_specific": "salmonella",
+      "severity_raw": "information notification for attention/serious",
+      "original_score": 4.71923,
+      "original_percentile": null,
+      "top_driver": "hazard→allergen",
+      "perturbations": [
+        {
+          "perturbation": "hazard→Listeria",
+          "perturbation_he": "סיכון→ליסטריה",
+          "field": "hazard_specific",
+          "new_value": "Listeria monocytogenes",
+          "original_score": 4.71923,
+          "perturbed_score": 5.35227,
+          "delta": 0.63304,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "hazard→mineral_oil",
+          "perturbation_he": "סיכון→שמן מינרלי",
+          "field": "hazard_specific",
+          "new_value": "mineral oil MOSH/MOAH (chronic chemical)",
+          "original_score": 4.71923,
+          "perturbed_score": 3.25336,
+          "delta": -1.46587,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "hazard→allergen",
+          "perturbation_he": "סיכון→אלרגן",
+          "field": "hazard_specific",
+          "new_value": "undeclared allergen: peanuts, sesame",
+          "original_score": 4.71923,
+          "perturbed_score": 2.16526,
+          "delta": -2.55397,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "severity→ClassI",
+          "perturbation_he": "חומרה→Class I",
+          "field": "severity_raw",
+          "new_value": "Class I",
+          "original_score": 4.71923,
+          "perturbed_score": 5.08969,
+          "delta": 0.37046,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "severity→ClassIII",
+          "perturbation_he": "חומרה→Class III",
+          "field": "severity_raw",
+          "new_value": "Class III",
+          "original_score": 4.71923,
+          "perturbed_score": 4.22308,
+          "delta": -0.49615,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→nationwide",
+          "perturbation_he": "הפצה→ארצית",
+          "field": "distribution_countries",
+          "new_value": "[\"United States\"]",
+          "original_score": 4.71923,
+          "perturbed_score": 5.26464,
+          "delta": 0.54541,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "dist→local_only",
+          "perturbation_he": "הפצה→מקומית",
+          "field": "distribution_countries",
+          "new_value": "[\"limited local area, single county\"]",
+          "original_score": 4.71923,
+          "perturbed_score": 5.01164,
+          "delta": 0.29241,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "dist→+Israel",
+          "perturbation_he": "הפצה→+ישראל",
+          "field": "_append_israel",
+          "new_value": null,
+          "original_score": 4.71923,
+          "perturbed_score": 4.51336,
+          "delta": -0.20587,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "rte→add_RTE",
+          "perturbation_he": "מוצר→RTE",
+          "field": "_prepend_desc",
+          "new_value": "Ready-to-eat product. ",
+          "original_score": 4.71923,
+          "perturbed_score": 2.32914,
+          "delta": -2.39009,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "rte→cooked",
+          "perturbation_he": "מוצר→בישול נדרש",
+          "field": "_prepend_desc",
+          "new_value": "Requires thorough cooking before consumption. ",
+          "original_score": 4.71923,
+          "perturbed_score": 3.75145,
+          "delta": -0.96778,
+          "direction": "↓"
+        }
+      ]
+    },
+    {
+      "alert_id": "rasff::2026.8089",
+      "title": "The goods present organoleptically altered lesions-swollen pouch (bombage) ",
+      "source_id": "rasff",
+      "hazard_specific": "",
+      "severity_raw": "border rejection notification/potential risk",
+      "original_score": 2.21361,
+      "original_percentile": null,
+      "top_driver": "rte→add_RTE",
+      "perturbations": [
+        {
+          "perturbation": "hazard→Listeria",
+          "perturbation_he": "סיכון→ליסטריה",
+          "field": "hazard_specific",
+          "new_value": "Listeria monocytogenes",
+          "original_score": 2.21361,
+          "perturbed_score": 3.23388,
+          "delta": 1.02027,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "hazard→mineral_oil",
+          "perturbation_he": "סיכון→שמן מינרלי",
+          "field": "hazard_specific",
+          "new_value": "mineral oil MOSH/MOAH (chronic chemical)",
+          "original_score": 2.21361,
+          "perturbed_score": 1.14904,
+          "delta": -1.06457,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "hazard→allergen",
+          "perturbation_he": "סיכון→אלרגן",
+          "field": "hazard_specific",
+          "new_value": "undeclared allergen: peanuts, sesame",
+          "original_score": 2.21361,
+          "perturbed_score": 0.88741,
+          "delta": -1.3262,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "severity→ClassI",
+          "perturbation_he": "חומרה→Class I",
+          "field": "severity_raw",
+          "new_value": "Class I",
+          "original_score": 2.21361,
+          "perturbed_score": 3.63168,
+          "delta": 1.41807,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "severity→ClassIII",
+          "perturbation_he": "חומרה→Class III",
+          "field": "severity_raw",
+          "new_value": "Class III",
+          "original_score": 2.21361,
+          "perturbed_score": 1.58028,
+          "delta": -0.63333,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→nationwide",
+          "perturbation_he": "הפצה→ארצית",
+          "field": "distribution_countries",
+          "new_value": "[\"United States\"]",
+          "original_score": 2.21361,
+          "perturbed_score": 2.76918,
+          "delta": 0.55557,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "dist→local_only",
+          "perturbation_he": "הפצה→מקומית",
+          "field": "distribution_countries",
+          "new_value": "[\"limited local area, single county\"]",
+          "original_score": 2.21361,
+          "perturbed_score": 2.46988,
+          "delta": 0.25627,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "dist→+Israel",
+          "perturbation_he": "הפצה→+ישראל",
+          "field": "_append_israel",
+          "new_value": null,
+          "original_score": 2.21361,
+          "perturbed_score": 2.00236,
+          "delta": -0.21125,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "rte→add_RTE",
+          "perturbation_he": "מוצר→RTE",
+          "field": "_prepend_desc",
+          "new_value": "Ready-to-eat product. ",
+          "original_score": 2.21361,
+          "perturbed_score": -0.16264,
+          "delta": -2.37625,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "rte→cooked",
+          "perturbation_he": "מוצר→בישול נדרש",
+          "field": "_prepend_desc",
+          "new_value": "Requires thorough cooking before consumption. ",
+          "original_score": 2.21361,
+          "perturbed_score": 0.59599,
+          "delta": -1.61762,
+          "direction": "↓"
+        }
+      ]
+    },
+    {
+      "alert_id": "rasff::2026.8118",
+      "title": "Salmonella Enteritidis in frozen duck from Poland",
+      "source_id": "rasff",
+      "hazard_specific": "salmonella",
+      "severity_raw": "alert notification/serious",
+      "original_score": 2.15385,
+      "original_percentile": null,
+      "top_driver": "rte→add_RTE",
+      "perturbations": [
+        {
+          "perturbation": "hazard→Listeria",
+          "perturbation_he": "סיכון→ליסטריה",
+          "field": "hazard_specific",
+          "new_value": "Listeria monocytogenes",
+          "original_score": 2.15385,
+          "perturbed_score": 2.54068,
+          "delta": 0.38683,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "hazard→mineral_oil",
+          "perturbation_he": "סיכון→שמן מינרלי",
+          "field": "hazard_specific",
+          "new_value": "mineral oil MOSH/MOAH (chronic chemical)",
+          "original_score": 2.15385,
+          "perturbed_score": 1.08557,
+          "delta": -1.06828,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "hazard→allergen",
+          "perturbation_he": "סיכון→אלרגן",
+          "field": "hazard_specific",
+          "new_value": "undeclared allergen: peanuts, sesame",
+          "original_score": 2.15385,
+          "perturbed_score": 0.95224,
+          "delta": -1.20161,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "severity→ClassI",
+          "perturbation_he": "חומרה→Class I",
+          "field": "severity_raw",
+          "new_value": "Class I",
+          "original_score": 2.15385,
+          "perturbed_score": 2.51687,
+          "delta": 0.36302,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "severity→ClassIII",
+          "perturbation_he": "חומרה→Class III",
+          "field": "severity_raw",
+          "new_value": "Class III",
+          "original_score": 2.15385,
+          "perturbed_score": 1.15613,
+          "delta": -0.99772,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→nationwide",
+          "perturbation_he": "הפצה→ארצית",
+          "field": "distribution_countries",
+          "new_value": "[\"United States\"]",
+          "original_score": 2.15385,
+          "perturbed_score": 2.26626,
+          "delta": 0.11241,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "dist→local_only",
+          "perturbation_he": "הפצה→מקומית",
+          "field": "distribution_countries",
+          "new_value": "[\"limited local area, single county\"]",
+          "original_score": 2.15385,
+          "perturbed_score": 2.2944,
+          "delta": 0.14055,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "dist→+Israel",
+          "perturbation_he": "הפצה→+ישראל",
+          "field": "_append_israel",
+          "new_value": null,
+          "original_score": 2.15385,
+          "perturbed_score": 2.12708,
+          "delta": -0.02677,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "rte→add_RTE",
+          "perturbation_he": "מוצר→RTE",
+          "field": "_prepend_desc",
+          "new_value": "Ready-to-eat product. ",
+          "original_score": 2.15385,
+          "perturbed_score": 0.8692,
+          "delta": -1.28465,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "rte→cooked",
+          "perturbation_he": "מוצר→בישול נדרש",
+          "field": "_prepend_desc",
+          "new_value": "Requires thorough cooking before consumption. ",
+          "original_score": 2.15385,
+          "perturbed_score": 1.52797,
+          "delta": -0.62588,
           "direction": "↓"
         }
       ]

@@ -1,5 +1,5 @@
 {
-  "n_alerts": 975,
+  "n_alerts": 976,
   "analyses": [
     {
       "alert_id": "fsis::092-2019",
@@ -109197,6 +109197,118 @@
           "original_score": 1.75265,
           "perturbed_score": 1.21031,
           "delta": -0.54234,
+          "direction": "↓"
+        }
+      ]
+    },
+    {
+      "alert_id": "rasff::2026.8335",
+      "title": "Listeria monocytogenes was detected in 25 g samples (2 out of 5) of cold-smoked ",
+      "source_id": "rasff",
+      "hazard_specific": "listeria monocytogenes",
+      "severity_raw": "alert notification/serious",
+      "original_score": 4.86011,
+      "original_percentile": null,
+      "top_driver": "rte→add_RTE",
+      "perturbations": [
+        {
+          "perturbation": "hazard→Listeria",
+          "perturbation_he": "סיכון→ליסטריה",
+          "field": "hazard_specific",
+          "new_value": "Listeria monocytogenes",
+          "original_score": 4.86011,
+          "perturbed_score": 4.81682,
+          "delta": -0.04329,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "hazard→mineral_oil",
+          "perturbation_he": "סיכון→שמן מינרלי",
+          "field": "hazard_specific",
+          "new_value": "mineral oil MOSH/MOAH (chronic chemical)",
+          "original_score": 4.86011,
+          "perturbed_score": 3.52167,
+          "delta": -1.33844,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "hazard→allergen",
+          "perturbation_he": "סיכון→אלרגן",
+          "field": "hazard_specific",
+          "new_value": "undeclared allergen: peanuts, sesame",
+          "original_score": 4.86011,
+          "perturbed_score": 3.3965,
+          "delta": -1.46361,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "severity→ClassI",
+          "perturbation_he": "חומרה→Class I",
+          "field": "severity_raw",
+          "new_value": "Class I",
+          "original_score": 4.86011,
+          "perturbed_score": 5.05174,
+          "delta": 0.19163,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "severity→ClassIII",
+          "perturbation_he": "חומרה→Class III",
+          "field": "severity_raw",
+          "new_value": "Class III",
+          "original_score": 4.86011,
+          "perturbed_score": 4.10322,
+          "delta": -0.75689,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→nationwide",
+          "perturbation_he": "הפצה→ארצית",
+          "field": "distribution_countries",
+          "new_value": "[\"United States\"]",
+          "original_score": 4.86011,
+          "perturbed_score": 5.30588,
+          "delta": 0.44577,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "dist→local_only",
+          "perturbation_he": "הפצה→מקומית",
+          "field": "distribution_countries",
+          "new_value": "[\"limited local area, single county\"]",
+          "original_score": 4.86011,
+          "perturbed_score": 5.22551,
+          "delta": 0.3654,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "dist→+Israel",
+          "perturbation_he": "הפצה→+ישראל",
+          "field": "_append_israel",
+          "new_value": null,
+          "original_score": 4.86011,
+          "perturbed_score": 4.76418,
+          "delta": -0.09593,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "rte→add_RTE",
+          "perturbation_he": "מוצר→RTE",
+          "field": "_prepend_desc",
+          "new_value": "Ready-to-eat product. ",
+          "original_score": 4.86011,
+          "perturbed_score": 2.75902,
+          "delta": -2.10109,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "rte→cooked",
+          "perturbation_he": "מוצר→בישול נדרש",
+          "field": "_prepend_desc",
+          "new_value": "Requires thorough cooking before consumption. ",
+          "original_score": 4.86011,
+          "perturbed_score": 3.91256,
+          "delta": -0.94755,
           "direction": "↓"
         }
       ]

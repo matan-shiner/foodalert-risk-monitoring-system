@@ -1,5 +1,5 @@
 {
-  "n_alerts": 1103,
+  "n_alerts": 1104,
   "analyses": [
     {
       "alert_id": "fsis::092-2019",
@@ -123533,6 +123533,118 @@
           "original_score": 2.01302,
           "perturbed_score": 1.29971,
           "delta": -0.71331,
+          "direction": "↓"
+        }
+      ]
+    },
+    {
+      "alert_id": "rasff::2026.9183",
+      "title": "Escherichia coli in a batch of clams from France",
+      "source_id": "rasff",
+      "hazard_specific": "escherichia coli",
+      "severity_raw": "alert notification/serious",
+      "original_score": 1.84151,
+      "original_percentile": null,
+      "top_driver": "rte→add_RTE",
+      "perturbations": [
+        {
+          "perturbation": "hazard→Listeria",
+          "perturbation_he": "סיכון→ליסטריה",
+          "field": "hazard_specific",
+          "new_value": "Listeria monocytogenes",
+          "original_score": 1.84151,
+          "perturbed_score": 3.2517,
+          "delta": 1.41019,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "hazard→mineral_oil",
+          "perturbation_he": "סיכון→שמן מינרלי",
+          "field": "hazard_specific",
+          "new_value": "mineral oil MOSH/MOAH (chronic chemical)",
+          "original_score": 1.84151,
+          "perturbed_score": 1.38567,
+          "delta": -0.45584,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "hazard→allergen",
+          "perturbation_he": "סיכון→אלרגן",
+          "field": "hazard_specific",
+          "new_value": "undeclared allergen: peanuts, sesame",
+          "original_score": 1.84151,
+          "perturbed_score": 0.70224,
+          "delta": -1.13927,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "severity→ClassI",
+          "perturbation_he": "חומרה→Class I",
+          "field": "severity_raw",
+          "new_value": "Class I",
+          "original_score": 1.84151,
+          "perturbed_score": 2.28292,
+          "delta": 0.44141,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "severity→ClassIII",
+          "perturbation_he": "חומרה→Class III",
+          "field": "severity_raw",
+          "new_value": "Class III",
+          "original_score": 1.84151,
+          "perturbed_score": 0.39865,
+          "delta": -1.44286,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→nationwide",
+          "perturbation_he": "הפצה→ארצית",
+          "field": "distribution_countries",
+          "new_value": "[\"United States\"]",
+          "original_score": 1.84151,
+          "perturbed_score": 2.08432,
+          "delta": 0.24281,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "dist→local_only",
+          "perturbation_he": "הפצה→מקומית",
+          "field": "distribution_countries",
+          "new_value": "[\"limited local area, single county\"]",
+          "original_score": 1.84151,
+          "perturbed_score": 1.88263,
+          "delta": 0.04112,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "dist→+Israel",
+          "perturbation_he": "הפצה→+ישראל",
+          "field": "_append_israel",
+          "new_value": null,
+          "original_score": 1.84151,
+          "perturbed_score": 1.64332,
+          "delta": -0.19819,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "rte→add_RTE",
+          "perturbation_he": "מוצר→RTE",
+          "field": "_prepend_desc",
+          "new_value": "Ready-to-eat product. ",
+          "original_score": 1.84151,
+          "perturbed_score": -0.25823,
+          "delta": -2.09974,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "rte→cooked",
+          "perturbation_he": "מוצר→בישול נדרש",
+          "field": "_prepend_desc",
+          "new_value": "Requires thorough cooking before consumption. ",
+          "original_score": 1.84151,
+          "perturbed_score": 0.5757,
+          "delta": -1.26581,
           "direction": "↓"
         }
       ]

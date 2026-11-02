@@ -1,5 +1,5 @@
 {
-  "n_alerts": 1146,
+  "n_alerts": 1148,
   "analyses": [
     {
       "alert_id": "fsis::092-2019",
@@ -128349,6 +128349,230 @@
           "original_score": 1.65561,
           "perturbed_score": 0.72424,
           "delta": -0.93137,
+          "direction": "↓"
+        }
+      ]
+    },
+    {
+      "alert_id": "cdc_food_safety_rss::766667",
+      "title": "Krasnyi Oktyabr Inc. Recalls Starfish Seafood Premium Cold Smoked Norwegian Salm",
+      "source_id": "cdc_food_safety_rss",
+      "hazard_specific": "listeria monocytogenes",
+      "severity_raw": "",
+      "original_score": 1.64272,
+      "original_percentile": null,
+      "top_driver": "hazard→allergen",
+      "perturbations": [
+        {
+          "perturbation": "hazard→Listeria",
+          "perturbation_he": "סיכון→ליסטריה",
+          "field": "hazard_specific",
+          "new_value": "Listeria monocytogenes",
+          "original_score": 1.64272,
+          "perturbed_score": 1.64836,
+          "delta": 0.00564,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "hazard→mineral_oil",
+          "perturbation_he": "סיכון→שמן מינרלי",
+          "field": "hazard_specific",
+          "new_value": "mineral oil MOSH/MOAH (chronic chemical)",
+          "original_score": 1.64272,
+          "perturbed_score": 0.84813,
+          "delta": -0.79459,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "hazard→allergen",
+          "perturbation_he": "סיכון→אלרגן",
+          "field": "hazard_specific",
+          "new_value": "undeclared allergen: peanuts, sesame",
+          "original_score": 1.64272,
+          "perturbed_score": 0.41026,
+          "delta": -1.23246,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "severity→ClassI",
+          "perturbation_he": "חומרה→Class I",
+          "field": "severity_raw",
+          "new_value": "Class I",
+          "original_score": 1.64272,
+          "perturbed_score": 2.00933,
+          "delta": 0.36661,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "severity→ClassIII",
+          "perturbation_he": "חומרה→Class III",
+          "field": "severity_raw",
+          "new_value": "Class III",
+          "original_score": 1.64272,
+          "perturbed_score": 1.49177,
+          "delta": -0.15095,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→nationwide",
+          "perturbation_he": "הפצה→ארצית",
+          "field": "distribution_countries",
+          "new_value": "[\"United States\"]",
+          "original_score": 1.64272,
+          "perturbed_score": 1.64272,
+          "delta": -0.0,
+          "direction": "→"
+        },
+        {
+          "perturbation": "dist→local_only",
+          "perturbation_he": "הפצה→מקומית",
+          "field": "distribution_countries",
+          "new_value": "[\"limited local area, single county\"]",
+          "original_score": 1.64272,
+          "perturbed_score": 2.05697,
+          "delta": 0.41425,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "dist→+Israel",
+          "perturbation_he": "הפצה→+ישראל",
+          "field": "_append_israel",
+          "new_value": null,
+          "original_score": 1.64272,
+          "perturbed_score": 1.44686,
+          "delta": -0.19586,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "rte→add_RTE",
+          "perturbation_he": "מוצר→RTE",
+          "field": "_prepend_desc",
+          "new_value": "Ready-to-eat product. ",
+          "original_score": 1.64272,
+          "perturbed_score": 1.10673,
+          "delta": -0.53599,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "rte→cooked",
+          "perturbation_he": "מוצר→בישול נדרש",
+          "field": "_prepend_desc",
+          "new_value": "Requires thorough cooking before consumption. ",
+          "original_score": 1.64272,
+          "perturbed_score": 1.38279,
+          "delta": -0.25993,
+          "direction": "↓"
+        }
+      ]
+    },
+    {
+      "alert_id": "cdc_food_safety_rss::766694",
+      "title": "Krasnyi Oktyabr Inc. Recalls Starfish Seafood Premium Cold Smoked Norwegian Salm",
+      "source_id": "cdc_food_safety_rss",
+      "hazard_specific": "listeria monocytogenes",
+      "severity_raw": "",
+      "original_score": 1.64272,
+      "original_percentile": null,
+      "top_driver": "hazard→allergen",
+      "perturbations": [
+        {
+          "perturbation": "hazard→Listeria",
+          "perturbation_he": "סיכון→ליסטריה",
+          "field": "hazard_specific",
+          "new_value": "Listeria monocytogenes",
+          "original_score": 1.64272,
+          "perturbed_score": 1.64836,
+          "delta": 0.00564,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "hazard→mineral_oil",
+          "perturbation_he": "סיכון→שמן מינרלי",
+          "field": "hazard_specific",
+          "new_value": "mineral oil MOSH/MOAH (chronic chemical)",
+          "original_score": 1.64272,
+          "perturbed_score": 0.84813,
+          "delta": -0.79459,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "hazard→allergen",
+          "perturbation_he": "סיכון→אלרגן",
+          "field": "hazard_specific",
+          "new_value": "undeclared allergen: peanuts, sesame",
+          "original_score": 1.64272,
+          "perturbed_score": 0.41026,
+          "delta": -1.23246,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "severity→ClassI",
+          "perturbation_he": "חומרה→Class I",
+          "field": "severity_raw",
+          "new_value": "Class I",
+          "original_score": 1.64272,
+          "perturbed_score": 2.00933,
+          "delta": 0.36661,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "severity→ClassIII",
+          "perturbation_he": "חומרה→Class III",
+          "field": "severity_raw",
+          "new_value": "Class III",
+          "original_score": 1.64272,
+          "perturbed_score": 1.49177,
+          "delta": -0.15095,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→nationwide",
+          "perturbation_he": "הפצה→ארצית",
+          "field": "distribution_countries",
+          "new_value": "[\"United States\"]",
+          "original_score": 1.64272,
+          "perturbed_score": 1.64272,
+          "delta": -0.0,
+          "direction": "→"
+        },
+        {
+          "perturbation": "dist→local_only",
+          "perturbation_he": "הפצה→מקומית",
+          "field": "distribution_countries",
+          "new_value": "[\"limited local area, single county\"]",
+          "original_score": 1.64272,
+          "perturbed_score": 2.05697,
+          "delta": 0.41425,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "dist→+Israel",
+          "perturbation_he": "הפצה→+ישראל",
+          "field": "_append_israel",
+          "new_value": null,
+          "original_score": 1.64272,
+          "perturbed_score": 1.44686,
+          "delta": -0.19586,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "rte→add_RTE",
+          "perturbation_he": "מוצר→RTE",
+          "field": "_prepend_desc",
+          "new_value": "Ready-to-eat product. ",
+          "original_score": 1.64272,
+          "perturbed_score": 1.10673,
+          "delta": -0.53599,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "rte→cooked",
+          "perturbation_he": "מוצר→בישול נדרש",
+          "field": "_prepend_desc",
+          "new_value": "Requires thorough cooking before consumption. ",
+          "original_score": 1.64272,
+          "perturbed_score": 1.38279,
+          "delta": -0.25993,
           "direction": "↓"
         }
       ]

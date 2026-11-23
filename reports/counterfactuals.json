@@ -1,5 +1,5 @@
 {
-  "n_alerts": 1265,
+  "n_alerts": 1267,
   "analyses": [
     {
       "alert_id": "fsis::092-2019",
@@ -141677,6 +141677,230 @@
           "original_score": 3.03086,
           "perturbed_score": 2.10556,
           "delta": -0.9253,
+          "direction": "↓"
+        }
+      ]
+    },
+    {
+      "alert_id": "fsis::028-2026",
+      "title": "Brett Anthony Foods Recalls Frozen Fully Cooked Cheeseburger Products Due to Mis",
+      "source_id": "fsis",
+      "hazard_specific": "undeclared allergen",
+      "severity_raw": "Class I",
+      "original_score": 4.17489,
+      "original_percentile": null,
+      "top_driver": "severity→ClassIII",
+      "perturbations": [
+        {
+          "perturbation": "hazard→Listeria",
+          "perturbation_he": "סיכון→ליסטריה",
+          "field": "hazard_specific",
+          "new_value": "Listeria monocytogenes",
+          "original_score": 4.17489,
+          "perturbed_score": 5.4783,
+          "delta": 1.30341,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "hazard→mineral_oil",
+          "perturbation_he": "סיכון→שמן מינרלי",
+          "field": "hazard_specific",
+          "new_value": "mineral oil MOSH/MOAH (chronic chemical)",
+          "original_score": 4.17489,
+          "perturbed_score": 4.80687,
+          "delta": 0.63198,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "hazard→allergen",
+          "perturbation_he": "סיכון→אלרגן",
+          "field": "hazard_specific",
+          "new_value": "undeclared allergen: peanuts, sesame",
+          "original_score": 4.17489,
+          "perturbed_score": 4.64504,
+          "delta": 0.47015,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "severity→ClassI",
+          "perturbation_he": "חומרה→Class I",
+          "field": "severity_raw",
+          "new_value": "Class I",
+          "original_score": 4.17489,
+          "perturbed_score": 4.17489,
+          "delta": 0.0,
+          "direction": "→"
+        },
+        {
+          "perturbation": "severity→ClassIII",
+          "perturbation_he": "חומרה→Class III",
+          "field": "severity_raw",
+          "new_value": "Class III",
+          "original_score": 4.17489,
+          "perturbed_score": 0.06569,
+          "delta": -4.1092,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→nationwide",
+          "perturbation_he": "הפצה→ארצית",
+          "field": "distribution_countries",
+          "new_value": "[\"United States\"]",
+          "original_score": 4.17489,
+          "perturbed_score": 2.57606,
+          "delta": -1.59883,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→local_only",
+          "perturbation_he": "הפצה→מקומית",
+          "field": "distribution_countries",
+          "new_value": "[\"limited local area, single county\"]",
+          "original_score": 4.17489,
+          "perturbed_score": 2.64021,
+          "delta": -1.53468,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→+Israel",
+          "perturbation_he": "הפצה→+ישראל",
+          "field": "_append_israel",
+          "new_value": null,
+          "original_score": 4.17489,
+          "perturbed_score": 4.08977,
+          "delta": -0.08512,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "rte→add_RTE",
+          "perturbation_he": "מוצר→RTE",
+          "field": "_prepend_desc",
+          "new_value": "Ready-to-eat product. ",
+          "original_score": 4.17489,
+          "perturbed_score": 3.58654,
+          "delta": -0.58835,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "rte→cooked",
+          "perturbation_he": "מוצר→בישול נדרש",
+          "field": "_prepend_desc",
+          "new_value": "Requires thorough cooking before consumption. ",
+          "original_score": 4.17489,
+          "perturbed_score": 4.07668,
+          "delta": -0.09821,
+          "direction": "↓"
+        }
+      ]
+    },
+    {
+      "alert_id": "cdc_food_safety_rss::766900",
+      "title": "Brett Anthony Foods Recalls Frozen Fully Cooked Cheeseburger Products Due to Mis",
+      "source_id": "cdc_food_safety_rss",
+      "hazard_specific": "allergen",
+      "severity_raw": "",
+      "original_score": 2.13737,
+      "original_percentile": null,
+      "top_driver": "hazard→Listeria",
+      "perturbations": [
+        {
+          "perturbation": "hazard→Listeria",
+          "perturbation_he": "סיכון→ליסטריה",
+          "field": "hazard_specific",
+          "new_value": "Listeria monocytogenes",
+          "original_score": 2.13737,
+          "perturbed_score": 5.40826,
+          "delta": 3.27089,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "hazard→mineral_oil",
+          "perturbation_he": "סיכון→שמן מינרלי",
+          "field": "hazard_specific",
+          "new_value": "mineral oil MOSH/MOAH (chronic chemical)",
+          "original_score": 2.13737,
+          "perturbed_score": 3.11281,
+          "delta": 0.97544,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "hazard→allergen",
+          "perturbation_he": "סיכון→אלרגן",
+          "field": "hazard_specific",
+          "new_value": "undeclared allergen: peanuts, sesame",
+          "original_score": 2.13737,
+          "perturbed_score": 2.52889,
+          "delta": 0.39152,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "severity→ClassI",
+          "perturbation_he": "חומרה→Class I",
+          "field": "severity_raw",
+          "new_value": "Class I",
+          "original_score": 2.13737,
+          "perturbed_score": 3.54762,
+          "delta": 1.41025,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "severity→ClassIII",
+          "perturbation_he": "חומרה→Class III",
+          "field": "severity_raw",
+          "new_value": "Class III",
+          "original_score": 2.13737,
+          "perturbed_score": 1.70082,
+          "delta": -0.43655,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "dist→nationwide",
+          "perturbation_he": "הפצה→ארצית",
+          "field": "distribution_countries",
+          "new_value": "[\"United States\"]",
+          "original_score": 2.13737,
+          "perturbed_score": 2.13737,
+          "delta": 0.0,
+          "direction": "→"
+        },
+        {
+          "perturbation": "dist→local_only",
+          "perturbation_he": "הפצה→מקומית",
+          "field": "distribution_countries",
+          "new_value": "[\"limited local area, single county\"]",
+          "original_score": 2.13737,
+          "perturbed_score": 2.3672,
+          "delta": 0.22983,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "dist→+Israel",
+          "perturbation_he": "הפצה→+ישראל",
+          "field": "_append_israel",
+          "new_value": null,
+          "original_score": 2.13737,
+          "perturbed_score": 2.35396,
+          "delta": 0.21659,
+          "direction": "↑"
+        },
+        {
+          "perturbation": "rte→add_RTE",
+          "perturbation_he": "מוצר→RTE",
+          "field": "_prepend_desc",
+          "new_value": "Ready-to-eat product. ",
+          "original_score": 2.13737,
+          "perturbed_score": 0.75216,
+          "delta": -1.38521,
+          "direction": "↓"
+        },
+        {
+          "perturbation": "rte→cooked",
+          "perturbation_he": "מוצר→בישול נדרש",
+          "field": "_prepend_desc",
+          "new_value": "Requires thorough cooking before consumption. ",
+          "original_score": 2.13737,
+          "perturbed_score": 1.44449,
+          "delta": -0.69288,
           "direction": "↓"
         }
       ]
